@@ -1,11 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
-import {
-  Button,
-  DefaultTheme,
-  PaperProvider,
-  ProgressBar,
-} from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { StyleSheet } from 'react-native';
+import { DefaultTheme, PaperProvider } from 'react-native-paper';
 
 const theme = {
   ...DefaultTheme,
@@ -15,20 +11,58 @@ const theme = {
     secondary: 'yellow',
   },
 };
+const Stack = createNativeStackNavigator();
 export default function App() {
+  console.log('test');
+
   return (
     <PaperProvider theme={theme}>
-      <View style={styles.container}>
-        <Button
-          icon="camera"
-          mode="contained"
-          onPress={() => console.log('Pressed')}
-        >
-          Press me
-        </Button>
-        <Text>haksdjfajs</Text>
-        <StatusBar style="auto" />
-      </View>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Search">
+          <Stack.Screen
+            name="Welcome"
+            component={Welcome}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="HomeScreen"
+            component={HomeScreen}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Grocery"
+            component={Grocery}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="Search"
+            component={Search}
+            options={{
+              headerShown: false,
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
     </PaperProvider>
   );
 }
