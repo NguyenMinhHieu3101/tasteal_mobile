@@ -1,20 +1,20 @@
-import { AntDesign } from '@expo/vector-icons';
-import React from 'react';
-import { BackHandler, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Button, IconButton } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import MyButton from '../components/MyButton';
-import COLORS from '../constants/colors';
-import FONTSIZE from '../constants/fontsize';
+import { AntDesign } from "@expo/vector-icons";
+import React from "react";
+import { BackHandler, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, IconButton } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import MyButton from "../components/MyButton";
+import COLORS from "../constants/colors";
+import FONTSIZE from "../constants/fontsize";
 const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
-        <View style={{ alignItems: 'flex-start' }}>
+        <View style={{ alignItems: "flex-start" }}>
           <IconButton
             icon="arrow-left"
             size={24}
-            onPress={() => navigation.navigate('Welcome')}
+            onPress={() => navigation.navigate("Welcome")}
           />
         </View>
         <View style={styles.view}>
@@ -36,14 +36,14 @@ const Login = ({ navigation }) => {
             style={styles.input}
           ></TextInput>
         </View>
-        <View style={{ alignItems: 'flex-end' }}>
-          <Text style={{ fontSize: FONTSIZE.small, color: COLORS.blue }}>
+        <View style={{ alignItems: "flex-end" }}>
+          <Text style={{ fontSize: FONTSIZE.sm, color: COLORS.blue }}>
             Forgot Your Password?
           </Text>
         </View>
         <View style={styles.view}>
           <Button
-            onPress={() => navigation.navigate('Grocery')}
+            onPress={() => navigation.navigate("Grocery")}
             mode="contained"
           >
             Log In
@@ -63,18 +63,18 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   title: {
-    fontSize: FONTSIZE.xlarge,
-    fontWeight: '700',
+    fontSize: FONTSIZE.xl,
+    fontWeight: "700",
     color: COLORS.black,
   },
   text: {
-    fontSize: FONTSIZE.medium,
-    fontWeight: '200',
+    fontSize: FONTSIZE.md,
+    fontWeight: "200",
     color: COLORS.black,
   },
   input: {
     backgroundColor: COLORS.lightgrey,
-    fontSize: FONTSIZE.small,
+    fontSize: FONTSIZE.sm,
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,

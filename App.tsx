@@ -1,85 +1,78 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet } from 'react-native';
-import { DefaultTheme, PaperProvider } from 'react-native-paper';
-import {
-  Grocery,
-  HomeScreen,
-  Login,
-  Search,
-  Signup,
-  Welcome,
-} from './src/screens';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { PaperProvider } from "react-native-paper";
+import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
+import { defaultTheme } from "./src/theme/defaultTheme";
+import { ROUTES } from "./src/constants/common";
 
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'tomato',
-    secondary: 'yellow',
-  },
-};
 const Stack = createNativeStackNavigator();
-export default function App() {
-  console.log('test');
 
+const screens: {
+  name: string;
+  component: React.FC;
+  options?: object;
+}[] = [
+  {
+    name: ROUTES.Welcome,
+    component: Welcome,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.Login,
+    component: Login,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.Signup,
+    component: Signup,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.Home,
+    component: Home,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.Grocery,
+    component: Grocery,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.Search,
+    component: Search,
+    options: {
+      headerShown: false,
+    },
+  },
+];
+
+export default function App() {
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider theme={defaultTheme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Home">
-          <Stack.Screen
-            name="Welcome"
-            component={Welcome}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="HomeScreen"
-            component={HomeScreen}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Grocery"
-            component={Grocery}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Stack.Screen
-            name="Search"
-            component={Search}
-            options={{
-              headerShown: false,
-            }}
-          />
+        <Stack.Navigator initialRouteName={ROUTES.Welcome}>
+          {screens.map((screen) => (
+            <Stack.Screen
+              key={screen.name}
+              name={screen.name}
+              component={screen.component}
+              options={{
+                ...screen.options,
+              }}
+            />
+          ))}
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

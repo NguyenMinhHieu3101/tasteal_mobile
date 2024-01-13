@@ -9,7 +9,7 @@ import {
 
 import RecipeCard from "../components/RecipeCard";
 
-const HomeScreen = () => {
+const Home = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.title}>Daily Inspiration</Text>
@@ -73,4 +73,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Home;

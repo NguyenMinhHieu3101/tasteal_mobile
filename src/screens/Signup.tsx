@@ -1,19 +1,19 @@
-import { AntDesign } from '@expo/vector-icons';
-import React, { useState } from 'react';
-import { BackHandler, StyleSheet, Text, TextInput, View } from 'react-native';
-import { Button, IconButton } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import CheckBox from '../components/CheckBox';
-import MyButton from '../components/MyButton';
-import COLORS from '../constants/colors';
-import FONTSIZE from '../constants/fontsize';
+import { AntDesign } from "@expo/vector-icons";
+import React, { useState } from "react";
+import { BackHandler, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, IconButton } from "react-native-paper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import CheckBox from "../components/CheckBox";
+import MyButton from "../components/MyButton";
+import COLORS from "../constants/colors";
+import FONTSIZE from "../constants/fontsize";
 
 const Signup = ({ navigation }) => {
   const [check, setCheck] = useState(false);
   return (
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
-        <View style={{ alignItems: 'flex-start' }}>
+        <View style={{ alignItems: "flex-start" }}>
           <IconButton
             icon="arrow-left"
             size={24}
@@ -52,8 +52,8 @@ const Signup = ({ navigation }) => {
         </View>
         <View
           style={{
-            display: 'flex',
-            flexDirection: 'row',
+            display: "flex",
+            flexDirection: "row",
           }}
         >
           <CheckBox
@@ -68,7 +68,7 @@ const Signup = ({ navigation }) => {
         <View style={styles.view}>
           <Button
             mode="contained"
-            onPress={() => navigation.navigate('HomeScreen')}
+            onPress={() => navigation.navigate("HomeScreen")}
           >
             NEXT
           </Button>
@@ -87,18 +87,18 @@ const styles = StyleSheet.create({
     marginVertical: 20,
   },
   title: {
-    fontSize: FONTSIZE.xlarge,
-    fontWeight: '700',
+    fontSize: FONTSIZE.xl,
+    fontWeight: "700",
     color: COLORS.black,
   },
   text: {
-    fontSize: FONTSIZE.medium,
-    fontWeight: '200',
+    fontSize: FONTSIZE.md,
+    fontWeight: "200",
     color: COLORS.black,
   },
   input: {
     backgroundColor: COLORS.lightgrey,
-    fontSize: FONTSIZE.small,
+    fontSize: FONTSIZE.sm,
     padding: 10,
     borderRadius: 10,
     marginVertical: 10,

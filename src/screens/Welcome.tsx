@@ -1,87 +1,87 @@
-import { LinearGradient } from 'expo-linear-gradient';
-import React from 'react';
-import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
-import { Button } from 'react-native-paper';
-import COLORS from '../constants/colors';
-import IMAGES from '../constants/images';
+import { LinearGradient } from "expo-linear-gradient";
+import React from "react";
+import { Image, Pressable, TouchableOpacity, View } from "react-native";
+import { Text, useTheme } from "react-native-paper";
+import { Button } from "react-native-paper";
+import COLORS from "../constants/colors";
+import IMAGES from "../constants/images";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Container from "../components/common/Container";
 
 const Welcome = ({ navigation }) => {
+  const theme = useTheme();
   return (
-    <LinearGradient
-      style={{
-        flex: 1,
-      }}
-      colors={[COLORS.secondary, COLORS.primary]}
-    >
+    <SafeAreaView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <View>
+        <View style={{ flex: 1 }}>
           <Image
             source={IMAGES.welcome}
             style={{
-              height: 880,
-              width: 400,
-              position: 'absolute',
+              height: "100%",
+              width: "100%",
+              resizeMode: "cover",
             }}
           />
         </View>
 
-        <View
+        <Container
           style={{
-            paddingHorizontal: 20,
-            position: 'absolute',
-            textAlignVertical: 'center',
-            paddingTop: 530,
-            width: '100%',
+            position: "absolute",
+            bottom: 0,
+            width: "100%",
+            paddingBottom: 20,
+            gap: 16,
           }}
         >
           <Text
+            variant="displayLarge"
             style={{
-              fontSize: 50,
-              fontWeight: '500',
-              color: COLORS.white,
+              color: "white",
+              fontWeight: "bold",
+              marginBottom: -8,
             }}
           >
             DishDash
           </Text>
 
-          <View
+          <Text
+            variant="headlineSmall"
             style={{
-              marginVertical: 10,
+              color: "white",
+              fontWeight: "bold",
             }}
           >
-            <Text
-              style={{
-                fontSize: 30,
-                fontWeight: '500',
-                color: COLORS.white,
-              }}
-            >
-              Cook with Confidence
-            </Text>
-          </View>
+            Cook with Confidence
+          </Text>
 
           <View
             style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: '100%',
-              marginBottom: 20,
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              width: "100%",
+              gap: 16,
             }}
           >
             <Button
               mode="contained"
               buttonColor="white"
-              onPress={() => navigation.navigate('Signup')}
+              onPress={() => navigation.navigate("Signup")}
               style={{
-                width: 170,
-                height: 45,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+                flex: 1,
+                borderRadius: 100,
               }}
             >
               <Image
                 source={IMAGES.icon_google}
                 style={{
-                  height: 20,
-                  width: 20,
+                  height: 24,
+                  width: 24,
+                  resizeMode: "contain",
                 }}
               />
             </Button>
@@ -89,66 +89,74 @@ const Welcome = ({ navigation }) => {
             <Button
               mode="contained"
               buttonColor="white"
-              onPress={() => navigation.navigate('Signup')}
+              onPress={() => navigation.navigate("Signup")}
               style={{
-                width: 170,
-                height: 45,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+                flex: 1,
+                borderRadius: 100,
               }}
             >
               <Image
                 source={IMAGES.icon_facebook}
                 style={{
-                  height: 28,
-                  width: 28,
-                  position: 'absolute',
+                  height: 24,
+                  width: 24,
+                  resizeMode: "contain",
                 }}
               />
             </Button>
           </View>
 
-          <TouchableOpacity>
-            <Button
-              mode="contained"
-              buttonColor="white"
-              onPress={() => navigation.navigate('Signup')}
-              textColor="black"
-            >
-              SIGN UP WITH EMAIL
-            </Button>
-          </TouchableOpacity>
+          <Button
+            mode="contained"
+            buttonColor="white"
+            onPress={() => navigation.navigate("Signup")}
+            textColor="black"
+            style={{
+              borderRadius: 100,
+              height: 50,
+              width: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            SIGN UP WITH EMAIL
+          </Button>
 
           <View
             style={{
-              flexDirection: 'row',
-              marginTop: 15,
-              justifyContent: 'center',
+              flexDirection: "row",
+              justifyContent: "center",
             }}
           >
             <Text
+              variant="bodyLarge"
               style={{
-                fontSize: 17,
                 color: COLORS.grey,
               }}
             >
-              Already have an account?{' '}
+              Already have an account?{" "}
             </Text>
-            <Pressable onPress={() => navigation.navigate('Login')}>
+            <Pressable onPress={() => navigation.navigate("Login")}>
               <Text
+                variant="bodyLarge"
                 style={{
-                  fontSize: 17,
-                  fontWeight: 'bold',
-                  marginLeft: 4,
+                  fontWeight: "bold",
                   color: COLORS.grey,
-                  textDecorationLine: 'underline',
+                  textDecorationLine: "underline",
                 }}
               >
                 Log In
               </Text>
             </Pressable>
           </View>
-        </View>
+        </Container>
       </View>
-    </LinearGradient>
+    </SafeAreaView>
   );
 };
 

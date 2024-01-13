@@ -1,8 +1,8 @@
 const FONTSIZE = {
-  small: 15,
-  medium: 18,
-  large: 20,
-  xlarge: 30,
+  sm: 15,
+  md: 18,
+  lg: 20,
+  xl: 30,
   subtitle2: 18,
 };
 export default FONTSIZE;
