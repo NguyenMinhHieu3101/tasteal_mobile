@@ -4,6 +4,7 @@ import { PaperProvider } from "react-native-paper";
 import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
 import { defaultTheme } from "./src/theme/defaultTheme";
 import { ROUTES } from "./src/constants/common";
+import DoThang from "./src/screens/DoThang";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,13 +55,25 @@ const screens: {
       headerShown: false,
     },
   },
+  {
+    name: "DoThang",
+    component: DoThang,
+    options: {
+      headerShown: false,
+    },
+  },
 ];
 
 export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={ROUTES.Welcome}>
+        <Stack.Navigator
+          initialRouteName={
+            // ROUTES.Welcome
+            "DoThang"
+          }
+        >
           {screens.map((screen) => (
             <Stack.Screen
               key={screen.name}
