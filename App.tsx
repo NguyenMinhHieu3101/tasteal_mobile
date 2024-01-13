@@ -2,6 +2,14 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { StyleSheet } from 'react-native';
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
+import {
+  Grocery,
+  HomeScreen,
+  Login,
+  Search,
+  Signup,
+  Welcome,
+} from './src/screens';
 
 const theme = {
   ...DefaultTheme,
@@ -18,7 +26,7 @@ export default function App() {
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName="Search">
+        <Stack.Navigator initialRouteName="Home">
           <Stack.Screen
             name="Welcome"
             component={Welcome}
