@@ -2,6 +2,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { styled } from 'nativewind';
 import React from 'react';
 import { BackHandler, StyleSheet, Text, TextInput, View } from 'react-native';
+import { IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Button from '../components/MyButton';
 import COLORS from '../constants/colors';
@@ -13,22 +14,11 @@ const Grocery = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
         <View style={{ alignItems: 'flex-start' }}>
-          <Button
-            title="Sign Up"
+          <IconButton
+            icon="arrow-left"
+            size={24}
             onPress={() => navigation.navigate('HomeScreen')}
-            backgroundColor="transparent"
-            borderColor="transparent"
-            width={'20%'}
-            height={50}
-            startIcon={
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="black"
-                style={{ marginRight: 40 }}
-              />
-            }
-          ></Button>
+          />
         </View>
         <View style={styles.view}>
           <Text style={styles.title}>Giỏ Đi Chợ</Text>
