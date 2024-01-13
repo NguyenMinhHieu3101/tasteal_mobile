@@ -1,15 +1,14 @@
-import { View, Text, Pressable, TouchableOpacity } from "react-native";
-import React from "react";
-import { LinearGradient } from "expo-linear-gradient";
-import COLORS from "../constants/colors";
-import { Image } from "react-native";
-import IMAGES from "../constants/images";
-import Button from "../components/MyButton";
-import Icon from "react-native-vector-icons/Ionicons";
+import { LinearGradient } from 'expo-linear-gradient';
+import React from 'react';
+import { Image, Pressable, Text, TouchableOpacity, View } from 'react-native';
+import { Button } from 'react-native-paper';
+import COLORS from '../constants/colors';
+import IMAGES from '../constants/images';
+
 const Welcome = ({ navigation }) => {
   return (
     <LinearGradient
-      styles={{
+      style={{
         flex: 1,
       }}
       colors={[COLORS.secondary, COLORS.primary]}
@@ -21,7 +20,7 @@ const Welcome = ({ navigation }) => {
             style={{
               height: 880,
               width: 400,
-              position: "absolute",
+              position: 'absolute',
             }}
           />
         </View>
@@ -29,16 +28,16 @@ const Welcome = ({ navigation }) => {
         <View
           style={{
             paddingHorizontal: 20,
-            position: "absolute",
-            textAlignVertical: "center",
+            position: 'absolute',
+            textAlignVertical: 'center',
             paddingTop: 530,
-            width: "100%",
+            width: '100%',
           }}
         >
           <Text
             style={{
               fontSize: 50,
-              fontWeight: 500,
+              fontWeight: '500',
               color: COLORS.white,
             }}
           >
@@ -53,7 +52,7 @@ const Welcome = ({ navigation }) => {
             <Text
               style={{
                 fontSize: 30,
-                fontWeight: 500,
+                fontWeight: '500',
                 color: COLORS.white,
               }}
             >
@@ -63,69 +62,66 @@ const Welcome = ({ navigation }) => {
 
           <View
             style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              width: "100%",
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              width: '100%',
               marginBottom: 20,
             }}
           >
             <Button
-              onPress={() => navigation.navigate("Signup")}
-              labelColor={COLORS.black}
-              borderColor={COLORS.white}
-              width={170}
-              height={45}
-              startIcon={
-                <Image
-                  source={IMAGES.icon_google}
-                  style={{
-                    height: 20,
-                    width: 20,
-                    position: "absolute",
-                  }}
-                />
-              }
-            ></Button>
+              mode="contained"
+              buttonColor="white"
+              onPress={() => navigation.navigate('Signup')}
+              style={{
+                width: 170,
+                height: 45,
+              }}
+            >
+              <Image
+                source={IMAGES.icon_google}
+                style={{
+                  height: 20,
+                  width: 20,
+                }}
+              />
+            </Button>
+
             <Button
-              onPress={() => navigation.navigate("Signup")}
-              // label={<Text style={{fontSize: 22, fontWeight: 700}}>f</Text>}
-              backgroundColor={"#3a559f"}
-              labelColor={COLORS.white}
-              borderColor={"#3a559f"}
-              width={170}
-              height={45}
-              startIcon={
-                <Image
-                  source={IMAGES.icon_facebook}
-                  style={{
-                    height: 28,
-                    width: 28,
-                    position: "absolute",
-                  }}
-                />
-              }
-            ></Button>
+              mode="contained"
+              buttonColor="white"
+              onPress={() => navigation.navigate('Signup')}
+              style={{
+                width: 170,
+                height: 45,
+              }}
+            >
+              <Image
+                source={IMAGES.icon_facebook}
+                style={{
+                  height: 28,
+                  width: 28,
+                  position: 'absolute',
+                }}
+              />
+            </Button>
           </View>
 
           <TouchableOpacity>
             <Button
-              onPress={() => {
-                navigation.navigate("Signup");
-              }}
-              label="SIGN UP WITH EMAIL"
-              labelColor={COLORS.black}
-              borderColor={COLORS.white}
-              width="100%"
-              height={45}
-              startIcon={<Icon name="mail" size={20} color="black"></Icon>}
-            ></Button>
+              mode="contained"
+              buttonColor="white"
+              onPress={() => navigation.navigate('Signup')}
+              textColor="black"
+            >
+              SIGN UP WITH EMAIL
+            </Button>
           </TouchableOpacity>
 
           <View
             style={{
-              flexDirection: "row",
+              flexDirection: 'row',
               marginTop: 15,
-              justifyContent: "center",
+              justifyContent: 'center',
             }}
           >
             <Text
@@ -134,16 +130,16 @@ const Welcome = ({ navigation }) => {
                 color: COLORS.grey,
               }}
             >
-              Already have an account?{" "}
+              Already have an account?{' '}
             </Text>
-            <Pressable onPress={() => navigation.navigate("Login")}>
+            <Pressable onPress={() => navigation.navigate('Login')}>
               <Text
                 style={{
                   fontSize: 17,
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                   marginLeft: 4,
                   color: COLORS.grey,
-                  textDecorationLine: "underline",
+                  textDecorationLine: 'underline',
                 }}
               >
                 Log In

@@ -1,9 +1,10 @@
 import { AntDesign } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { BackHandler, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import CheckBox from '../components/CheckBox';
-import Button from '../components/MyButton';
+import MyButton from '../components/MyButton';
 import COLORS from '../constants/colors';
 import FONTSIZE from '../constants/fontsize';
 
@@ -13,22 +14,11 @@ const Signup = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
         <View style={{ alignItems: 'flex-start' }}>
-          <Button
-            title="Sign Up"
-            onPress={() => navigation.navigate('Welcome')}
-            backgroundColor="transparent"
-            borderColor="transparent"
-            width={'20%'}
-            height={50}
-            startIcon={
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="black"
-                style={{ marginRight: 40 }}
-              />
-            }
-          ></Button>
+          <IconButton
+            icon="arrow-left"
+            size={24}
+            onPress={() => navigation.goBack()}
+          />
         </View>
         <View style={styles.view}>
           <Text style={styles.title}>Sign Up</Text>
@@ -77,16 +67,11 @@ const Signup = ({ navigation }) => {
         </View>
         <View style={styles.view}>
           <Button
-            title="next"
+            mode="contained"
             onPress={() => navigation.navigate('HomeScreen')}
-            backgroundColor={COLORS.blue}
-            label="Next"
-            labelColor={COLORS.white}
-            borderColor={COLORS.blue}
-            // borderColor={COLORS.white}
-            width={'100%'}
-            height={50}
-          ></Button>
+          >
+            NEXT
+          </Button>
         </View>
       </View>
     </SafeAreaView>

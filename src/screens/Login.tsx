@@ -1,8 +1,9 @@
 import { AntDesign } from '@expo/vector-icons';
 import React from 'react';
 import { BackHandler, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Button, IconButton } from 'react-native-paper';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Button from '../components/MyButton';
+import MyButton from '../components/MyButton';
 import COLORS from '../constants/colors';
 import FONTSIZE from '../constants/fontsize';
 const Login = ({ navigation }) => {
@@ -10,22 +11,11 @@ const Login = ({ navigation }) => {
     <SafeAreaView style={styles.container}>
       <View style={{ flex: 1, marginHorizontal: 22 }}>
         <View style={{ alignItems: 'flex-start' }}>
-          <Button
-            title="Sign Up"
+          <IconButton
+            icon="arrow-left"
+            size={24}
             onPress={() => navigation.navigate('Welcome')}
-            backgroundColor="transparent"
-            borderColor="transparent"
-            width={'20%'}
-            height={50}
-            startIcon={
-              <AntDesign
-                name="arrowleft"
-                size={24}
-                color="black"
-                style={{ marginRight: 40 }}
-              />
-            }
-          ></Button>
+          />
         </View>
         <View style={styles.view}>
           <Text style={styles.title}>Log In</Text>
@@ -53,16 +43,11 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.view}>
           <Button
-            title="Log In"
             onPress={() => navigation.navigate('Grocery')}
-            backgroundColor={COLORS.blue}
-            label="Start Cooking!"
-            labelColor={COLORS.white}
-            borderColor={COLORS.blue}
-            // borderColor={COLORS.white}
-            width={'100%'}
-            height={50}
-          ></Button>
+            mode="contained"
+          >
+            Log In
+          </Button>
         </View>
       </View>
     </SafeAreaView>

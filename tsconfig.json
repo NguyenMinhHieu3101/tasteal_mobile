@@ -1,8 +1,5 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {},
-  "include": ["**/*.ts", "**/*.tsx", "src/components/RecipesCarousel.js"],
-  "paths": {
-    "@/*": ["src/"]
-  }
+  "include": ["**/*.ts", "**/*.tsx", "src/components/RecipesCarousel.js"]
 }
