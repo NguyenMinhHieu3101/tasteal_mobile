@@ -44,9 +44,7 @@ const screens: {
   {
     name: ROUTES.Grocery,
     component: Grocery,
-    options: {
-      headerShown: false,
-    },
+    options: {},
   },
   {
     name: ROUTES.Search,
