@@ -1,4 +1,4 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { TouchableOpacity, View } from "react-native";
 import { IconButton, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
@@ -6,6 +6,7 @@ import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 import React, { useEffect } from "react";
 import AddYourOwnItem from "../components/grocery/AddYourOwnItem";
+import Container from "../components/common/Container";
 const Grocery = ({ navigation }) => {
   const theme = useTheme();
   const bottomSheet = useDefaultBottomSheet();
@@ -19,7 +20,7 @@ const Grocery = ({ navigation }) => {
           style={{ marginLeft: -10 }}
           icon="arrow-left"
           size={24}
-          onPress={() => navigation.navigate("DoThang")}
+          onPress={() => navigation.goBack()}
         />
       ),
       headerRight: () => (
@@ -82,18 +83,18 @@ const Grocery = ({ navigation }) => {
       <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.colors.background }}
       >
-        <View style={{ marginHorizontal: 20, paddingBottom: 20 }}>
+        <Container style={{ paddingBottom: 20, flex: 0 }}>
           <View>
             <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
               Giỏ đi chợ
             </Text>
             <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
           </View>
-        </View>
+        </Container>
         <View style={{ backgroundColor: theme.colors.secondary, flex: 1 }}>
-          <View style={{ marginHorizontal: 20 }}>
+          <Container>
             <AddYourOwnItem></AddYourOwnItem>
-          </View>
+          </Container>
         </View>
       </SafeAreaView>
     </DefaultBottomSheet>

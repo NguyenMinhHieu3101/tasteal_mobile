@@ -5,6 +5,7 @@ import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
 import { defaultTheme } from "./src/theme/defaultTheme";
 import { ROUTES } from "./src/constants/common";
 import DoThang from "./src/screens/DoThang";
+import Pantry from "./src/screens/Pantry";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +45,6 @@ const screens: {
   {
     name: ROUTES.Grocery,
     component: Grocery,
-    options: {},
   },
   {
     name: ROUTES.Search,
@@ -52,6 +52,10 @@ const screens: {
     options: {
       headerShown: false,
     },
+  },
+  {
+    name: ROUTES.Pantry,
+    component: Pantry,
   },
   {
     name: "DoThang",

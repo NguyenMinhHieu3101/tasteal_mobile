@@ -8,7 +8,11 @@ function Container({
   style?: ViewStyle;
 }) {
   return (
-    <View style={{ flex: 1, paddingHorizontal: 20, ...style }}>{children}</View>
+    <View
+      style={{ flex: 1, paddingHorizontal: 20, overflow: "visible", ...style }}
+    >
+      {children}
+    </View>
   );
 }
 

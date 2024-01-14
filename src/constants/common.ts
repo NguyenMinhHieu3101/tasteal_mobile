@@ -5,4 +5,5 @@ export const ROUTES = {
   Home: "Home",
   Grocery: "Grocery",
   Search: "Search",
+  Pantry: "Pantry",
 };
