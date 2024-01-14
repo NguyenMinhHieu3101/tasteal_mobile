@@ -7,6 +7,7 @@ import COLORS from "../constants/colors";
 import IMAGES from "../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
@@ -63,9 +64,9 @@ const Welcome = ({ navigation }) => {
               gap: 16,
             }}
           >
-            <Button
-              mode="contained"
-              buttonColor="white"
+            <TouchableOpacity
+              // mode="contained"
+              // buttonColor="white"
               onPress={() => navigation.navigate("Signup")}
               style={{
                 display: "flex",
@@ -74,6 +75,7 @@ const Welcome = ({ navigation }) => {
                 height: 50,
                 flex: 1,
                 borderRadius: 100,
+                backgroundColor: "white",
               }}
             >
               <Image
@@ -84,11 +86,11 @@ const Welcome = ({ navigation }) => {
                   resizeMode: "contain",
                 }}
               />
-            </Button>
+            </TouchableOpacity>
 
-            <Button
-              mode="contained"
-              buttonColor="white"
+            <TouchableOpacity
+              // mode="contained"
+              // buttonColor="white"
               onPress={() => navigation.navigate("Signup")}
               style={{
                 display: "flex",
@@ -97,6 +99,7 @@ const Welcome = ({ navigation }) => {
                 height: 50,
                 flex: 1,
                 borderRadius: 100,
+                backgroundColor: "white",
               }}
             >
               <Image
@@ -107,14 +110,11 @@ const Welcome = ({ navigation }) => {
                   resizeMode: "contain",
                 }}
               />
-            </Button>
+            </TouchableOpacity>
           </View>
 
-          <Button
-            mode="contained"
-            buttonColor="white"
+          <TouchableOpacity
             onPress={() => navigation.navigate("Signup")}
-            textColor="black"
             style={{
               borderRadius: 100,
               height: 50,
@@ -122,10 +122,14 @@ const Welcome = ({ navigation }) => {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "white",
             }}
-          >
-            SIGN UP WITH EMAIL
-          </Button>
+          > 
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+              <MaterialCommunityIcons name="gmail" size={24} color="black" />
+              <Text variant="bodyLarge" style={{ fontWeight: "700" }}>SIGN UP WITH EMAIL</Text> 
+            </View>
+          </TouchableOpacity>
 
           <View
             style={{

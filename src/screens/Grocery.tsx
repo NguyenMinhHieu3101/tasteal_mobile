@@ -1,7 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { BackHandler, StyleSheet, Text, TextInput, View } from "react-native";
-import { IconButton } from "react-native-paper";
+import { BackHandler, StyleSheet, TextInput, View } from "react-native";
+import { IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/MyButton";
 import COLORS from "../constants/colors";
@@ -16,16 +16,15 @@ const Grocery = ({ navigation }) => {
           <IconButton
             icon="arrow-left"
             size={24}
-            onPress={() => navigation.navigate("HomeScreen")}
+            onPress={() => navigation.navigate("DoThang")}
           />
         </View>
         <View style={styles.view}>
-          <Text style={styles.title}>Giỏ Đi Chợ</Text>
+          <Text variant="headlineLarge" style={{fontWeight: "600"}}>Giỏ đi chợ</Text>
         </View>
         <View style={styles.view}>
-          <Text style={styles.subtitle2}>
-            {/* {cartData.length} Công thức | {getTotalIngredient()} Nguyên liệu */}
-            0 Công thức | 3 Nguyên liệu
+          <Text variant="titleMedium">
+          0 Công thức | 3 Nguyên liệu
           </Text>
         </View>
       </View>
@@ -44,11 +43,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: FONTSIZE.xl,
     fontWeight: "900",
-    color: COLORS.black,
-  },
-  text: {
-    fontSize: FONTSIZE.md,
-    fontWeight: "200",
     color: COLORS.black,
   },
   subtitle2: {
