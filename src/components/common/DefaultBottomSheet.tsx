@@ -7,12 +7,13 @@ const DefaultBottomSheet = ({
   children,
   bottomSheetChildren,
   bottomSheetHookType,
+  snapPoints,
 }: {
   children: React.ReactNode;
   bottomSheetChildren: React.ReactNode;
   bottomSheetHookType: BottomSheetHookType;
+  snapPoints?: string[];
 }) => {
-  const snapPoints = ["10%", "50%", "70%"];
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View
@@ -24,7 +25,7 @@ const DefaultBottomSheet = ({
         {children}
         <BottomSheet
           ref={bottomSheetHookType.sheetRef}
-          snapPoints={snapPoints}
+          snapPoints={snapPoints ? snapPoints : ["10%", "50%", "70%"]}
           style={{ flex: 1 }}
           enablePanDownToClose={true}
           onClose={() => bottomSheetHookType.closeBottomSheet()}

@@ -51,11 +51,5 @@ const Grocery = ({ navigation }) => {
     </DefaultBottomSheet>
   );
 };
-const styles = StyleSheet.create({
-  contentContainer: {
-    flex: 1,
-    alignItems: "center",
-  },
-});
 
 export default Grocery;
