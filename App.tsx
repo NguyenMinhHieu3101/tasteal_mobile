@@ -6,6 +6,7 @@ import { defaultTheme } from "./src/theme/defaultTheme";
 import { ROUTES } from "./src/constants/common";
 import DoThang from "./src/screens/DoThang";
 import Pantry from "./src/screens/Pantry";
+import { Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
 

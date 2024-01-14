@@ -85,7 +85,7 @@ const Grocery = ({ navigation }) => {
           </View>
         </Header>
 
-        <ScrollView style={{ flex: 1 }}>
+        <ScrollView style={{ flex: 1, flexDirection: "column" }}>
           <Container style={{ paddingBottom: 20, flex: 0 }}>
             <View>
               <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
@@ -99,9 +99,11 @@ const Grocery = ({ navigation }) => {
             style={{
               backgroundColor: theme.colors.secondary,
               flex: 1,
+              minHeight: "100%",
+              position: "relative",
             }}
           >
-            <Container style={{ height: 100 }}>
+            <Container style={{ flex: 1, position: "relative" }}>
               <AddYourOwnItem></AddYourOwnItem>
             </Container>
           </View>
