@@ -17,7 +17,7 @@ const MyButton = ({
   height,
   startIcon,
   endIcon,
-}) => {
+}:{label?: string, labelColor?: string, backgroundColor?: string, borderColor?: string, onPress?: () => void, width?: number, height?: number, startIcon?: React.ReactNode, endIcon?: React.ReactNode}) => {
   return (
     <TouchableOpacity
       style={[

@@ -1,76 +1,123 @@
 import React from "react";
 import {
-  StyleSheet,
   Text,
   ScrollView,
   View,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import Carousel from "react-native-reanimated-carousel";
 
 import RecipeCard from "../components/RecipeCard";
 
 const Home = () => {
+  const { width } = Dimensions.get("screen");
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.title}>Daily Inspiration</Text>
-      <RecipeCard style={styles.card} />
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{ flex: 1, margin: 20 }}
+      >
+        <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 15 }}>
+          Daily Inspiration
+        </Text>
 
-      <View style={styles.subTitleRow}>
-        <Text style={styles.subTitle}>Trending Now</Text>
-        <TouchableOpacity>
-          <Text style={styles.viewButton}>View all</Text>
-        </TouchableOpacity>
-      </View>
-      <RecipeCard />
+        <View>
+          <Carousel
+            loop
+            width={width}
+            height={460}
+            // mode="horizontal-stack"
+            autoPlay={true}
+            data={[...new Array(6).keys()]}
+            scrollAnimationDuration={1000}
+            onSnapToItem={(index) => console.log("current index:", index)}
+            renderItem={({ index }) => <RecipeCard />}
+          />
+        </View>
 
-      <View style={styles.subTitleRow}>
-        <Text style={styles.subTitle}>New Releases</Text>
-        <TouchableOpacity>
-          <Text style={styles.viewButton}>View all</Text>
-        </TouchableOpacity>
-      </View>
-      <RecipeCard />
+        <View>
+          <View
+            style={{
+              marginTop: 35,
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 15,
+            }}
+          >
+            <Text style={{ flex: 0.9, fontSize: 20, fontWeight: "bold" }}>
+              Thịnh hành
+            </Text>
+            <TouchableOpacity style={{ marginRight: -20 }}>
+              <Text
+                style={{
+                  textTransform: "uppercase",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Xem tất cả
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-      <View style={styles.subTitleRow}>
-        <Text style={styles.subTitle}>New Everyday Dishes</Text>
-        <TouchableOpacity>
-          <Text style={styles.viewButton}>View all</Text>
-        </TouchableOpacity>
-      </View>
-      <RecipeCard />
-    </ScrollView>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ height: 460 }}
+          >
+            <View style={{ flexDirection: "row", gap: 20 }}>
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
+            </View>
+          </ScrollView>
+        </View>
+
+        <View>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 15,
+            }}
+          >
+            <Text
+              style={{
+                flex: 0.9,
+                fontSize: 20,
+                fontWeight: "bold",
+              }}
+            >
+              Vừa ra mắt
+            </Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  textTransform: "uppercase",
+                  textDecorationLine: "underline",
+                }}
+              >
+                Xem tất cả
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={{ height: 460 }}
+          >
+            <View style={{ flexDirection: "row", gap: 20 }}>
+              <RecipeCard />
+              <RecipeCard />
+              <RecipeCard />
+            </View>
+          </ScrollView>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 50,
-    marginLeft: 25,
-  },
-  title: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginBottom: 15,
-  },
-  card: {
-    marginBottom: 30,
-  },
-  subTitleRow: {
-    marginTop: 35,
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  subTitle: {
-    flex: 0.9,
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  viewButton: {
-    textTransform: "uppercase",
-    textDecorationLine: "underline",
-  },
-});
 
 export default Home;
