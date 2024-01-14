@@ -1,44 +1,17 @@
-import { TouchableOpacity, View } from "react-native";
+import { ScrollView, TouchableOpacity, View } from "react-native";
 import { IconButton, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
+import React, { useEffect } from "react";
+
 import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
-import React, { useEffect } from "react";
-import AddYourOwnItem from "../components/grocery/AddYourOwnItem";
+import AddYourOwnItem from "../components/ui/grocery/AddYourOwnItem";
 import Container from "../components/common/Container";
+import Header from "../components/common/Header";
 const Grocery = ({ navigation }) => {
   const theme = useTheme();
   const bottomSheet = useDefaultBottomSheet();
-
-  useEffect(() => {
-    // Tùy chỉnh header trong useEffect
-    navigation.setOptions({
-      headerTitle: "",
-      headerLeft: () => (
-        <IconButton
-          style={{ marginLeft: -10 }}
-          icon="arrow-left"
-          size={24}
-          onPress={() => navigation.goBack()}
-        />
-      ),
-      headerRight: () => (
-        <IconButton
-          style={{ marginRight: -10 }}
-          icon="dots-horizontal-circle-outline"
-          size={24}
-          onPress={() => {
-            bottomSheet.openBottomSheet();
-          }}
-        />
-      ),
-      headerStyle: {
-        backgroundColor: theme.colors.background,
-      },
-      headerShadowVisible: false,
-    });
-  }, [navigation]);
 
   return (
     <DefaultBottomSheet
@@ -83,19 +56,56 @@ const Grocery = ({ navigation }) => {
       <SafeAreaView
         style={{ flex: 1, backgroundColor: theme.colors.background }}
       >
-        <Container style={{ paddingBottom: 20, flex: 0 }}>
-          <View>
-            <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
-              Giỏ đi chợ
-            </Text>
-            <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
+        {/* Header */}
+        <Header>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 8,
+              width: "100%",
+            }}
+          >
+            <IconButton
+              style={{ marginLeft: -10 }}
+              icon="arrow-left"
+              size={24}
+              onPress={() => navigation.goBack()}
+            />
+
+            <IconButton
+              style={{ marginRight: -10 }}
+              icon="dots-horizontal-circle-outline"
+              size={24}
+              onPress={() => {
+                bottomSheet.openBottomSheet();
+              }}
+            />
           </View>
-        </Container>
-        <View style={{ backgroundColor: theme.colors.secondary, flex: 1 }}>
-          <Container>
-            <AddYourOwnItem></AddYourOwnItem>
+        </Header>
+
+        <ScrollView style={{ flex: 1 }}>
+          <Container style={{ paddingBottom: 20, flex: 0 }}>
+            <View>
+              <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
+                Giỏ đi chợ
+              </Text>
+              <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
+            </View>
           </Container>
-        </View>
+
+          <View
+            style={{
+              backgroundColor: theme.colors.secondary,
+              flex: 1,
+            }}
+          >
+            <Container style={{ height: 100 }}>
+              <AddYourOwnItem></AddYourOwnItem>
+            </Container>
+          </View>
+        </ScrollView>
       </SafeAreaView>
     </DefaultBottomSheet>
   );

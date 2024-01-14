@@ -7,33 +7,31 @@ import COLORS from "../constants/colors";
 import IMAGES from "../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1 }}>
-          <Image
-            source={IMAGES.welcome}
-            style={{
-              height: "100%",
-              width: "100%",
-              resizeMode: "cover",
-            }}
-          />
-        </View>
-
-        <Container
+        <Image
+          source={IMAGES.welcome}
           style={{
-            position: "absolute",
-            bottom: 0,
+            height: "100%",
             width: "100%",
-            paddingBottom: 20,
-            gap: 16,
+            resizeMode: "cover",
           }}
-        >
+        />
+      </View>
+
+      <Container
+        style={{
+          position: "absolute",
+          bottom: 0,
+          width: "100%",
+        }}
+      >
+        <SafeAreaView style={{ flex: 1, paddingBottom: 20, gap: 16 }}>
           <Text
             variant="displayLarge"
             style={{
@@ -124,10 +122,14 @@ const Welcome = ({ navigation }) => {
               alignItems: "center",
               backgroundColor: "white",
             }}
-          > 
-            <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          >
+            <View
+              style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
+            >
               <MaterialCommunityIcons name="gmail" size={24} color="black" />
-              <Text variant="bodyLarge" style={{ fontWeight: "700" }}>SIGN UP WITH EMAIL</Text> 
+              <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+                SIGN UP WITH EMAIL
+              </Text>
             </View>
           </TouchableOpacity>
 
@@ -158,9 +160,9 @@ const Welcome = ({ navigation }) => {
               </Text>
             </Pressable>
           </View>
-        </Container>
-      </View>
-    </SafeAreaView>
+        </SafeAreaView>
+      </Container>
+    </View>
   );
 };
 
