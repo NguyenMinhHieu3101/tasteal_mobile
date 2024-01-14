@@ -1,61 +1,60 @@
-import { AntDesign } from "@expo/vector-icons";
-import React from "react";
-import { BackHandler, StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Button from "../components/MyButton";
-import COLORS from "../constants/colors";
-import FONTSIZE from "../constants/fontsize";
-import FONTWEIGHT from "../constants/fontweight";
 
+import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
+import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 const Grocery = ({ navigation }) => {
+  const bottomSheet = useDefaultBottomSheet();
+
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{ flex: 1, marginHorizontal: 22 }}>
-        <View style={{ alignItems: "flex-start" }}>
-          <IconButton
-            icon="arrow-left"
-            size={24}
-            onPress={() => navigation.navigate("DoThang")}
-          />
+    <DefaultBottomSheet
+      bottomSheetHookType={bottomSheet}
+      bottomSheetChildren={<Text>BottomSheet</Text>}
+    >
+      <SafeAreaView style={{ flex: 1 }}>
+        <View style={{ flex: 1, marginHorizontal: 22 }}>
+          <View>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
+              <IconButton
+                style={{ marginLeft: -10 }}
+                icon="arrow-left"
+                size={24}
+                onPress={() => navigation.navigate("DoThang")}
+              />
+              <IconButton
+                style={{ marginRight: -10 }}
+                icon="dots-horizontal-circle-outline"
+                size={24}
+                onPress={() => {
+                  bottomSheet.openBottomSheet();
+                }}
+              />
+            </View>
+          </View>
+          <View>
+            <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
+              Giỏ đi chợ
+            </Text>
+          </View>
+          <View>
+            <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
+          </View>
         </View>
-        <View style={styles.view}>
-          <Text variant="headlineLarge" style={{fontWeight: "600"}}>Giỏ đi chợ</Text>
-        </View>
-        <View style={styles.view}>
-          <Text variant="titleMedium">
-          0 Công thức | 3 Nguyên liệu
-          </Text>
-        </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </DefaultBottomSheet>
   );
 };
 const styles = StyleSheet.create({
-  container: {
+  contentContainer: {
     flex: 1,
-    backgroundColor: COLORS.white,
-  },
-  view: {
-    marginTop: 20,
-    marginVertical: 20,
-  },
-  title: {
-    fontSize: FONTSIZE.xl,
-    fontWeight: "900",
-    color: COLORS.black,
-  },
-  subtitle2: {
-    fontSize: FONTSIZE.subtitle2,
-    fontWeight: "400",
-    color: COLORS.black,
-  },
-  input: {
-    backgroundColor: COLORS.lightgrey,
-    fontSize: FONTSIZE.sm,
-    padding: 10,
-    borderRadius: 10,
-    marginVertical: 10,
+    alignItems: "center",
   },
 });
 
