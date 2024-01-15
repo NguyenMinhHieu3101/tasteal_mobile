@@ -9,7 +9,9 @@ export const defaultTheme: typeof DefaultTheme = {
     ...DefaultTheme.colors,
     primary: TopicColor,
     inversePrimary: '#fff',
+    primaryContainer: TopicColor,
     secondary: SubColor,
+    secondaryContainer: SubColor,
     background: '#fffaf9',
   },
 };

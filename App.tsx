@@ -5,6 +5,7 @@ import { ROUTES } from './src/constants/common';
 import { Grocery, Home, Login, Search, Signup, Welcome } from './src/screens';
 import DoThang from './src/screens/DoThang';
 import IngredientFilter from './src/screens/IngredientFilter';
+import Pantry from './src/screens/Pantry';
 import { defaultTheme } from './src/theme/defaultTheme';
 
 const Stack = createNativeStackNavigator();
@@ -17,44 +18,30 @@ const screens: {
   {
     name: ROUTES.Welcome,
     component: Welcome,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Login,
     component: Login,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Signup,
     component: Signup,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Home,
     component: Home,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Grocery,
     component: Grocery,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Search,
     component: Search,
-    options: {
-      headerShown: false,
-    },
+  },
+  {
+    name: ROUTES.Pantry,
+    component: Pantry,
   },
   {
     name: ROUTES.IngredientFilter,
@@ -66,9 +53,6 @@ const screens: {
   {
     name: 'DoThang',
     component: DoThang,
-    options: {
-      headerShown: false,
-    },
   },
 ];
 
@@ -89,6 +73,7 @@ export default function App() {
               component={screen.component}
               options={{
                 ...screen.options,
+                headerShown: false,
               }}
             />
           ))}

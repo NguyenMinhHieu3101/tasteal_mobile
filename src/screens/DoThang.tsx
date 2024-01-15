@@ -26,7 +26,7 @@ const DoThang = ({ navigation }) => {
               variant="labelLarge"
               style={{ color: "white", fontWeight: "bold" }}
             >
-              {route}
+              {route[1]}
             </Text>
           </Button>
         ))}

@@ -5,7 +5,7 @@ export const ROUTES = {
   Home: 'Home',
   Grocery: 'Grocery',
   Search: 'Search',
-  IngredientFilter: 'IngredientFilter',
+  Pantry: 'Pantry',
 };
 
 // this is from tasteal-web
