@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { PaperProvider } from 'react-native-paper';
 import { ROUTES } from './src/constants/common';
+import { SpinnerProvider } from './src/contexts';
 import { Grocery, Home, Login, Search, Signup, Welcome } from './src/screens';
 import DoThang from './src/screens/DoThang';
 import IngredientFilter from './src/screens/IngredientFilter';
@@ -59,26 +60,28 @@ const screens: {
 export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={
-            // ROUTES.Welcome
-            'DoThang'
-          }
-        >
-          {screens.map((screen) => (
-            <Stack.Screen
-              key={screen.name}
-              name={screen.name}
-              component={screen.component}
-              options={{
-                ...screen.options,
-                headerShown: false,
-              }}
-            />
-          ))}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SpinnerProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={
+              // ROUTES.Welcome
+              'DoThang'
+            }
+          >
+            {screens.map((screen) => (
+              <Stack.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+                options={{
+                  ...screen.options,
+                  headerShown: false,
+                }}
+              />
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SpinnerProvider>
     </PaperProvider>
   );
 }
