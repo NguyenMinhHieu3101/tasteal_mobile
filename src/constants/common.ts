@@ -4,8 +4,9 @@ export const ROUTES = {
   Signup: 'Signup',
   Home: 'Home',
   Grocery: 'Grocery',
-  Search: 'Search',
   Pantry: 'Pantry',
+  Search: 'Search',
+  IngredientFilter: 'IngredientFilter',
 };
 
 // this is from tasteal-web
