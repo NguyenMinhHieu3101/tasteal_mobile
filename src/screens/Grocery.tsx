@@ -1,5 +1,5 @@
-import { ScrollView, TouchableOpacity, View } from "react-native";
-import { IconButton, Text, useTheme } from "react-native-paper";
+import { Dimensions, ScrollView, TouchableOpacity, View } from "react-native";
+import { IconButton, PaperProvider, Text, useTheme } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import React, { useEffect } from "react";
@@ -12,7 +12,7 @@ import Header from "../components/common/Header";
 const Grocery = ({ navigation }) => {
   const theme = useTheme();
   const bottomSheet = useDefaultBottomSheet();
-
+  const heightDevice = Dimensions.get("screen").height;
   return (
     <DefaultBottomSheet
       bottomSheetHookType={bottomSheet}
@@ -54,7 +54,11 @@ const Grocery = ({ navigation }) => {
       snapPoints={["20%"]}
     >
       <SafeAreaView
-        style={{ flex: 1, backgroundColor: theme.colors.background }}
+        style={{
+          flex: 1,
+          backgroundColor: theme.colors.background,
+          // height: "100%",
+        }}
       >
         {/* Header */}
         <Header>
@@ -85,8 +89,22 @@ const Grocery = ({ navigation }) => {
           </View>
         </Header>
 
-        <ScrollView style={{ flex: 1, flexDirection: "column" }}>
-          <Container style={{ paddingBottom: 20, flex: 0 }}>
+        <ScrollView
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            backgroundColor: theme.colors.secondary,
+            flexGrow: 1,
+            // height: "100%",
+          }}
+        >
+          <Container
+            style={{
+              paddingBottom: 20,
+              flex: 0,
+              backgroundColor: theme.colors.background,
+            }}
+          >
             <View>
               <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
                 Giỏ đi chợ
@@ -94,19 +112,27 @@ const Grocery = ({ navigation }) => {
               <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
             </View>
           </Container>
+          <Container
+            style={{
+              flex: 1,
+              paddingTop: 20,
+            }}
+          >
+            <AddYourOwnItem />
+          </Container>
 
-          <View
+          {/* <View
             style={{
               backgroundColor: theme.colors.secondary,
               flex: 1,
-              minHeight: "100%",
-              position: "relative",
+              // position: "relative",
+              height: "100%",
             }}
           >
-            <Container style={{ flex: 1, position: "relative" }}>
-              <AddYourOwnItem></AddYourOwnItem>
+            <Container>
+              
             </Container>
-          </View>
+          </View> */}
         </ScrollView>
       </SafeAreaView>
     </DefaultBottomSheet>
