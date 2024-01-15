@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
+import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
+import { IngredientService } from '../api/services/ingredientService';
+import IngredientItem from '../components/common/collections/IngredientItem';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
 
 const IngredientFilter = ({ navigation }) => {
@@ -8,6 +11,32 @@ const IngredientFilter = ({ navigation }) => {
   const styles = getStyles(theme);
 
   const [search, setSearch] = useState('');
+  const [ingredients, setIngredients] = useState<IngredientEntity[]>([]);
+
+  useEffect(() => {
+    let active = true;
+
+    (async () => {
+      let entites;
+
+      try {
+        entites = await IngredientService.GetAll(1000000);
+        console.log('entites', entites);
+      } catch (error) {
+        console.log('error', error);
+      }
+
+      if (!active) return;
+
+      setIngredients(entites);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  console.log(ingredients);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,6 +58,10 @@ const IngredientFilter = ({ navigation }) => {
           <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
             Gợi ý cho bạn
           </Text>
+
+          {ingredients.map((i) => (
+            <IngredientItem key={i.id} name={i.name} image={i.image} />
+          ))}
         </View>
       </View>
     </SafeAreaView>
