@@ -32,7 +32,6 @@ export const resolveImagePathAsync = createCacheAsyncFunction(
       const url = await getDownloadURL(storageRef);
       return url;
     } catch (error) {
-      console.log(debugStringFormatter('Failed to get image url'), error);
       return '';
     }
   }
