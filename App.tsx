@@ -1,10 +1,19 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { PaperProvider } from "react-native-paper";
-import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
+import {
+  Grocery,
+  Home,
+  Login,
+  Search,
+  Signup,
+  Welcome,
+  RecipeDetail,
+} from "./src/screens";
 import { defaultTheme } from "./src/theme/defaultTheme";
 import { ROUTES } from "./src/constants/common";
 import DoThang from "./src/screens/DoThang";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import Pantry from "./src/screens/Pantry";
 
 const Stack = createNativeStackNavigator();
@@ -45,6 +54,13 @@ const screens: {
   {
     name: "DoThang",
     component: DoThang,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.RecipeDetail,
+    component: RecipeDetail,
   },
 ];
 
