@@ -59,23 +59,20 @@ const IngredientFilter = ({ navigation }) => {
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientEntity[]
   >([]);
-  const handleSelectIngredient = useCallback(
-    (ingredient: IngredientEntity) => {
-      console.log('selected: ', selectedIngredients);
-      if (
-        selectedIngredients.findIndex((item) => item.id === ingredient.id) ===
-        -1
-      ) {
-        setSelectedIngredients((prev) => [ingredient, ...prev]);
+  const handleSelectIngredient = useCallback((ingredient: IngredientEntity) => {
+    setSelectedIngredients((prev) => {
+      if (prev.includes(ingredient)) {
+        return prev;
+      } else {
+        return [...prev, ingredient];
       }
-    },
-    [selectedIngredients]
-  );
+    });
+  }, []);
   const handleDeselectIngredient = useCallback(
     (ingredient: IngredientEntity) => {
       setSelectedIngredients((prev) => prev.filter((i) => i != ingredient));
     },
-    [selectedIngredients]
+    []
   );
 
   //#endregion
