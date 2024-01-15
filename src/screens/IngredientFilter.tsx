@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -16,8 +16,11 @@ import {
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { IngredientService } from '../api/services/ingredientService';
 import IngredientItem from '../components/common/collections/IngredientItem';
+import RowIngredientItem from '../components/common/collections/RowIngredientItem';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { useSpinner } from '../hooks';
+
+const PADDING_HORIZONTAL = 20;
 
 const IngredientFilter = ({ navigation }) => {
   // Hooks
@@ -62,11 +65,11 @@ const IngredientFilter = ({ navigation }) => {
         if (prev.includes(ingredient)) {
           return prev;
         }
-        return [...prev, ingredient];
+        return [ingredient, ...prev];
       });
     }
   }, []);
-  const handleUnselectIngredient = useCallback(
+  const handleDeselectIngredient = useCallback(
     (ingredient: IngredientEntity) => {
       setSelectedIngredients((prev) => {
         return prev.filter((i) => i != ingredient);
@@ -74,6 +77,11 @@ const IngredientFilter = ({ navigation }) => {
     },
     []
   );
+
+  const [flatListWidth, setFlatListWidth] = useState(0);
+  const handleLayout = (event) => {
+    setFlatListWidth(event.nativeEvent.layout.width);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -87,6 +95,7 @@ const IngredientFilter = ({ navigation }) => {
           placeholder="Tìm nguyên liệu phổ biến"
           right={<TextInput.Icon icon="magnify" />}
         />
+
         <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
           Nguyên liệu đã chọn
         </Text>
@@ -95,27 +104,40 @@ const IngredientFilter = ({ navigation }) => {
           data={selectedIngredients}
           keyExtractor={(i) => i.id.toString()}
           renderItem={({ item }) => (
-            <IngredientItem item={item} onTap={handleSelectIngredient} />
+            <RowIngredientItem
+              item={item}
+              items={selectedIngredients}
+              onTap={handleDeselectIngredient}
+              removeable
+              checkSelected={false}
+              style={{
+                width: flatListWidth / 4,
+              }}
+            />
           )}
-          horizontal={false}
-          numColumns={4}
-          style={styles.ingredientList}
+          horizontal={true}
+          contentContainerStyle={styles.selectedIngredientFlatList}
+          showsHorizontalScrollIndicator={false}
         />
 
         <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
           Gợi ý cho bạn
         </Text>
-
         <FlatList
           key="ingredient-flat-list"
           data={ingredients}
           keyExtractor={(i) => i.id.toString()}
           renderItem={({ item }) => (
-            <IngredientItem item={item} onTap={handleSelectIngredient} />
+            <IngredientItem
+              item={item}
+              items={selectedIngredients}
+              checkSelected
+              onPress={handleSelectIngredient}
+            />
           )}
           horizontal={false}
           numColumns={4}
-          style={styles.ingredientList}
+          onLayout={handleLayout}
         />
       </View>
     </SafeAreaView>
@@ -127,14 +149,16 @@ const getStyles = (theme?: MD3Theme) =>
     container: {
       flex: 1,
       paddingTop: 60,
-      paddingHorizontal: 20,
+      paddingHorizontal: PADDING_HORIZONTAL,
       backgroundColor: theme.colors.background,
     },
     content: {
       gap: 12,
     },
-    ingredientList: {
-      rowGap: 200,
+    selectedIngredientFlatList: {
+      overflow: 'visible',
+      height: 'auto',
+      paddingBottom: 32,
     },
   });
 
