@@ -1,22 +1,32 @@
-import { View, Text } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import Container from "../../common/Container";
-import { LinearGradient } from "expo-linear-gradient";
-import { useTheme } from "react-native-paper";
+import { Text, useTheme } from "react-native-paper";
 
-const AddIngredient = () => {
+const AddIngredient = ({ onPress }: { onPress?: () => void }) => {
   const theme = useTheme();
   return (
-    <LinearGradient
-      colors={[
-        theme.colors.primary + (0.5 * 255).toString,
-        theme.colors.background,
-      ]}
-    >
-      <Container style={{ flex: 0, height: 50 }}>
-        <Text>AddIngredient</Text>
+    <View style={{ width: "100%", backgroundColor: theme.colors.background }}>
+      <Container style={{ flex: 0, paddingVertical: 16 }}>
+        <TouchableOpacity
+          onPress={onPress}
+          style={{
+            width: "100%",
+            backgroundColor: theme.colors.primary,
+            borderRadius: 100,
+            padding: 12,
+            alignItems: "center",
+          }}
+        >
+          <Text
+            variant="bodyLarge"
+            style={{ fontWeight: "700", color: "white" }}
+          >
+            Thêm nguyên liệu
+          </Text>
+        </TouchableOpacity>
       </Container>
-    </LinearGradient>
+    </View>
   );
 };
 

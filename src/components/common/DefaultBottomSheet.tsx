@@ -34,26 +34,25 @@ const DefaultBottomSheet = ({
             zIndex: bottomSheetHookType.isOpen ? 1 : -1,
           }}
         >
-          <View
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
+          <BottomSheet
+            ref={bottomSheetHookType.sheetRef}
+            snapPoints={
+              snapPoints
+                ? snapPoints.map((snapPoint) =>
+                    parseInt(snapPoint.replace("%", "")) < 10
+                      ? "10%"
+                      : snapPoint
+                  )
+                : ["10%", "20%", "50%", "70%"]
+            }
+            style={{ flex: 1 }}
+            enablePanDownToClose={true}
+            onClose={() => bottomSheetHookType.closeBottomSheet()}
           >
-            <BottomSheet
-              ref={bottomSheetHookType.sheetRef}
-              snapPoints={
-                snapPoints ? snapPoints : ["10%", "20%", "50%", "70%"]
-              }
-              style={{ flex: 1 }}
-              enablePanDownToClose={true}
-              onClose={() => bottomSheetHookType.closeBottomSheet()}
-            >
-              <BottomSheetView style={{ flex: 1 }}>
-                {bottomSheetChildren}
-              </BottomSheetView>
-            </BottomSheet>
-          </View>
+            <BottomSheetView style={{ flex: 1 }}>
+              {bottomSheetChildren}
+            </BottomSheetView>
+          </BottomSheet>
         </Animated.View>
       </View>
     </GestureHandlerRootView>
