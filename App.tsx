@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon, PaperProvider, Text, useTheme } from "react-native-paper";
 import { ROUTES } from "./src/constants/common";
-import { SpinnerProvider } from './src/contexts';
+import { SpinnerProvider } from "./src/contexts";
 import {
   Grocery,
   Home,
@@ -132,9 +132,6 @@ const screens: {
     options: {
       ...screenHideOption,
     },
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.RecipeDetail,
@@ -145,39 +142,41 @@ const screens: {
 export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
-      <NavigationContainer>
-        <Tab.Navigator
-          initialRouteName={
-            // ROUTES.Welcome
-            "DoThang"
-          }
-          screenOptions={{
-            headerShown: false,
-          }}
-        >
-          {screens.map((screen) => (
-            <Tab.Screen
-              key={screen.name}
-              name={screen.name}
-              component={screen.component}
-              options={{
-                ...screen.options,
-                tabBarLabel: ({ focused, color }) => (
-                  <Text
-                    variant="labelSmall"
-                    style={{
-                      color: !focused ? color : defaultTheme.colors.primary,
-                      fontWeight: focused ? "900" : "normal",
-                    }}
-                  >
-                    {screen.name}
-                  </Text>
-                ),
-              }}
-            />
-          ))}
-        </Tab.Navigator>
-      </NavigationContainer>
+      <SpinnerProvider>
+        <NavigationContainer>
+          <Tab.Navigator
+            initialRouteName={
+              // ROUTES.Welcome
+              "DoThang"
+            }
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            {screens.map((screen) => (
+              <Tab.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+                options={{
+                  ...screen.options,
+                  tabBarLabel: ({ focused, color }) => (
+                    <Text
+                      variant="labelSmall"
+                      style={{
+                        color: !focused ? color : defaultTheme.colors.primary,
+                        fontWeight: focused ? "900" : "normal",
+                      }}
+                    >
+                      {screen.name}
+                    </Text>
+                  ),
+                }}
+              />
+            ))}
+          </Tab.Navigator>
+        </NavigationContainer>
+      </SpinnerProvider>
     </PaperProvider>
   );
 }
