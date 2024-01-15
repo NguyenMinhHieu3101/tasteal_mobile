@@ -1,7 +1,6 @@
-import { View, Text } from "react-native";
-import React, { useRef, useState } from "react";
-import BottomSheet from "@gorhom/bottom-sheet";
-import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import BottomSheet from '@gorhom/bottom-sheet';
+import { BottomSheetMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import React, { useRef, useState } from 'react';
 
 export type BottomSheetHookType = {
   sheetRef: React.MutableRefObject<BottomSheetMethods>;

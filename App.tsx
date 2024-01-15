@@ -2,10 +2,20 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { Icon, PaperProvider, Text, useTheme } from "react-native-paper";
 import { ROUTES } from "./src/constants/common";
-import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
+import { SpinnerProvider } from './src/contexts';
+import {
+  Grocery,
+  Home,
+  Login,
+  Search,
+  Signup,
+  Welcome,
+  RecipeDetail,
+} from "./src/screens";
 import DoThang from "./src/screens/DoThang";
 import IngredientFilter from "./src/screens/IngredientFilter";
 import Pantry from "./src/screens/Pantry";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { defaultTheme } from "./src/theme/defaultTheme";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
@@ -122,6 +132,13 @@ const screens: {
     options: {
       ...screenHideOption,
     },
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: ROUTES.RecipeDetail,
+    component: RecipeDetail,
   },
 ];
 

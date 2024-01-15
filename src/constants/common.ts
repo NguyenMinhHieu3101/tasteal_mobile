@@ -6,6 +6,7 @@ export const ROUTES = {
   Grocery: 'Grocery',
   Pantry: 'Pantry',
   Search: 'Search',
+  RecipeDetail: "RecipeDetail",
   IngredientFilter: 'IngredientFilter',
 };
 
