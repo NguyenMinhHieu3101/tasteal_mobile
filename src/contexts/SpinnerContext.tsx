@@ -15,7 +15,7 @@ const SpinnerContext = createContext(null as unknown as SpinnerContextType);
 
 const SpinnerProvider: FC<PropsWithChildren> = ({ children }) => {
   const [spinning, setSpinning] = useState(false);
-  const spin = useCallback((spin: boolean = true) => {
+  const spin = useCallback((spin: boolean = false) => {
     setSpinning(spin);
   }, []);
 

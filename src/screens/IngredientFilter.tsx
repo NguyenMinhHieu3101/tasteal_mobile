@@ -51,34 +51,32 @@ const IngredientFilter = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.innerContainer}>
-        <View style={[styles.content]}>
-          <Text variant="headlineSmall" style={{ fontWeight: 'bold' }}>
-            Tìm kiếm với Nguyên liệu
-          </Text>
-          <TastealTextInput
-            value={search}
-            onChangeText={setSearch}
-            placeholder="Tìm nguyên liệu phổ biến"
-            right={<TextInput.Icon icon="magnify" />}
-          />
-          <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
-            Nguyên liệu đã chọn
-          </Text>
+      <View style={[styles.content]}>
+        <Text variant="headlineSmall" style={{ fontWeight: 'bold' }}>
+          Tìm kiếm với Nguyên liệu
+        </Text>
+        <TastealTextInput
+          value={search}
+          onChangeText={setSearch}
+          placeholder="Tìm nguyên liệu phổ biến"
+          right={<TextInput.Icon icon="magnify" />}
+        />
+        <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
+          Nguyên liệu đã chọn
+        </Text>
 
-          <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
-            Gợi ý cho bạn
-          </Text>
+        <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
+          Gợi ý cho bạn
+        </Text>
 
-          <FlatList
-            data={ingredients}
-            keyExtractor={(i) => i.id.toString()}
-            renderItem={({ item }) => (
-              <IngredientItem name={item.name} image={item.image} />
-            )}
-          />
-        </View>
-      </ScrollView>
+        <FlatList
+          data={ingredients}
+          keyExtractor={(i) => i.id.toString()}
+          renderItem={({ item }) => (
+            <IngredientItem name={item.name} image={item.image} />
+          )}
+        />
+      </View>
     </SafeAreaView>
   );
 };
@@ -88,8 +86,6 @@ const getStyles = (theme?: MD3Theme) =>
     container: {
       flex: 1,
       backgroundColor: theme.colors.background,
-    },
-    innerContainer: {
       marginTop: 60,
       marginHorizontal: 20,
     },
