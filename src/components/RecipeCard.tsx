@@ -7,9 +7,8 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+import { Button, IconButton } from "react-native-paper";
 
-import Button from "./MyButton";
 import StarRating from "./StarRating";
 
 const RecipeCard = () => {
@@ -21,14 +20,14 @@ const RecipeCard = () => {
           uri: "https://www.sidechef.com/recipe/cc20c05d-aeca-4029-b717-e77b6f3ea5e0.jpg?d=375x375",
         }}
       >
-        <View style={styles.savedStyle}>
-          <Button
-            backgroundColor="rgba(0, 0, 0, 0.6)"
-            borderColor="rgba(0, 0, 0, 0.6 )"
-            width={35}
-            startIcon={
-              <Icon name="bookmark-outline" size={20} color={"white"} />
-            }
+        <View style={{ position: "absolute", top: 10, right: 10 }}>
+          <IconButton
+            mode="contained"
+            icon="bookmark-outline"
+            iconColor="white"
+            containerColor="rgba(0, 0, 0, 0.6 )"
+            size={20}
+            onPress={() => {}}
           />
         </View>
         <Text style={styles.timeStyle}>40min</Text>
@@ -41,20 +40,40 @@ const RecipeCard = () => {
         }}
       ></Image>
 
-      <View style={styles.ratingStyle}>
+      <View style={{ marginHorizontal: 14, marginTop: 10 }}>
         <StarRating rating={4} />
       </View>
 
-      <Text style={styles.titleStyle}>
-        Spicy Butternut Squash Soup with Maple Jalapaño Bacon
+      <Text
+        style={{
+          fontSize: 15,
+          fontWeight: "bold",
+          marginHorizontal: 15,
+          // marginTop: 5,
+          marginVertical: 10,
+        }}
+      >
+        Zabaglione cùng mứt cherry
       </Text>
 
       <View style={styles.buttonStyle}>
         <Button
-          label=" Add ingredients"
-          width={deviceWidth - 130}
-          startIcon={<Icon name="cart" size={20} />}
-        />
+          mode="outlined"
+          onPress={() => {}}
+          textColor="black"
+          icon="cart"
+          style={{
+            borderRadius: 100,
+            height: 40,
+            width: "85%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            borderColor: "black",
+          }}
+        >
+          THÊM VÀO GIỎ ĐI CHỢ
+        </Button>
       </View>
     </View>
   );
@@ -66,7 +85,7 @@ const styles = StyleSheet.create({
   cardContainer: {
     width: deviceWidth - 100,
     backgroundColor: "white",
-    height: 425,
+    height: 430,
     borderRadius: radius,
     shadowColor: "black",
     shadowOffset: {
@@ -83,11 +102,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: radius,
     borderTopRightRadius: radius,
     overflow: "hidden",
-  },
-  savedStyle: {
-    position: "absolute",
-    top: 10,
-    right: 10,
   },
   timeStyle: {
     fontSize: 15,
@@ -107,20 +121,10 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 4,
   },
-  ratingStyle: {
-    marginHorizontal: 14,
-    marginTop: 10,
-  },
-  titleStyle: {
-    fontSize: 15,
-    fontWeight: "bold",
-    marginHorizontal: 15,
-    marginTop: 5,
-  },
   buttonStyle: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 9,
+    marginTop: 8,
   },
 });
 
