@@ -8,7 +8,9 @@ export const defaultTheme = {
   colors: {
     ...DefaultTheme.colors,
     primary: TopicColor,
+    primaryContainer: TopicColor,
     secondary: SubColor,
+    secondaryContainer: SubColor,
     background: "#fffaf9",
   },
 };

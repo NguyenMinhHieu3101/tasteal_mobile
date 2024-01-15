@@ -6,6 +6,7 @@ import { defaultTheme } from "./src/theme/defaultTheme";
 import { ROUTES } from "./src/constants/common";
 import DoThang from "./src/screens/DoThang";
 import Pantry from "./src/screens/Pantry";
+import { Text } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,30 +18,18 @@ const screens: {
   {
     name: ROUTES.Welcome,
     component: Welcome,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Login,
     component: Login,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Signup,
     component: Signup,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Home,
     component: Home,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Grocery,
@@ -49,9 +38,6 @@ const screens: {
   {
     name: ROUTES.Search,
     component: Search,
-    options: {
-      headerShown: false,
-    },
   },
   {
     name: ROUTES.Pantry,
@@ -60,9 +46,6 @@ const screens: {
   {
     name: "DoThang",
     component: DoThang,
-    options: {
-      headerShown: false,
-    },
   },
 ];
 
@@ -83,6 +66,7 @@ export default function App() {
               component={screen.component}
               options={{
                 ...screen.options,
+                headerShown: false,
               }}
             />
           ))}
