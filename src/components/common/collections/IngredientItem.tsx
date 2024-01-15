@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
 
@@ -12,10 +12,10 @@ const IngredientItem: FC<IngredientItemProps> = ({ name, image }) => {
   const imageUrl = useFirebaseImage(image || '');
 
   return (
-    <View>
+    <TouchableOpacity>
       <Image source={{ uri: imageUrl }} style={[styles.image]} />
       <Text>{name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -25,5 +25,6 @@ const styles = StyleSheet.create({
   image: {
     width: 40,
     height: 40,
+    borderRadius: 100,
   },
 });

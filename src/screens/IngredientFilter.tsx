@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
 import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { IngredientService } from '../api/services/ingredientService';
@@ -40,7 +46,7 @@ const IngredientFilter = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.innerContainer}>
+      <ScrollView style={styles.innerContainer}>
         <View style={[styles.content]}>
           <Text variant="headlineSmall" style={{ fontWeight: 'bold' }}>
             Tìm kiếm với Nguyên liệu
@@ -59,11 +65,15 @@ const IngredientFilter = ({ navigation }) => {
             Gợi ý cho bạn
           </Text>
 
-          {ingredients.map((i) => (
-            <IngredientItem key={i.id} name={i.name} image={i.image} />
-          ))}
+          <FlatList
+            data={ingredients}
+            keyExtractor={(i) => i.id.toString()}
+            renderItem={({ item }) => (
+              <IngredientItem name={item.name} image={item.image} />
+            )}
+          />
         </View>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
