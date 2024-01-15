@@ -83,6 +83,13 @@ const screens: {
       ...screenHideOption,
     },
   },
+  {
+    name: ROUTES.RecipeDetail,
+    component: RecipeDetail,
+    options: {
+      ...screenHideOption,
+    },
+  },
   // Hiện bottom navigation bar
   {
     name: ROUTES.Home,
@@ -132,10 +139,6 @@ const screens: {
     options: {
       ...screenHideOption,
     },
-  },
-  {
-    name: ROUTES.RecipeDetail,
-    component: RecipeDetail,
   },
 ];
 
