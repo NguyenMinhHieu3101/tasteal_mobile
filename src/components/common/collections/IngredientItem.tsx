@@ -1,29 +1,48 @@
-import React, { FC } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import React, { FC, memo, useCallback } from 'react';
+import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Text } from 'react-native-paper';
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
+import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
 
 type IngredientItemProps = {
-  name: string;
-  image?: string;
+  item: IngredientEntity;
+  onTap?: (ingredient: IngredientEntity) => void;
 };
 
-const IngredientItem: FC<IngredientItemProps> = ({ name, image }) => {
-  const imageUrl = useFirebaseImage(image || '');
+const IngredientItem: FC<IngredientItemProps> = ({ item, onTap }) => {
+  const imageUrl = useFirebaseImage(item.image || '');
+
+  const handleTap = useCallback(() => {
+    if (onTap) {
+      onTap(item);
+    }
+  }, []);
 
   return (
-    <View>
+    <TouchableOpacity style={styles.container} onPress={handleTap}>
       <Image source={{ uri: imageUrl }} style={[styles.image]} />
-      <Text>{name}</Text>
-    </View>
+      <Text variant="titleSmall" style={styles.name}>
+        {item.name}
+      </Text>
+    </TouchableOpacity>
   );
 };
 
-export default IngredientItem;
-
 const styles = StyleSheet.create({
+  container: {
+    width: '25%',
+    alignItems: 'center',
+    marginBottom: 32,
+  },
   image: {
-    width: 40,
-    height: 40,
+    width: 64,
+    height: 64,
+    borderRadius: 100,
+  },
+  name: {
+    textAlign: 'center',
+    fontWeight: 'bold',
   },
 });
+
+export default memo(IngredientItem);
