@@ -1,5 +1,5 @@
-import { CartEntity } from '@/api/models/entities/CartEntity/CartEntity';
-import { IngredientEntity } from '@/api/models/entities/IngredientEntity/IngredientEntity';
+import { CartEntity } from '../CartEntity/CartEntity';
+import { IngredientEntity } from '../IngredientEntity/IngredientEntity';
 
 export type Cart_ItemEntity = {
   cartId: number;

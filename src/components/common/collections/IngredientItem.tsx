@@ -3,25 +3,21 @@ import { Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { IconButton, MD3Theme, Text } from 'react-native-paper';
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
 import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
-import { useSelected } from '../../../hooks';
 
 type IngredientItemProps = {
   item: IngredientEntity;
-  items: IngredientEntity[];
+  selected?: boolean;
   onPress?: (ingredient: IngredientEntity) => void;
   removeable?: boolean;
-  checkSelected?: boolean;
 };
 
 const IngredientItem: FC<IngredientItemProps> = ({
   item,
-  items,
+  selected = false,
   removeable = false,
-  checkSelected = false,
   onPress: onTap,
 }) => {
   const imageUrl = useFirebaseImage(item.image || '');
-  const selected = useSelected(item, items, checkSelected);
 
   const handleTap = useCallback(() => {
     if (onTap) {

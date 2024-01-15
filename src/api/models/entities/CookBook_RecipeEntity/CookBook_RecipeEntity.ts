@@ -1,5 +1,5 @@
-import { CookBookEntity } from '@/api/models/entities/CookBookEntity/CookBookEntity';
-import { RecipeEntity } from '@/api/models/entities/RecipeEntity/RecipeEntity';
+import { CookBookEntity } from '../CookBookEntity/CookBookEntity';
+import { RecipeEntity } from '../RecipeEntity/RecipeEntity';
 
 export type CookBook_RecipeEntity = {
   id: number;

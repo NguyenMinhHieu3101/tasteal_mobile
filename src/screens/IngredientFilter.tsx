@@ -1,18 +1,7 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {
-  Banner,
-  MD3Theme,
-  Text,
-  TextInput,
-  useTheme,
-} from 'react-native-paper';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
+
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { IngredientService } from '../api/services/ingredientService';
 import IngredientItem from '../components/common/collections/IngredientItem';
@@ -23,22 +12,30 @@ import { useSpinner } from '../hooks';
 const PADDING_HORIZONTAL = 20;
 
 const IngredientFilter = ({ navigation }) => {
-  // Hooks
+  //#region Hooks
+
   const theme = useTheme();
   const styles = getStyles(theme);
   const spin = useSpinner();
 
+  //#endregion
+  //#region Search
+
   const [search, setSearch] = useState('');
+
+  //#endregion
+  //#region Ingredients
+
   const [ingredients, setIngredients] = useState<IngredientEntity[]>([]);
   useEffect(() => {
     let active = true;
 
     (async () => {
-      let entites;
+      let entities;
 
       spin(true);
       try {
-        entites = await IngredientService.GetAll(1000000);
+        entities = await IngredientService.GetAll(1000000);
       } catch (error) {
         console.log('error', error);
       } finally {
@@ -46,7 +43,7 @@ const IngredientFilter = ({ navigation }) => {
 
       if (!active) return;
 
-      setIngredients(entites);
+      setIngredients(entities);
       spin(false);
     })();
 
@@ -55,33 +52,52 @@ const IngredientFilter = ({ navigation }) => {
     };
   }, []);
 
+  //#endregion
+  //#region Selection
+
   // Ingredient selection
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientEntity[]
   >([]);
-  const handleSelectIngredient = useCallback((ingredient: IngredientEntity) => {
-    if (!selectedIngredients.includes(ingredient)) {
-      setSelectedIngredients((prev) => {
-        if (prev.includes(ingredient)) {
-          return prev;
-        }
-        return [ingredient, ...prev];
-      });
-    }
-  }, []);
+  const handleSelectIngredient = useCallback(
+    (ingredient: IngredientEntity) => {
+      console.log('selected: ', selectedIngredients);
+      if (
+        selectedIngredients.findIndex((item) => item.id === ingredient.id) ===
+        -1
+      ) {
+        setSelectedIngredients((prev) => [ingredient, ...prev]);
+      }
+    },
+    [selectedIngredients]
+  );
   const handleDeselectIngredient = useCallback(
     (ingredient: IngredientEntity) => {
-      setSelectedIngredients((prev) => {
-        return prev.filter((i) => i != ingredient);
-      });
+      setSelectedIngredients((prev) => prev.filter((i) => i != ingredient));
     },
-    []
+    [selectedIngredients]
   );
+
+  //#endregion
+  //#region Rendergin stuffs
 
   const [flatListWidth, setFlatListWidth] = useState(0);
   const handleLayout = (event) => {
     setFlatListWidth(event.nativeEvent.layout.width);
   };
+
+  const renderIngredient = useCallback(({ item }) => {
+    const selected = selectedIngredients.includes(item);
+    return (
+      <IngredientItem
+        item={item}
+        selected={selected}
+        onPress={handleSelectIngredient}
+      />
+    );
+  }, []);
+
+  //#endregion
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,10 +122,8 @@ const IngredientFilter = ({ navigation }) => {
           renderItem={({ item }) => (
             <RowIngredientItem
               item={item}
-              items={selectedIngredients}
               onTap={handleDeselectIngredient}
               removeable
-              checkSelected={false}
               style={{
                 width: flatListWidth / 4,
               }}
@@ -123,21 +137,17 @@ const IngredientFilter = ({ navigation }) => {
         <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
           Gợi ý cho bạn
         </Text>
+
         <FlatList
           key="ingredient-flat-list"
           data={ingredients}
           keyExtractor={(i) => i.id.toString()}
-          renderItem={({ item }) => (
-            <IngredientItem
-              item={item}
-              items={selectedIngredients}
-              checkSelected
-              onPress={handleSelectIngredient}
-            />
-          )}
+          renderItem={renderIngredient}
           horizontal={false}
           numColumns={4}
           onLayout={handleLayout}
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={styles.ingredientsFlatList}
         />
       </View>
     </SafeAreaView>
@@ -159,6 +169,9 @@ const getStyles = (theme?: MD3Theme) =>
       overflow: 'visible',
       height: 'auto',
       paddingBottom: 32,
+    },
+    ingredientsFlatList: {
+      paddingBottom: 512,
     },
   });
 
