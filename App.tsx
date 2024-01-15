@@ -1,6 +1,8 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PaperProvider } from "react-native-paper";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PaperProvider } from 'react-native-paper';
+import { ROUTES } from './src/constants/common';
+import { SpinnerProvider } from './src/contexts';
 import {
   Grocery,
   Home,
@@ -9,12 +11,12 @@ import {
   Signup,
   Welcome,
   RecipeDetail,
-} from "./src/screens";
-import { defaultTheme } from "./src/theme/defaultTheme";
-import { ROUTES } from "./src/constants/common";
-import DoThang from "./src/screens/DoThang";
+} from './src/screens';
+import DoThang from './src/screens/DoThang';
+import IngredientFilter from './src/screens/IngredientFilter';
+import Pantry from './src/screens/Pantry';
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import Pantry from "./src/screens/Pantry";
+import { defaultTheme } from './src/theme/defaultTheme';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,7 +54,14 @@ const screens: {
     component: Pantry,
   },
   {
-    name: "DoThang",
+    name: ROUTES.IngredientFilter,
+    component: IngredientFilter,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: 'DoThang',
     component: DoThang,
     options: {
       headerShown: false,
@@ -67,26 +76,28 @@ const screens: {
 export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName={
-            // ROUTES.Welcome
-            "DoThang"
-          }
-        >
-          {screens.map((screen) => (
-            <Stack.Screen
-              key={screen.name}
-              name={screen.name}
-              component={screen.component}
-              options={{
-                ...screen.options,
-                headerShown: false,
-              }}
-            />
-          ))}
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SpinnerProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName={
+              // ROUTES.Welcome
+              'DoThang'
+            }
+          >
+            {screens.map((screen) => (
+              <Stack.Screen
+                key={screen.name}
+                name={screen.name}
+                component={screen.component}
+                options={{
+                  ...screen.options,
+                  headerShown: false,
+                }}
+              />
+            ))}
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SpinnerProvider>
     </PaperProvider>
   );
 }

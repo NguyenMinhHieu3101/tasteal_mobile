@@ -1,10 +1,14 @@
 export const ROUTES = {
-  Welcome: "Welcome",
-  Login: "Login",
-  Signup: "Signup",
-  Home: "Home",
-  Grocery: "Grocery",
-  Search: "Search",
+  Welcome: 'Welcome',
+  Login: 'Login',
+  Signup: 'Signup',
+  Home: 'Home',
+  Grocery: 'Grocery',
+  Pantry: 'Pantry',
+  Search: 'Search',
   RecipeDetail: "RecipeDetail",
-  Pantry: "Pantry",
+  IngredientFilter: 'IngredientFilter',
 };
+
+// this is from tasteal-web
+export const DefaultPage = 1;
