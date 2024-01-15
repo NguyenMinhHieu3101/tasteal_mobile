@@ -1,12 +1,12 @@
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { PaperProvider } from "react-native-paper";
-import { Grocery, Home, Login, Search, Signup, Welcome } from "./src/screens";
-import { defaultTheme } from "./src/theme/defaultTheme";
-import { ROUTES } from "./src/constants/common";
-import DoThang from "./src/screens/DoThang";
-import Pantry from "./src/screens/Pantry";
-import { Text } from "react-native";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { PaperProvider } from 'react-native-paper';
+import { ROUTES } from './src/constants/common';
+import { Grocery, Home, Login, Search, Signup, Welcome } from './src/screens';
+import DoThang from './src/screens/DoThang';
+import IngredientFilter from './src/screens/IngredientFilter';
+import Pantry from './src/screens/Pantry';
+import { defaultTheme } from './src/theme/defaultTheme';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,7 +44,14 @@ const screens: {
     component: Pantry,
   },
   {
-    name: "DoThang",
+    name: ROUTES.IngredientFilter,
+    component: IngredientFilter,
+    options: {
+      headerShown: false,
+    },
+  },
+  {
+    name: 'DoThang',
     component: DoThang,
   },
 ];
@@ -56,7 +63,7 @@ export default function App() {
         <Stack.Navigator
           initialRouteName={
             // ROUTES.Welcome
-            "DoThang"
+            'DoThang'
           }
         >
           {screens.map((screen) => (
