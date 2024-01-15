@@ -11,10 +11,12 @@ import { IngredientEntity } from '../api/models/entities/IngredientEntity/Ingred
 import { IngredientService } from '../api/services/ingredientService';
 import IngredientItem from '../components/common/collections/IngredientItem';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
+import { useSpinner } from '../hooks';
 
 const IngredientFilter = ({ navigation }) => {
   const theme = useTheme();
   const styles = getStyles(theme);
+  const spin = useSpinner();
 
   const [search, setSearch] = useState('');
   const [ingredients, setIngredients] = useState<IngredientEntity[]>([]);
@@ -25,16 +27,19 @@ const IngredientFilter = ({ navigation }) => {
     (async () => {
       let entites;
 
+      spin();
       try {
         entites = await IngredientService.GetAll(1000000);
         console.log('entites', entites);
       } catch (error) {
         console.log('error', error);
+      } finally {
       }
 
       if (!active) return;
 
       setIngredients(entites);
+      spin(false);
     })();
 
     return () => {

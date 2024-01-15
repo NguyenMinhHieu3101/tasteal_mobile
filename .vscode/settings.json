@@ -1,3 +1,7 @@
 {
-  "exportall.config.folderListener": ["/src/components/common/inputs"]
+  "exportall.config.folderListener": [
+    "/src/components/common/inputs",
+    "/src/contexts",
+    "/src/hooks"
+  ]
 }
