@@ -5,14 +5,14 @@ import { AccountEntity } from "../../../api/models/entities/AccountEntity/Accoun
 import { useTheme, Card, Text } from "react-native-paper";
 import useFirebaseImage from "../../../api/hooks/useStorageImage";
 
-const AuthorCard = ({ author }: { author: AccountEntity }) => {
+const AuthorCard = ({ author }: { author?: AccountEntity }) => {
   const theme = useTheme();
   const width = Dimensions.get("screen").width;
   const avatarUrl = useFirebaseImage(author?.avatar || "");
   return (
     <>
       <View>
-        <Card style={{ width: width - 150, height: 400 }}>
+        <Card style={{ width: width - 150, height: 415 }}>
           <Card.Cover source={{ uri: avatarUrl }}></Card.Cover>
           <Card.Content>
             <Text
@@ -35,7 +35,7 @@ const AuthorCard = ({ author }: { author: AccountEntity }) => {
             >
               {author?.name}
             </Text>
-            <Text style={{ color: theme.colors.primary }}>
+            <Text variant="bodyMedium" style={{ color: theme.colors.primary }}>
               {author?.introduction}
             </Text>
           </Card.Content>
