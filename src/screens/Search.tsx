@@ -98,8 +98,6 @@ const Search = () => {
 
   //#endregion
 
-  console.log(recipes[0].ingredients);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.content]}>
