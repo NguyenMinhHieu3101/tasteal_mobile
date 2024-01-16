@@ -44,7 +44,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.view}>
           <Button
-            onPress={() => navigation.navigate(ROUTES.Home)}
+            onPress={() => navigation.navigate(ROUTES.NoBottomBarScreen)}
             mode="contained"
           >
             Log In

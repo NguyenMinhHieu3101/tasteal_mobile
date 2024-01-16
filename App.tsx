@@ -20,15 +20,6 @@ import { defaultTheme } from "./src/theme/defaultTheme";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
 
-const screenHideOption = {
-  tabBarStyle: {
-    display: "none",
-  },
-  tabBarItemStyle: {
-    display: "none",
-  },
-};
-
 const CustomTabBarIcon = ({ focused, color, active, inactive }) => {
   const theme = useTheme();
   return (
@@ -45,49 +36,38 @@ const CustomTabBarIcon = ({ focused, color, active, inactive }) => {
 const screens: {
   name: string;
   component: React.FC;
+  hideBottomBar?: boolean;
   options?: object;
 }[] = [
   {
     name: ROUTES.Welcome,
     component: Welcome,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   {
     name: ROUTES.Login,
     component: Login,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   {
     name: ROUTES.Signup,
     component: Signup,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   {
     name: ROUTES.Grocery,
     component: Grocery,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   {
     name: ROUTES.IngredientFilter,
     component: IngredientFilter,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   {
     name: ROUTES.RecipeDetail,
     component: RecipeDetail,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
   // Hiện bottom navigation bar
   {
@@ -132,68 +112,79 @@ const screens: {
       ),
     },
   },
+  // Xóa khi phát triển xong
   {
     name: "DoThang",
     component: DoThang,
-    options: {
-      ...screenHideOption,
-    },
+    hideBottomBar: true,
   },
 ];
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
-const StackNavigatorWithoutNavBar = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Welcome" component={Welcome} />
-    {/* Thêm các màn hình khác nếu cần */}
-  </Stack.Navigator>
-);
-
-const StackNavigatorWithNavBar = () => (
-  <Stack.Navigator>
-    <Stack.Screen name="Home" component={Home} />
-    {/* Thêm các màn hình khác nếu cần */}
-  </Stack.Navigator>
-);
-
 export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
       <SpinnerProvider>
         <NavigationContainer>
-          <Tab.Navigator
+          <Stack.Navigator
             initialRouteName={
-              // ROUTES.Welcome
+              // ROUTES.Welcome Mở ra
               "DoThang"
             }
             screenOptions={{
               headerShown: false,
             }}
           >
-            {screens.map((screen) => (
-              <Tab.Screen
-                key={screen.name}
-                name={screen.name}
-                component={screen.component}
-                options={{
-                  ...screen.options,
-                  tabBarLabel: ({ focused, color }) => (
-                    <Text
-                      variant="labelSmall"
-                      style={{
-                        color: !focused ? color : defaultTheme.colors.primary,
-                        fontWeight: focused ? "900" : "normal",
-                      }}
-                    >
-                      {screen.name}
-                    </Text>
-                  ),
-                }}
-              />
-            ))}
-          </Tab.Navigator>
+            {screens
+              // .filter((screen) => screen.hideBottomBar) Mở ra
+              .map((screen) => (
+                <Stack.Screen
+                  key={screen.name}
+                  name={screen.name}
+                  component={screen.component}
+                />
+              ))}
+
+            <Stack.Screen
+              name={ROUTES.NoBottomBarScreen}
+              component={() => (
+                <Tab.Navigator
+                  screenOptions={({ route }) => ({
+                    headerShown: false,
+                  })}
+                  initialRouteName={ROUTES.Home}
+                >
+                  {screens
+                    .filter((screen) => !screen.hideBottomBar)
+                    .map((screen) => (
+                      <Tab.Screen
+                        key={screen.name}
+                        name={screen.name}
+                        component={screen.component}
+                        options={{
+                          ...screen.options,
+                          tabBarLabel: ({ focused, color }) => (
+                            <Text
+                              variant="labelSmall"
+                              style={{
+                                color: !focused
+                                  ? color
+                                  : defaultTheme.colors.primary,
+                                fontWeight: focused ? "900" : "normal",
+                              }}
+                            >
+                              {screen.name}
+                            </Text>
+                          ),
+                        }}
+                      />
+                    ))}
+                </Tab.Navigator>
+              )}
+            />
+          </Stack.Navigator>
         </NavigationContainer>
       </SpinnerProvider>
     </PaperProvider>
