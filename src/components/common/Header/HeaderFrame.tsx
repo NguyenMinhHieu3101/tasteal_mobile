@@ -1,6 +1,6 @@
 import { View, Text, ViewStyle, SafeAreaView } from "react-native";
 import React from "react";
-import Container from "./Container";
+import Container from "../Container";
 
 const Header = ({
   children,

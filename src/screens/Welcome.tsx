@@ -8,6 +8,7 @@ import IMAGES from "../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ROUTES } from "../constants/common";
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
@@ -65,7 +66,7 @@ const Welcome = ({ navigation }) => {
             <TouchableOpacity
               // mode="contained"
               // buttonColor="white"
-              onPress={() => navigation.navigate("Signup")}
+              onPress={() => navigation.navigate(ROUTES.Signup)}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -89,7 +90,7 @@ const Welcome = ({ navigation }) => {
             <TouchableOpacity
               // mode="contained"
               // buttonColor="white"
-              onPress={() => navigation.navigate("Signup")}
+              onPress={() => navigation.navigate(ROUTES.Signup)}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -112,7 +113,7 @@ const Welcome = ({ navigation }) => {
           </View>
 
           <TouchableOpacity
-            onPress={() => navigation.navigate("Signup")}
+            onPress={() => navigation.navigate(ROUTES.Signup)}
             style={{
               borderRadius: 100,
               height: 50,
@@ -147,7 +148,7 @@ const Welcome = ({ navigation }) => {
             >
               Already have an account?{" "}
             </Text>
-            <Pressable onPress={() => navigation.navigate("Login")}>
+            <Pressable onPress={() => navigation.navigate(ROUTES.Login)}>
               <Text
                 variant="bodyLarge"
                 style={{

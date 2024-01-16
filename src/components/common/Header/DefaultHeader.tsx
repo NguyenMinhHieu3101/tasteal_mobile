@@ -2,9 +2,10 @@ import { View, TouchableOpacity } from "react-native";
 import React from "react";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Avatar } from "react-native-paper";
-import Header from "../../common/Header";
+import Header from "./HeaderFrame";
+import { ROUTES } from "../../../constants/common";
 
-export function PantryHeader({ navigation }: { navigation: any }) {
+export function DefaultHeader({ navigation }: { navigation: any }) {
   const theme = useTheme();
   return (
     <Header>
@@ -17,6 +18,7 @@ export function PantryHeader({ navigation }: { navigation: any }) {
           width: "100%",
         }}
       >
+        {/* Avatar */}
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Avatar.Image
             size={28}
@@ -51,7 +53,7 @@ export function PantryHeader({ navigation }: { navigation: any }) {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate(ROUTES.Grocery)}>
             <View
               style={{
                 flexDirection: "row",

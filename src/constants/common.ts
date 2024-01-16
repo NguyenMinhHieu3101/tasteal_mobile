@@ -1,13 +1,15 @@
 export const ROUTES = {
-  Welcome: 'Welcome',
-  Login: 'Login',
-  Signup: 'Signup',
-  Home: 'Home',
-  Grocery: 'Grocery',
-  Pantry: 'Pantry',
-  Search: 'Search',
+  Welcome: "Welcome",
+  Login: "Login",
+  Signup: "Signup",
+  Grocery: "Grocery",
+  IngredientFilter: "IngredientFilter",
   RecipeDetail: "RecipeDetail",
-  IngredientFilter: 'IngredientFilter',
+  //
+  NoBottomBarScreen: "NoBottomBarScreen",
+  Home: "Home",
+  Search: "Search",
+  Pantry: "Pantry",
 };
 
 // this is from tasteal-web
