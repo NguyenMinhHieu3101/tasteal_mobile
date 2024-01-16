@@ -14,6 +14,7 @@ import {
 } from 'react-native-paper';
 import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
 import { RecipeService } from '../api/services/recipeService';
+import SmallRecipeCard from '../components/common/collections/SmallRecipeCard';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES } from '../constants/common';
 import { useSpinner } from '../hooks';
@@ -74,8 +75,6 @@ const Search = () => {
     };
   }, []);
 
-  console.log(recipes);
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.content]}>
@@ -111,12 +110,9 @@ const Search = () => {
 
         <FlatList
           data={recipes}
-          renderItem={({ item }) => (
-            <>
-              <Text variant="titleLarge">{item.name}</Text>
-            </>
-          )}
+          renderItem={({ item }) => <SmallRecipeCard recipe={item} />}
           keyExtractor={(item) => item.id.toString()}
+          numColumns={2}
         />
       </View>
     </SafeAreaView>
