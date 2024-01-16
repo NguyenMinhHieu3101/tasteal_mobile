@@ -54,7 +54,6 @@ export class CommentService {
     return await fetch(ApiEndPoint.GetAllComments(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -73,7 +72,6 @@ export class CommentService {
     return await fetch(ApiEndPoint.SoftDelete(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -92,7 +90,6 @@ export class CommentService {
     return await fetch(ApiEndPoint.HardDelete(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

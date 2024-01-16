@@ -20,7 +20,6 @@ export class PantryService {
     return await fetch(ApiEndPoint.GetRecipesByIngredientsAny(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -43,7 +42,6 @@ export class PantryService {
     return await fetch(ApiEndPoint.GetRecipesByIngredientsAll(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -66,7 +64,6 @@ export class PantryService {
     return await fetch(ApiEndPoint.GetRecipesByPantryIdAny(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -89,7 +86,6 @@ export class PantryService {
     return await fetch(ApiEndPoint.GetRecipesByPantryIdAll(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

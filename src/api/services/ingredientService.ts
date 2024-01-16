@@ -87,12 +87,9 @@ export class IngredientService {
     };
     return await fetch(ApiEndPoint.DeleteIngredient(id), requestOptions)
       .then((res) => {
-        console.log(res);
         return res.json();
       })
       .then((data) => {
-        console.log(data);
-
         return data;
       })
       .catch((error) => {

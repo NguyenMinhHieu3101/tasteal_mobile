@@ -1,6 +1,6 @@
 import { FC, memo, useCallback } from 'react';
 import { Image, StyleSheet, TouchableOpacity } from 'react-native';
-import { IconButton, MD3Theme, Text } from 'react-native-paper';
+import { IconButton, MD3Theme, Text, useTheme } from 'react-native-paper';
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
 import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
 
@@ -17,6 +17,8 @@ const IngredientItem: FC<IngredientItemProps> = ({
   removeable = false,
   onPress: onTap,
 }) => {
+  const theme = useTheme();
+
   const imageUrl = useFirebaseImage(item.image || '');
 
   const handleTap = useCallback(() => {
@@ -31,7 +33,10 @@ const IngredientItem: FC<IngredientItemProps> = ({
       onPress={handleTap}
     >
       <Image source={{ uri: imageUrl }} style={[styles.image]} />
-      <Text variant="titleSmall" style={styles.name}>
+      <Text
+        variant="titleSmall"
+        style={[styles.name, { color: theme.colors.primary }]}
+      >
         {item.name}
       </Text>
       {removeable && (

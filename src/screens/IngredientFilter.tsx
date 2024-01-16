@@ -1,23 +1,38 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
-import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
+import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  Button,
+  Icon,
+  IconButton,
+  MD3Theme,
+  Text,
+  TextInput,
+  useTheme,
+} from 'react-native-paper';
 
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { useDebounce } from '@uidotdev/usehooks';
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { IngredientService } from '../api/services/ingredientService';
 import IngredientItem from '../components/common/collections/IngredientItem';
 import RowIngredientItem from '../components/common/collections/RowIngredientItem';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
+import { PADDING_HORIZONTAL, ROUTES } from '../constants/common';
 import { useSpinner } from '../hooks';
 
-const PADDING_HORIZONTAL = 20;
-
-const IngredientFilter = ({ navigation }) => {
+const IngredientFilter = () => {
   //#region Hooks
 
   const theme = useTheme();
   const styles = getStyles(theme);
   const spin = useSpinner();
+  const navigation = useNavigation<NavigationProp<any>>();
 
   //#endregion
   //#region State
@@ -93,7 +108,7 @@ const IngredientFilter = ({ navigation }) => {
       if (prev.includes(ingredient)) {
         return prev;
       } else {
-        return [...prev, ingredient];
+        return [ingredient, ...prev];
       }
     });
   }, []);
@@ -129,11 +144,27 @@ const IngredientFilter = ({ navigation }) => {
   );
 
   //#endregion
+  //#region Handlers
+
+  const handleConfirm = () => {
+    navigation.navigate(ROUTES.Search, {
+      ingredients: selectedIngredients.map((i) => i.id),
+    });
+  };
+
+  //#endregion
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.content]}>
-        <Text variant="headlineSmall" style={{ fontWeight: 'bold' }}>
+        <TouchableOpacity onPress={() => navigation.navigate(ROUTES.Search)}>
+          <Icon source="close" size={20} />
+        </TouchableOpacity>
+
+        <Text
+          variant="headlineSmall"
+          style={{ fontWeight: 'bold', color: theme.colors.primary }}
+        >
           Tìm kiếm với Nguyên liệu
         </Text>
         <TastealTextInput
@@ -143,7 +174,10 @@ const IngredientFilter = ({ navigation }) => {
           right={<TextInput.Icon icon="magnify" />}
         />
 
-        <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
+        <Text
+          variant="titleLarge"
+          style={{ fontWeight: 'bold', color: theme.colors.primary }}
+        >
           Nguyên liệu đã chọn
         </Text>
         <FlatList
@@ -161,11 +195,19 @@ const IngredientFilter = ({ navigation }) => {
             />
           )}
           horizontal={true}
-          contentContainerStyle={styles.selectedIngredientFlatList}
+          contentContainerStyle={
+            getStyles(theme, {
+              loading,
+              hasSelected: selectedIngredients.length > 0,
+            }).selectedIngredientFlatList
+          }
           showsHorizontalScrollIndicator={false}
         />
 
-        <Text variant="titleLarge" style={{ fontWeight: 'bold' }}>
+        <Text
+          variant="titleLarge"
+          style={{ fontWeight: 'bold', color: theme.colors.primary }}
+        >
           Gợi ý cho bạn
         </Text>
 
@@ -180,29 +222,47 @@ const IngredientFilter = ({ navigation }) => {
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.ingredientsFlatList}
         />
+
+        <Button
+          mode="contained"
+          style={styles.confirmButton}
+          disabled={selectedIngredients.length === 0}
+          onPress={handleConfirm}
+        >
+          TÌM KIẾM VỚI {selectedIngredients.length} NGUYÊN LIỆU
+        </Button>
       </View>
     </SafeAreaView>
   );
 };
 
-const getStyles = (theme?: MD3Theme) =>
+const getStyles = (
+  theme?: MD3Theme,
+  options?: { loading?: boolean; hasSelected?: boolean }
+) =>
   StyleSheet.create({
     container: {
       flex: 1,
       paddingTop: 60,
+      paddingBottom: 12,
       paddingHorizontal: PADDING_HORIZONTAL,
       backgroundColor: theme.colors.background,
+      position: 'relative',
     },
     content: {
       gap: 12,
+      height: '100%',
     },
     selectedIngredientFlatList: {
-      overflow: 'visible',
-      height: 'auto',
-      paddingBottom: 32,
+      paddingTop: 8,
+      minHeight: options?.loading || !options?.hasSelected ? 0 : 240,
     },
     ingredientsFlatList: {
-      paddingBottom: 512,
+      flexGrow: 1,
+    },
+    confirmButton: {
+      // position: 'absolute',
+      // bottom: 0,
     },
   });
 
