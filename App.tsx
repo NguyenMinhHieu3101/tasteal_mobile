@@ -149,7 +149,7 @@ export default function App() {
 
             <Stack.Screen
               name={ROUTES.NoBottomBarScreen}
-              component={NoBottomBar}
+              children={NoBottomBar}
             />
           </Stack.Navigator>
         </NavigationContainer>
