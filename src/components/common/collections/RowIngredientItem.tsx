@@ -1,13 +1,7 @@
 import { FC, memo, useCallback } from 'react';
-import {
-  Image,
-  StyleProp,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  ViewStyle,
-} from 'react-native';
-import { IconButton, MD3Theme, Text } from 'react-native-paper';
+import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import { IconButton, Text, useTheme } from 'react-native-paper';
+
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
 import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
 
@@ -24,6 +18,8 @@ const RowIngredientItem: FC<RowIngredientItemProps> = ({
   onTap,
   style,
 }) => {
+  const theme = useTheme();
+
   const imageUrl = useFirebaseImage(item.image || '');
 
   const handleTap = useCallback(() => {
@@ -47,7 +43,10 @@ const RowIngredientItem: FC<RowIngredientItemProps> = ({
           />
         )}
       </View>
-      <Text variant="titleSmall" style={styles.name}>
+      <Text
+        variant="titleSmall"
+        style={[styles.name, { color: theme.colors.primary }]}
+      >
         {item.name}
       </Text>
     </View>
@@ -57,7 +56,6 @@ const RowIngredientItem: FC<RowIngredientItemProps> = ({
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    paddingTop: 8,
   },
   image: {
     width: 64,

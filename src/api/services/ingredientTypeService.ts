@@ -23,7 +23,6 @@ export class IngredientTypeService {
     return await fetch(ApiEndPoint.GetAllIngredientTypes(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -74,7 +73,6 @@ export class IngredientTypeService {
     return await fetch(ApiEndPoint.DeleteIngredientType(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -96,7 +94,6 @@ export class IngredientTypeService {
     return await fetch(ApiEndPoint.AddIngredientType(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

@@ -6,9 +6,11 @@ export const ROUTES = {
   Grocery: 'Grocery',
   Pantry: 'Pantry',
   Search: 'Search',
-  RecipeDetail: "RecipeDetail",
+  RecipeDetail: 'RecipeDetail',
   IngredientFilter: 'IngredientFilter',
 };
+
+export const PADDING_HORIZONTAL = 20;
 
 // this is from tasteal-web
 export const DefaultPage = 1;
