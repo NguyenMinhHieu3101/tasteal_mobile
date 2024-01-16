@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
 
+import { useDebounce } from '@uidotdev/usehooks';
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { IngredientService } from '../api/services/ingredientService';
 import IngredientItem from '../components/common/collections/IngredientItem';
@@ -19,16 +20,19 @@ const IngredientFilter = ({ navigation }) => {
   const spin = useSpinner();
 
   //#endregion
-  //#region Search
+  //#region State
 
-  const [search, setSearch] = useState('');
+  const [firstTime, setFirstTime] = useState(true); // Set to false after data loaded
+  const [loading, setLoading] = useState(false);
 
   //#endregion
-  //#region Ingredients
+  //#region Ingredients + Search
 
+  // Ingredients
   const [ingredients, setIngredients] = useState<IngredientEntity[]>([]);
   useEffect(() => {
     let active = true;
+    setLoading(true);
 
     (async () => {
       let entities;
@@ -44,6 +48,8 @@ const IngredientFilter = ({ navigation }) => {
       if (!active) return;
 
       setIngredients(entities);
+      setLoading(false);
+      setFirstTime(false);
       spin(false);
     })();
 
@@ -51,6 +57,29 @@ const IngredientFilter = ({ navigation }) => {
       active = false;
     };
   }, []);
+
+  // Search
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+  const [searchResults, setSearchResulst] = useState<IngredientEntity[]>([]);
+
+  useEffect(() => {
+    if (firstTime || loading) return;
+    spin(true);
+
+    if (debouncedSearchTerm === '') {
+      setSearchResulst(ingredients);
+      spin(false);
+      return;
+    }
+
+    setSearchResulst(
+      ingredients.filter((i) =>
+        i.name.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+      )
+    );
+    spin(false);
+  }, [debouncedSearchTerm, ingredients, loading, firstTime]);
 
   //#endregion
   //#region Selection
@@ -76,23 +105,28 @@ const IngredientFilter = ({ navigation }) => {
   );
 
   //#endregion
-  //#region Rendergin stuffs
+  //#region Rendering stuffs
 
   const [flatListWidth, setFlatListWidth] = useState(0);
   const handleLayout = (event) => {
     setFlatListWidth(event.nativeEvent.layout.width);
   };
 
-  const renderIngredient = useCallback(({ item }) => {
-    const selected = selectedIngredients.includes(item);
-    return (
-      <IngredientItem
-        item={item}
-        selected={selected}
-        onPress={handleSelectIngredient}
-      />
-    );
-  }, []);
+  const renderIngredient = useCallback(
+    ({ item }) => {
+      const selected = Boolean(
+        selectedIngredients.find((i) => i.id === item.id)
+      );
+      return (
+        <IngredientItem
+          item={item}
+          selected={selected}
+          onPress={handleSelectIngredient}
+        />
+      );
+    },
+    [selectedIngredients]
+  );
 
   //#endregion
 
@@ -103,8 +137,8 @@ const IngredientFilter = ({ navigation }) => {
           Tìm kiếm với Nguyên liệu
         </Text>
         <TastealTextInput
-          value={search}
-          onChangeText={setSearch}
+          value={searchTerm}
+          onChangeText={setSearchTerm}
           placeholder="Tìm nguyên liệu phổ biến"
           right={<TextInput.Icon icon="magnify" />}
         />
@@ -137,7 +171,7 @@ const IngredientFilter = ({ navigation }) => {
 
         <FlatList
           key="ingredient-flat-list"
-          data={ingredients}
+          data={searchResults}
           keyExtractor={(i) => i.id.toString()}
           renderItem={renderIngredient}
           horizontal={false}
