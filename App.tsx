@@ -144,6 +144,7 @@ export default function App() {
                   key={screen.name}
                   name={screen.name}
                   component={screen.component}
+                  options={{ ...screen.options }}
                 />
               ))}
 
@@ -162,6 +163,7 @@ const NoBottomBar = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
+      unmountOnBlur: true,
     })}
     initialRouteName={ROUTES.Home}
   >

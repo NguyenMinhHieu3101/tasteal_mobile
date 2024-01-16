@@ -10,6 +10,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Carousel from "react-native-reanimated-carousel";
 
 import RecipeCard from "../components/RecipeCard";
+import Animated from "react-native-reanimated";
 
 const Home = () => {
   const { width } = Dimensions.get("screen");
