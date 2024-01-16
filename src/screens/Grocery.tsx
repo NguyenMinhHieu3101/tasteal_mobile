@@ -8,7 +8,9 @@ import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 import AddYourOwnItem from "../components/ui/grocery/AddYourOwnItem";
 import Container from "../components/common/Container";
-import Header from "../components/common/Header";
+import Header from "../components/common/Header/HeaderFrame";
+import { ROUTES } from "../constants/common";
+import { CommonActions } from "@react-navigation/native";
 const Grocery = ({ navigation }) => {
   const theme = useTheme();
   const bottomSheet = useDefaultBottomSheet();
@@ -19,7 +21,7 @@ const Grocery = ({ navigation }) => {
       bottomSheetChildren={
         <View style={{ flex: 1, padding: 20 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Signup")}
+            onPress={() => navigation.navigate(ROUTES.Signup)}
             style={{
               // borderRadius: 100,
               height: 50,
@@ -75,7 +77,7 @@ const Grocery = ({ navigation }) => {
               style={{ marginLeft: -10 }}
               icon="arrow-left"
               size={24}
-              onPress={() => navigation.goBack()}
+              onPress={() => navigation.dispatch(CommonActions.goBack())}
             />
 
             <IconButton

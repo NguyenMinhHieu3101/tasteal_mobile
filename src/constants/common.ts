@@ -2,12 +2,14 @@ export const ROUTES = {
   Welcome: 'Welcome',
   Login: 'Login',
   Signup: 'Signup',
-  Home: 'Home',
   Grocery: 'Grocery',
-  Pantry: 'Pantry',
-  Search: 'Search',
-  RecipeDetail: 'RecipeDetail',
   IngredientFilter: 'IngredientFilter',
+  RecipeDetail: 'RecipeDetail',
+  //
+  NoBottomBarScreen: 'NoBottomBarScreen',
+  Home: 'Home',
+  Search: 'Search',
+  Pantry: 'Pantry',
 };
 
 export const PADDING_HORIZONTAL = 20;
