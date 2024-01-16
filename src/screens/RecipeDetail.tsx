@@ -15,7 +15,7 @@ import {
   Dimensions,
   FlatList,
 } from "react-native";
-import { IconButton, useTheme, Text } from "react-native-paper";
+import { IconButton, useTheme, Text, Button } from "react-native-paper";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 import Container from "../components/common/Container";
 import { useSpinner } from "../hooks/useSpinner";
@@ -24,17 +24,18 @@ import { RecipeEntity } from "../api/models/entities/RecipeEntity/RecipeEntity";
 import { RecipeRes } from "../api/models/dtos/Response/RecipeRes/RecipeRes";
 import useFirebaseImage from "../api/hooks/useStorageImage";
 import IngredientList from "../components/common/collections/IngredientList";
+import DirectionList from "../components/common/collections/DirectionList";
 
 const RecipeDetail = ({ route, navigation }) => {
   const theme = useTheme();
   const widthDevice = Dimensions.get("screen").width;
   const heightDevice = Dimensions.get("screen").height;
   const [currentRecipe, setCurrentRecipe] = useState<RecipeRes>(null);
-  // console.log(heightDevice); //844
-  // console.log(widthDevice); //390
+
   const { recipeId } = route.params ? route.params : { recipeId: 4 };
-  console.log(recipeId);
+
   const spin = useSpinner();
+  const [showMore, setShowMore] = useState(false);
 
   useLayoutEffect(() => {
     let active = true;
@@ -53,6 +54,7 @@ const RecipeDetail = ({ route, navigation }) => {
       if (!active) return;
 
       setCurrentRecipe(entities);
+
       spin(false);
     })();
 
@@ -78,12 +80,8 @@ const RecipeDetail = ({ route, navigation }) => {
       headerShadowVisible: false,
     });
   }, [navigation, currentRecipe]);
-  {
-    console.log(currentRecipe);
-  }
-  const imageRecipeUrl = useFirebaseImage(currentRecipe?.image);
 
-  console.log(imageRecipeUrl);
+  const imageRecipeUrl = useFirebaseImage(currentRecipe?.image);
 
   const renderIngredient = useCallback(
     ({ item }) => {
@@ -91,6 +89,54 @@ const RecipeDetail = ({ route, navigation }) => {
     },
     [currentRecipe]
   );
+
+  const renderDirection = useCallback(
+    ({ item }) => {
+      return <DirectionList item={item} />;
+    },
+    [currentRecipe]
+  );
+
+  const renderNutritionInfo = (nutrition, index) => (
+    <View
+      key={index}
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        gap: 12,
+        paddingBottom: 8,
+      }}
+    >
+      <Text
+        variant="labelLarge"
+        style={{
+          color: theme.colors.primary,
+          flex: 6,
+          fontWeight: nutrition[0] === "calories" ? "bold" : "normal",
+          paddingLeft: 12,
+        }}
+      >
+        {nutrition[0]}
+      </Text>
+      <Text
+        variant="bodyMedium"
+        style={{
+          color: theme.colors.primary,
+          flex: 2,
+          textAlign: "left",
+          fontWeight: nutrition[0] === "calories" ? "bold" : "normal",
+        }}
+      >
+        {nutrition[1]}g
+      </Text>
+    </View>
+  );
+
+  let nutritionEntries = null;
+  if (currentRecipe != null) {
+    nutritionEntries = Object.entries(currentRecipe.nutrition_info).slice(1);
+  }
   return currentRecipe == null ? (
     <View style={{ flex: 1 }} />
   ) : (
@@ -271,7 +317,7 @@ const RecipeDetail = ({ route, navigation }) => {
               variant="titleMedium"
             >
               {" "}
-              Ingredients
+              Nguyên liệu
             </Text>
             <FlatList
               key="ingredient-flat-list"
@@ -282,13 +328,117 @@ const RecipeDetail = ({ route, navigation }) => {
               style={{
                 flex: 1,
                 width: "100%",
-                marginBottom: 100,
+                marginBottom: 20,
                 flexDirection: "column",
               }}
             />
 
+            <Button
+              mode="contained"
+              style={{
+                width: "100%",
+                marginBottom: 24,
+              }}
+              onPress={() => {
+                navigation.navigate("#");
+              }}
+            >
+              <Text
+                variant="labelLarge"
+                style={{ color: "white", fontWeight: "bold" }}
+              >
+                THÊM VÀO GIỎ
+              </Text>
+            </Button>
+
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: theme.colors.primary,
+                textAlign: "left",
+                width: "100%",
+              }}
+              variant="titleMedium"
+            >
+              Dinh dưỡng mỗi bữa ăn
+            </Text>
+
+            <View>
+              {nutritionEntries
+                .map(renderNutritionInfo)
+                .slice(0, showMore ? undefined : 3)}
+
+              {!showMore && nutritionEntries.length > 3 && (
+                <Pressable onPress={() => setShowMore(true)}>
+                  <Text
+                    style={{
+                      color: theme.colors.primary,
+                      fontStyle: "italic",
+                      textAlign: "center",
+                    }}
+                  >
+                    Xem thêm
+                  </Text>
+                </Pressable>
+              )}
+
+              {showMore && (
+                <Pressable onPress={() => setShowMore(false)}>
+                  <Text
+                    style={{
+                      color: theme.colors.primary,
+                      fontStyle: "italic",
+                      textAlign: "center",
+                    }}
+                  >
+                    Ẩn bớt
+                  </Text>
+                </Pressable>
+              )}
+            </View>
+
+            {currentRecipe.author_note && (
+              <Text
+                style={{
+                  fontWeight: "bold",
+                  color: theme.colors.primary,
+                  textAlign: "left",
+                  width: "100%",
+                }}
+                variant="titleMedium"
+              >
+                {" "}
+                Ghi chú của tác giả
+              </Text>
+            )}
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: theme.colors.primary,
+                textAlign: "left",
+                width: "100%",
+              }}
+              variant="titleMedium"
+            >
+              {" "}
+              Hướng dẫn
+            </Text>
             <Text style={{ marginBottom: 24 }}>{""}</Text>
           </View>
+
+          <FlatList
+            key="direction-flat-list"
+            data={currentRecipe.directions}
+            renderItem={renderDirection}
+            numColumns={1}
+            showsVerticalScrollIndicator={false}
+            style={{
+              flex: 1,
+              width: "100%",
+              marginBottom: 20,
+              flexDirection: "column",
+            }}
+          />
         </Container>
       </View>
     </ScrollView>
