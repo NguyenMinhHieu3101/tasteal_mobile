@@ -1,4 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
 import { Rating, AirbnbRating } from "react-native-ratings";
 import {
   View,
@@ -8,6 +13,7 @@ import {
   ScrollView,
   Pressable,
   Dimensions,
+  FlatList,
 } from "react-native";
 import { IconButton, useTheme, Text } from "react-native-paper";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
@@ -17,6 +23,8 @@ import { RecipeService } from "../api/services/recipeService";
 import { RecipeEntity } from "../api/models/entities/RecipeEntity/RecipeEntity";
 import { RecipeRes } from "../api/models/dtos/Response/RecipeRes/RecipeRes";
 import useFirebaseImage from "../api/hooks/useStorageImage";
+import IngredientList from "../components/common/collections/IngredientList";
+
 const RecipeDetail = ({ route, navigation }) => {
   const theme = useTheme();
   const widthDevice = Dimensions.get("screen").width;
@@ -75,6 +83,14 @@ const RecipeDetail = ({ route, navigation }) => {
   }
   const imageRecipeUrl = useFirebaseImage(currentRecipe?.image);
 
+  console.log(imageRecipeUrl);
+
+  const renderIngredient = useCallback(
+    ({ item }) => {
+      return <IngredientList item={item} />;
+    },
+    [currentRecipe]
+  );
   return currentRecipe == null ? (
     <View style={{ flex: 1 }} />
   ) : (
@@ -245,10 +261,33 @@ const RecipeDetail = ({ route, navigation }) => {
               </View>
             </View>
 
-            <Text>Thời gian: {currentRecipe.totalTime} phút</Text>
-            <Text style={{ marginBottom: 24 }}>
-              Luồng: {currentRecipe.serving_size} người
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: theme.colors.primary,
+                textAlign: "left",
+                width: "100%",
+              }}
+              variant="titleMedium"
+            >
+              {" "}
+              Ingredients
             </Text>
+            <FlatList
+              key="ingredient-flat-list"
+              data={currentRecipe.ingredients}
+              renderItem={renderIngredient}
+              numColumns={1}
+              showsVerticalScrollIndicator={false}
+              style={{
+                flex: 1,
+                width: "100%",
+                marginBottom: 100,
+                flexDirection: "column",
+              }}
+            />
+
+            <Text style={{ marginBottom: 24 }}>{""}</Text>
           </View>
         </Container>
       </View>
