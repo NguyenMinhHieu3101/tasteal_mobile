@@ -4,7 +4,13 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import {
   Button,
   MD3Theme,
@@ -16,24 +22,32 @@ import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
 import { RecipeService } from '../api/services/recipeService';
 import SmallRecipeCard from '../components/common/collections/SmallRecipeCard';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
-import { PADDING_HORIZONTAL, ROUTES } from '../constants/common';
+import { PADDING_HORIZONTAL, ROUTES, SMALL_GAP } from '../constants/common';
 import { useSpinner } from '../hooks';
 
 let cache: RecipeEntity[];
 let time: number;
 
 const Search = () => {
-  const [search, setSearch] = useState('');
+  //#region Hooks
+
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
   const route = useRoute();
   const spin = useSpinner();
 
+  //#endregion
+  //#region Styles
+
   const styles = getStyles(theme);
 
-  const handleIngredientClick = () => {
-    navigation.navigate(ROUTES.IngredientFilter);
-  };
+  //#endregion
+  //#region Search
+
+  const [search, setSearch] = useState('');
+
+  //#endregion
+  //#region Recipes
 
   const [loading, setLoading] = useState(false);
 
@@ -75,6 +89,17 @@ const Search = () => {
     };
   }, []);
 
+  //#endregion
+  //#region Filtering
+
+  const handleIngredientClick = () => {
+    navigation.navigate(ROUTES.IngredientFilter);
+  };
+
+  //#endregion
+
+  console.log(recipes[0].ingredients);
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.content]}>
@@ -92,20 +117,22 @@ const Search = () => {
         />
 
         <View style={{ flexDirection: 'row', gap: 8 }}>
-          <Button mode="contained" compact style={styles.filterButton}>
-            Thời gian
-          </Button>
-          <Button mode="contained" compact style={styles.filterButton}>
-            Dịp lễ
-          </Button>
-          <Button
-            mode="contained"
-            compact
-            style={styles.filterButton}
+          <TouchableOpacity
+            style={[styles.filterButton, { borderColor: theme.colors.primary }]}
+          >
+            <Text>Thời gian</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, { borderColor: theme.colors.primary }]}
+          >
+            <Text>Dịp lễ</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.filterButton, { borderColor: theme.colors.primary }]}
             onPress={handleIngredientClick}
           >
-            Nguyên liệu
-          </Button>
+            <Text>Nguyên liệu</Text>
+          </TouchableOpacity>
         </View>
 
         <FlatList
@@ -113,6 +140,7 @@ const Search = () => {
           renderItem={({ item }) => <SmallRecipeCard recipe={item} />}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
+          columnWrapperStyle={{ gap: SMALL_GAP }}
         />
       </View>
     </SafeAreaView>
@@ -134,7 +162,14 @@ const getStyles = (theme?: MD3Theme) =>
       height: '100%',
     },
     filterButton: {
-      paddingHorizontal: 8,
+      paddingHorizontal: 16,
+      paddingVertical: 4,
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderRadius: 20,
+
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 
