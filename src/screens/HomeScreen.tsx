@@ -1,59 +1,95 @@
-import React from "react";
-import {
-  Text,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import React, { useState } from "react";
+import { ScrollView, View, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, useTheme } from "react-native-paper";
 import Carousel from "react-native-reanimated-carousel";
 
-import RecipeCard from "../components/RecipeCard";
+import TrendingComponent from "../components/ui/home/TrendingComponent";
+import NewReleaseComponent from "../components/ui/home/NewReleaseComponent";
+import MostContributeAuthorsComponent from "../components/ui/home/MostContributeAuthorsComponent";
 
 const Home = () => {
+  const theme = useTheme();
   const { width } = Dimensions.get("screen");
+  const [recipes, setRecipes] = useState([]);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, margin: 20 }}
+        style={{ flex: 1, marginHorizontal: 20 }}
       >
-        <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 15 }}>
-          Daily Inspiration
-        </Text>
-
         <View>
-          <Carousel
+          <Text
+            variant="headlineLarge"
+            style={{
+              fontWeight: "bold",
+              marginVertical: 15,
+              color: theme.colors.primary,
+            }}
+          >
+            Daily Inspiration
+          </Text>
+
+          <View>
+            {/* <Carousel
             loop
             width={width}
             height={460}
-            // mode="horizontal-stack"
+            mode="parallax"
             autoPlay={true}
             data={[...new Array(6).keys()]}
             scrollAnimationDuration={1000}
-            onSnapToItem={(index) => console.log("current index:", index)}
+            onSnapToItem={(index) => {}}
+            renderItem={({ index }) => <RecipeCard  />}
+            modeConfig={{
+              parallaxScrollingScale: 1,
+              parallaxScrollingOffset: 80,
+            }}
+          /> */}
+            {/* <Carousel
+            loop
+            width={width}
+            height={460}
+            mode="horizontal-stack"
+            autoPlay={true}
+            data={[...new Array(6).keys()]}
+            scrollAnimationDuration={1000}
+            onSnapToItem={(index) => {}}
             renderItem={({ index }) => <RecipeCard />}
-          />
+            modeConfig={{
+              snapDirection: "left",
+              stackInterval: 18,
+            }}
+          /> */}
+          </View>
         </View>
 
-        <View>
+        <View style={{ marginTop: 10 }}>
           <View
             style={{
-              marginTop: 35,
+              marginTop: 0,
               flexDirection: "row",
               alignItems: "center",
               marginBottom: 15,
+              justifyContent: "space-between",
             }}
           >
-            <Text style={{ flex: 0.9, fontSize: 20, fontWeight: "bold" }}>
+            <Text
+              variant="titleLarge"
+              style={{
+                flex: 0.9,
+                fontWeight: "bold",
+                color: theme.colors.primary,
+              }}
+            >
               Thịnh hành
             </Text>
-            <TouchableOpacity style={{ marginRight: -20 }}>
+            <TouchableOpacity>
               <Text
                 style={{
                   textTransform: "uppercase",
                   textDecorationLine: "underline",
+                  color: theme.colors.primary,
                 }}
               >
                 Xem tất cả
@@ -61,32 +97,24 @@ const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ height: 460 }}
-          >
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-            </View>
-          </ScrollView>
+          <TrendingComponent />
         </View>
 
-        <View>
+        <View style={{ marginTop: 10 }}>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
               marginBottom: 15,
+              justifyContent: "space-between",
             }}
           >
             <Text
+              variant="titleLarge"
               style={{
                 flex: 0.9,
-                fontSize: 20,
                 fontWeight: "bold",
+                color: theme.colors.primary,
               }}
             >
               Vừa ra mắt
@@ -96,6 +124,7 @@ const Home = () => {
                 style={{
                   textTransform: "uppercase",
                   textDecorationLine: "underline",
+                  color: theme.colors.primary,
                 }}
               >
                 Xem tất cả
@@ -103,17 +132,42 @@ const Home = () => {
             </TouchableOpacity>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ height: 460 }}
+          <NewReleaseComponent />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 15,
+              justifyContent: "space-between",
+            }}
           >
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-            </View>
-          </ScrollView>
+            <Text
+              variant="titleLarge"
+              style={{
+                flex: 0.9,
+                fontWeight: "bold",
+                color: theme.colors.primary,
+              }}
+            >
+              Đóng góp nhiều nhất
+            </Text>
+            <TouchableOpacity>
+              <Text
+                style={{
+                  textTransform: "uppercase",
+                  textDecorationLine: "underline",
+                  color: theme.colors.primary,
+                }}
+              >
+                Xem tất cả
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          <MostContributeAuthorsComponent />
         </View>
       </ScrollView>
     </SafeAreaView>
