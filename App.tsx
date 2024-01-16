@@ -149,40 +149,7 @@ export default function App() {
 
             <Stack.Screen
               name={ROUTES.NoBottomBarScreen}
-              component={() => (
-                <Tab.Navigator
-                  screenOptions={({ route }) => ({
-                    headerShown: false,
-                  })}
-                  initialRouteName={ROUTES.Home}
-                >
-                  {screens
-                    .filter((screen) => !screen.hideBottomBar)
-                    .map((screen) => (
-                      <Tab.Screen
-                        key={screen.name}
-                        name={screen.name}
-                        component={screen.component}
-                        options={{
-                          ...screen.options,
-                          tabBarLabel: ({ focused, color }) => (
-                            <Text
-                              variant="labelSmall"
-                              style={{
-                                color: !focused
-                                  ? color
-                                  : defaultTheme.colors.primary,
-                                fontWeight: focused ? "900" : "normal",
-                              }}
-                            >
-                              {screen.name}
-                            </Text>
-                          ),
-                        }}
-                      />
-                    ))}
-                </Tab.Navigator>
-              )}
+              component={NoBottomBar}
             />
           </Stack.Navigator>
         </NavigationContainer>
@@ -190,3 +157,36 @@ export default function App() {
     </PaperProvider>
   );
 }
+
+const NoBottomBar = () => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      headerShown: false,
+    })}
+    initialRouteName={ROUTES.Home}
+  >
+    {screens
+      .filter((screen) => !screen.hideBottomBar)
+      .map((screen) => (
+        <Tab.Screen
+          key={screen.name}
+          name={screen.name}
+          component={screen.component}
+          options={{
+            ...screen.options,
+            tabBarLabel: ({ focused, color }) => (
+              <Text
+                variant="labelSmall"
+                style={{
+                  color: !focused ? color : defaultTheme.colors.primary,
+                  fontWeight: focused ? "900" : "normal",
+                }}
+              >
+                {screen.name}
+              </Text>
+            ),
+          }}
+        />
+      ))}
+  </Tab.Navigator>
+);
