@@ -6,6 +6,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import MyButton from "../components/MyButton";
 import COLORS from "../constants/colors";
 import FONTSIZE from "../constants/fontsize";
+import { ROUTES } from "../constants/common";
 const Login = ({ navigation }) => {
   return (
     <SafeAreaView style={styles.container}>
@@ -43,7 +44,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.view}>
           <Button
-            onPress={() => navigation.navigate("Grocery")}
+            onPress={() => navigation.navigate(ROUTES.Home)}
             mode="contained"
           >
             Log In

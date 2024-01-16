@@ -42,7 +42,6 @@ const CustomTabBarIcon = ({ focused, color, active, inactive }) => {
   );
 };
 
-const Tab = createBottomTabNavigator();
 const screens: {
   name: string;
   component: React.FC;
@@ -141,6 +140,23 @@ const screens: {
     },
   },
 ];
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const StackNavigatorWithoutNavBar = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Welcome" component={Welcome} />
+    {/* Thêm các màn hình khác nếu cần */}
+  </Stack.Navigator>
+);
+
+const StackNavigatorWithNavBar = () => (
+  <Stack.Navigator>
+    <Stack.Screen name="Home" component={Home} />
+    {/* Thêm các màn hình khác nếu cần */}
+  </Stack.Navigator>
+);
 
 export default function App() {
   return (

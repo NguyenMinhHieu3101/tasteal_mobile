@@ -5,7 +5,7 @@ import Container from "../components/common/Container";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
 import CustomTabItem from "../components/ui/pantry/CustomTabItem";
-import { PantryHeader } from "../components/ui/pantry/PantryHeader";
+import { DefaultHeader } from "../components/common/Header/DefaultHeader";
 import SecondaryCard from "../components/common/SecondaryCard";
 import AddIngredient from "../components/ui/pantry/AddIngredient";
 
@@ -32,7 +32,7 @@ const Pantry = ({ navigation }) => {
         }}
       >
         {/* Header */}
-        <PantryHeader navigation={navigation} />
+        <DefaultHeader navigation={navigation} />
 
         {/* Body */}
         <ScrollView style={{ flex: 1 }}>
