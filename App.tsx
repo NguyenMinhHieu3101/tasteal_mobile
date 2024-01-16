@@ -1,8 +1,8 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { PaperProvider } from 'react-native-paper';
-import { ROUTES } from './src/constants/common';
-import { SpinnerProvider } from './src/contexts';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Icon, PaperProvider, Text, useTheme } from "react-native-paper";
+import { ROUTES } from "./src/constants/common";
+import { SpinnerProvider } from "./src/contexts";
 import {
   Grocery,
   Home,
@@ -11,15 +11,38 @@ import {
   Signup,
   Welcome,
   RecipeDetail,
-} from './src/screens';
-import DoThang from './src/screens/DoThang';
-import IngredientFilter from './src/screens/IngredientFilter';
-import Pantry from './src/screens/Pantry';
+} from "./src/screens";
+import DoThang from "./src/screens/DoThang";
+import IngredientFilter from "./src/screens/IngredientFilter";
+import Pantry from "./src/screens/Pantry";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { defaultTheme } from './src/theme/defaultTheme';
+import { defaultTheme } from "./src/theme/defaultTheme";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View } from "react-native";
 
-const Stack = createNativeStackNavigator();
+const screenHideOption = {
+  tabBarStyle: {
+    display: "none",
+  },
+  tabBarItemStyle: {
+    display: "none",
+  },
+};
 
+const CustomTabBarIcon = ({ focused, color, active, inactive }) => {
+  const theme = useTheme();
+  return (
+    <View style={{ paddingTop: 6 }}>
+      <Icon
+        source={focused ? active : inactive}
+        color={!focused ? color : theme.colors.primary}
+        size={24}
+      />
+    </View>
+  );
+};
+
+const Tab = createBottomTabNavigator();
 const screens: {
   name: string;
   component: React.FC;
@@ -28,48 +51,94 @@ const screens: {
   {
     name: ROUTES.Welcome,
     component: Welcome,
+    options: {
+      ...screenHideOption,
+    },
   },
   {
     name: ROUTES.Login,
     component: Login,
+    options: {
+      ...screenHideOption,
+    },
   },
   {
     name: ROUTES.Signup,
     component: Signup,
-  },
-  {
-    name: ROUTES.Home,
-    component: Home,
+    options: {
+      ...screenHideOption,
+    },
   },
   {
     name: ROUTES.Grocery,
     component: Grocery,
-  },
-  {
-    name: ROUTES.Search,
-    component: Search,
-  },
-  {
-    name: ROUTES.Pantry,
-    component: Pantry,
+    options: {
+      ...screenHideOption,
+    },
   },
   {
     name: ROUTES.IngredientFilter,
     component: IngredientFilter,
     options: {
-      headerShown: false,
-    },
-  },
-  {
-    name: 'DoThang',
-    component: DoThang,
-    options: {
-      headerShown: false,
+      ...screenHideOption,
     },
   },
   {
     name: ROUTES.RecipeDetail,
     component: RecipeDetail,
+    options: {
+      ...screenHideOption,
+    },
+  },
+  // Hiện bottom navigation bar
+  {
+    name: ROUTES.Home,
+    component: Home,
+    options: {
+      tabBarIcon: ({ focused, color }) => (
+        <CustomTabBarIcon
+          focused={focused}
+          color={color}
+          active="home"
+          inactive="home-outline"
+        />
+      ),
+    },
+  },
+  {
+    name: ROUTES.Search,
+    component: Search,
+    options: {
+      tabBarIcon: ({ focused, color }) => (
+        <CustomTabBarIcon
+          focused={focused}
+          color={color}
+          active="magnify"
+          inactive="magnify"
+        />
+      ),
+    },
+  },
+  {
+    name: ROUTES.Pantry,
+    component: Pantry,
+    options: {
+      tabBarIcon: ({ focused, color }) => (
+        <CustomTabBarIcon
+          focused={focused}
+          color={color}
+          active="food-takeout-box"
+          inactive="food-takeout-box-outline"
+        />
+      ),
+    },
+  },
+  {
+    name: "DoThang",
+    component: DoThang,
+    options: {
+      ...screenHideOption,
+    },
   },
 ];
 
@@ -78,24 +147,37 @@ export default function App() {
     <PaperProvider theme={defaultTheme}>
       <SpinnerProvider>
         <NavigationContainer>
-          <Stack.Navigator
+          <Tab.Navigator
             initialRouteName={
               // ROUTES.Welcome
-              'DoThang'
+              "DoThang"
             }
+            screenOptions={{
+              headerShown: false,
+            }}
           >
             {screens.map((screen) => (
-              <Stack.Screen
+              <Tab.Screen
                 key={screen.name}
                 name={screen.name}
                 component={screen.component}
                 options={{
                   ...screen.options,
-                  headerShown: false,
+                  tabBarLabel: ({ focused, color }) => (
+                    <Text
+                      variant="labelSmall"
+                      style={{
+                        color: !focused ? color : defaultTheme.colors.primary,
+                        fontWeight: focused ? "900" : "normal",
+                      }}
+                    >
+                      {screen.name}
+                    </Text>
+                  ),
                 }}
               />
             ))}
-          </Stack.Navigator>
+          </Tab.Navigator>
         </NavigationContainer>
       </SpinnerProvider>
     </PaperProvider>

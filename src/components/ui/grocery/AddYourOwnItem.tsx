@@ -8,6 +8,7 @@ import {
   IconButton,
   Text,
   TextInput,
+  useTheme,
 } from "react-native-paper";
 import { Ionicons } from "@expo/vector-icons";
 import Autocomplete from "react-native-autocomplete-input";
@@ -16,6 +17,7 @@ const AddYourOwnItem = () => {
   const [autoCompleteValue, setAutoCompleteValue] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [amount, setAmount] = useState(0);
+  const theme = useTheme();
   const [unit, setUnit] = useState(""); // Assuming 'unit' is a string, change it according to your data structure
 
   const ingredientData = []; // Replace with your actual ingredient data
@@ -54,7 +56,11 @@ const AddYourOwnItem = () => {
         </View>
       </TouchableOpacity>
       <Portal>
-        <Dialog visible={visible} onDismiss={hideDialog}>
+        <Dialog
+          visible={visible}
+          onDismiss={hideDialog}
+          style={{ backgroundColor: theme.colors.background }}
+        >
           <View
             style={{
               paddingHorizontal: 24,
@@ -83,31 +89,47 @@ const AddYourOwnItem = () => {
                   alignItems: "stretch",
                 }}
               >
-                <TextInput
-                  style={{
-                    flex: 1,
-                    borderRadius: 40,
-                    marginTop: 8,
-                    paddingHorizontal: 8,
-                  }}
-                  value={amount.toString()}
-                  onChangeText={(text) => setAmount(Number(text))}
-                  keyboardType="numeric"
-                  placeholder="Số lượng"
-                />
                 <View
                   style={{
                     flex: 1,
-                    width: "100%",
-                    paddingHorizontal: 8,
-                    marginTop: 8,
-                    backgroundColor: "#CCCCCC",
-                    borderRadius: 40,
-                    flexDirection: "row",
-                    alignItems: "center",
+                    borderBottomLeftRadius: 40,
+                    borderTopLeftRadius: 40,
+                    overflow: "hidden",
+                    borderWidth: 1, // Add this line for border width
+                    borderColor: "lightgrey",
+                    height: 50,
+                    justifyContent: "center",
                   }}
                 >
-                  <Text>{unit}</Text>
+                  <TextInput
+                    value={amount.toString()}
+                    onChangeText={(text) => setAmount(Number(text))}
+                    keyboardType="numeric"
+                    placeholder="Số lượng"
+                    underlineStyle={{ display: "none" }}
+                    style={{
+                      backgroundColor: theme.colors.background,
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    backgroundColor: "#eeeeee",
+                    borderBottomRightRadius: 40,
+                    borderTopRightRadius: 40,
+                    flexDirection: "row",
+                    alignItems: "center",
+                    height: 50,
+                  }}
+                >
+                  {/* <Text>{unit}</Text> */}
+                  <Text
+                    variant="titleMedium"
+                    style={{ fontWeight: "700", paddingLeft: 10 }}
+                  >
+                    g
+                  </Text>
                 </View>
               </View>
             </View>
@@ -121,14 +143,17 @@ const AddYourOwnItem = () => {
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
-                  backgroundColor: "white",
+                  backgroundColor: theme.colors.primary,
                 }}
                 onPress={hideDialog}
               >
                 <View
                   style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
                 >
-                  <Text variant="bodyMedium" style={{ fontWeight: "700" }}>
+                  <Text
+                    variant="bodyMedium"
+                    style={{ fontWeight: "700", color: "white" }}
+                  >
                     LƯU
                   </Text>
                 </View>

@@ -1,4 +1,4 @@
-import { RecipeEntity } from '@/api/models/entities/RecipeEntity/RecipeEntity';
+import { RecipeEntity } from '../RecipeEntity/RecipeEntity';
 
 export type Recipe_DirectionEntity = {
   recipe_id?: number;

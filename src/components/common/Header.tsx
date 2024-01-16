@@ -1,4 +1,4 @@
-import { View, Text, ViewStyle } from "react-native";
+import { View, Text, ViewStyle, SafeAreaView } from "react-native";
 import React from "react";
 import Container from "./Container";
 
@@ -10,9 +10,11 @@ const Header = ({
   style?: ViewStyle;
 }) => {
   return (
-    <Container style={{ flex: 0, paddingBottom: 16, ...style }}>
-      {children}
-    </Container>
+    <SafeAreaView>
+      <Container style={{ flex: 0, paddingBottom: 16, ...style }}>
+        {children}
+      </Container>
+    </SafeAreaView>
   );
 };
 

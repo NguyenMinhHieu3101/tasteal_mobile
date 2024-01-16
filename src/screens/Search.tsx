@@ -44,7 +44,12 @@ const Search = ({ navigation }) => {
             <Button mode="contained" compact style={styles.filterButton}>
               Dịp lễ
             </Button>
-            <Button mode="contained" compact style={styles.filterButton}>
+            <Button
+              mode="contained"
+              compact
+              style={styles.filterButton}
+              onPress={() => '/' + navigation.push(ROUTES.IngredientFilter)}
+            >
               Nguyên liệu
             </Button>
           </View>

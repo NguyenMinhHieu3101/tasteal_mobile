@@ -1,21 +1,28 @@
 import { FC, memo, useCallback } from 'react';
-import { Image, StyleSheet, TouchableOpacity } from 'react-native';
+import {
+  Image,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { IconButton, MD3Theme, Text } from 'react-native-paper';
 import useFirebaseImage from '../../../api/hooks/useStorageImage';
 import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
 
-type IngredientItemProps = {
+type RowIngredientItemProps = {
   item: IngredientEntity;
-  selected?: boolean;
-  onPress?: (ingredient: IngredientEntity) => void;
+  onTap?: (ingredient: IngredientEntity) => void;
   removeable?: boolean;
+  style?: StyleProp<ViewStyle> | undefined;
 };
 
-const IngredientItem: FC<IngredientItemProps> = ({
+const RowIngredientItem: FC<RowIngredientItemProps> = ({
   item,
-  selected = false,
   removeable = false,
-  onPress: onTap,
+  onTap,
+  style,
 }) => {
   const imageUrl = useFirebaseImage(item.image || '');
 
@@ -26,32 +33,31 @@ const IngredientItem: FC<IngredientItemProps> = ({
   }, []);
 
   return (
-    <TouchableOpacity
-      style={[styles.container, { opacity: selected ? 0.3 : 1 }]}
-      onPress={handleTap}
-    >
-      <Image source={{ uri: imageUrl }} style={[styles.image]} />
+    <View style={[styles.container, style || {}]}>
+      <View style={{ position: 'relative' }}>
+        <Image source={{ uri: imageUrl }} style={[styles.image]} />
+        {removeable && (
+          <IconButton
+            icon="close"
+            iconColor="white"
+            containerColor="black"
+            size={10}
+            style={styles.removeIcon}
+            onPress={handleTap}
+          />
+        )}
+      </View>
       <Text variant="titleSmall" style={styles.name}>
         {item.name}
       </Text>
-      {removeable && (
-        <IconButton
-          icon="close"
-          iconColor="white"
-          containerColor="black"
-          size={10}
-          style={styles.removeIcon}
-        />
-      )}
-    </TouchableOpacity>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    width: '25%',
     alignItems: 'center',
-    marginBottom: 32,
+    paddingTop: 8,
   },
   image: {
     width: 64,
@@ -65,8 +71,8 @@ const styles = StyleSheet.create({
   removeIcon: {
     position: 'absolute',
     top: -12,
-    left: 0,
+    left: -12,
   },
 });
 
-export default memo(IngredientItem);
+export default memo(RowIngredientItem);

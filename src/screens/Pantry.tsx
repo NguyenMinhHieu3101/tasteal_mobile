@@ -1,7 +1,6 @@
-import { View, ScrollView } from "react-native";
+import { View, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
 import { List, Text, useTheme } from "react-native-paper";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
 import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
 import DefaultBottomSheet from "../components/common/DefaultBottomSheet";
@@ -19,10 +18,14 @@ const Pantry = ({ navigation }) => {
   return (
     <DefaultBottomSheet
       bottomSheetHookType={bottomSheet}
-      bottomSheetChildren={<></>}
-      snapPoints={["20%"]}
+      bottomSheetChildren={
+        <View style={{ flex: 1, padding: 20 }}>
+          <Text>huy</Text>
+        </View>
+      }
+      snapPoints={["45%"]}
     >
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           backgroundColor: theme.colors.background,
@@ -155,10 +158,9 @@ const Pantry = ({ navigation }) => {
             ))}
           </Container>
         </ScrollView>
-
         {/* Add */}
-        <AddIngredient />
-      </SafeAreaView>
+        <AddIngredient onPress={() => bottomSheet.openBottomSheet()} />
+      </View>
     </DefaultBottomSheet>
   );
 };
