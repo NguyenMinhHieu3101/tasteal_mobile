@@ -11,6 +11,7 @@ import {
 import { Button, IconButton, useTheme } from 'react-native-paper';
 
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { Rating } from 'react-native-ratings';
 import useFirebaseImage from '../api/hooks/useFirebaseImage';
 import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
 import { ROUTES } from '../constants/common';
@@ -38,8 +39,9 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
   //   navigate(PageRoute.Recipe.Detail(recipe.id));
   // }, [navigate, recipe.id]);
   // const [snackbarAlert] = useSnackbarService();
-  const handleCardPress = () => {};
-  navigation.navigate(ROUTES.RecipeDetail, { recipeId: recipe.id });
+  const handleCardPress = () => {
+    navigation.navigate(ROUTES.RecipeDetail, { recipeId: recipe.id });
+  };
   return (
     <>
       <TouchableOpacity onPress={handleCardPress}>
@@ -65,8 +67,16 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
             }}
           ></Image>
 
-          <View style={{ marginHorizontal: 14, marginTop: 10 }}>
-            <StarRating rating={recipe.rating} />
+          <View style={{ marginHorizontal: 15, marginTop: 10 }}>
+            {/* <StarRating rating={recipe.rating} /> */}
+            <Rating
+              type="star"
+              ratingCount={5}
+              startingValue={recipe.rating}
+              imageSize={20}
+              style={{ alignItems: 'flex-start' }}
+              readonly
+            />
           </View>
 
           <Text
@@ -74,7 +84,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
               fontSize: 15,
               fontWeight: 'bold',
               marginHorizontal: 15,
-              marginVertical: 10,
+              marginVertical: 8,
               color: theme.colors.primary,
             }}
           >
@@ -90,7 +100,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
               style={{
                 borderRadius: 100,
                 height: 40,
-                width: '85%',
+                width: '90%',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',

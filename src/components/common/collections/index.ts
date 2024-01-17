@@ -1,3 +1,4 @@
+export * from './DirectionList';
 export * from './IngredientItem';
 export * from './IngredientList';
 export * from './RowIngredientItem';

@@ -1,13 +1,13 @@
+import { Dimensions } from "react-native";
 import React, { useEffect, useState } from "react";
 import { AccountEntity } from "../../../api/models/entities/AccountEntity/AccountEntity";
 import { AccountService } from "../../../api/services/accountService";
-import AuthorCarousel from "./AuthorCarousel";
+import Carousel from "react-native-reanimated-carousel";
+import AuthorCard from "./AuthorCard";
 
-const MostContributeAuthorsComponent = ({
-  exceptUid,
-}: {
-  exceptUid?: string;
-}) => {
+const MostContributeCarousel = ({ exceptUid }: { exceptUid?: string }) => {
+  const width = Dimensions.get("screen").width;
+
   const [mostContributedAuthors, setMostContributedAuthors] = useState<
     AccountEntity[] | undefined
   >(undefined);
@@ -32,13 +32,30 @@ const MostContributeAuthorsComponent = ({
     };
     fetchData();
   }, []);
+
   return (
     <>
       {mostContributedAuthors && (
-        <AuthorCarousel array={mostContributedAuthors} />
+        <Carousel
+          loop
+          width={width}
+          height={460}
+          mode="parallax"
+          autoPlay={true}
+          data={mostContributedAuthors}
+          scrollAnimationDuration={1000}
+          onSnapToItem={(index) => {}}
+          renderItem={({ index }) => (
+            <AuthorCard author={mostContributedAuthors[index]} />
+          )}
+          modeConfig={{
+            parallaxScrollingScale: 1,
+            parallaxScrollingOffset: 130,
+          }}
+        />
       )}
     </>
   );
 };
 
-export default MostContributeAuthorsComponent;
+export default MostContributeCarousel;
