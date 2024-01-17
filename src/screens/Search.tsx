@@ -29,7 +29,7 @@ import { PADDING_HORIZONTAL, ROUTES, SMALL_GAP } from '../constants/common';
 import { useSpinner } from '../hooks';
 import { IngredientFilterMode } from './IngredientFilter';
 
-const ITEM_AMOUNT = 12;
+const ITEM_AMOUNT = 100;
 
 const Search = ({ route }) => {
   //#region Hooks

@@ -85,7 +85,7 @@ const useRecipeSearch = (viewportItemAmount: number = 12) => {
     (item?: RecipeEntity) => {
       if (!item) return false;
 
-      const value = searchTerm;
+      const value = debouncedSearchTerm;
       if (!value || value == '') {
         return true;
       }
@@ -101,6 +101,14 @@ const useRecipeSearch = (viewportItemAmount: number = 12) => {
         item?.ingredients?.map((i) => i.name),
         item?.direction?.map((i) => i.direction),
       ]);
+
+      console.log('search term: ', removeDiacritics(value.toLocaleLowerCase()));
+      const searchStr = removeDiacritics(str.toLocaleLowerCase());
+      const index = searchStr.indexOf(
+        removeDiacritics(value.toLocaleLowerCase())
+      );
+      const foundStr = searchStr.slice(index, index + value.length);
+      console.log('found str', foundStr);
 
       return removeDiacritics(str.toLocaleLowerCase()).includes(
         removeDiacritics(value.toLocaleLowerCase())
