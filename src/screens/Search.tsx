@@ -25,11 +25,13 @@ import {
 import { useRecipeSearch } from '../api/hooks';
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
 import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
+import { IngredientService } from '../api/services/ingredientService';
+import { ChipList } from '../components/common/collections';
 import SmallRecipeCard from '../components/common/collections/SmallRecipeCard';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES, SMALL_GAP } from '../constants/common';
-import { ingredients } from '../constants/sampleData';
 import { useSpinner } from '../hooks';
+import { IngredientFilterMode } from './IngredientFilter';
 
 let cache: RecipeEntity[];
 let time: number;
@@ -67,17 +69,6 @@ const Search = ({ route }) => {
   } = useRecipeSearch(ITEM_AMOUNT);
 
   //#endregion
-  //#region Filtering
-
-  const handleIncludedIngredientTabClick = () => {
-    navigation.navigate(ROUTES.IngredientFilter, {
-      includedIngredients: includedIngredients.map(
-        (ingredient) => ingredient.id
-      ),
-    });
-  };
-
-  //#endregion
   //#region Routing
 
   const handleCardPress = useCallback((id: number) => {
@@ -85,6 +76,9 @@ const Search = ({ route }) => {
   }, []);
 
   //#endregion
+  //#region Filter
+
+  //#region Time
 
   const [selectedTime, setSelectedTime] = useState<TimeFilterValue>(null);
   const handleTimePressed = (time: TimeFilterValue) => {
@@ -100,6 +94,9 @@ const Search = ({ route }) => {
     }
     handleSearchReqChange('TotalTime', time);
   };
+
+  //#endregion
+  //#region Calories
 
   const [selectedCalories, setSelectedCalories] =
     useState<CaloriesFilterValue>(null);
@@ -141,7 +138,53 @@ const Search = ({ route }) => {
     handleSearchReqChange('Calories', { min: Number(min), max: Number(max) });
   };
 
-  // Ingredient
+  //#endregion
+  //#region Ingredients
+
+  //#region Shared
+
+  const [ingredients, setIngredients] = useState<IngredientEntity[]>([]);
+  useEffect(() => {
+    let active = true;
+
+    spin(true);
+    (async () => {
+      let entities;
+
+      spin(true);
+      try {
+        entities = await IngredientService.GetAll(1000000);
+      } catch (error) {
+        console.log('error', error);
+      } finally {
+      }
+
+      if (!active) return;
+
+      setIngredients(entities);
+      spin(false);
+    })();
+
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const handleIngredientFilterAddClick = (mode: IngredientFilterMode) => {
+    navigation.navigate(ROUTES.IngredientFilter, {
+      mode: mode,
+      includedIngredients: includedIngredients.map(
+        (ingredient) => ingredient.id
+      ),
+      excludedIngredients: excludedIngredients.map(
+        (ingredient) => ingredient.id
+      ),
+    });
+  };
+
+  //#endregion
+  //#region Included Ingredients
+
   const [includedIngredients, setIncludedIngredients] = useState<
     IngredientEntity[]
   >([]);
@@ -174,6 +217,50 @@ const Search = ({ route }) => {
   const handleIncludeIngredientRemove = useCallback((id: number) => {
     setIncludedIngredients((prev) => prev.filter((i) => i.id !== id));
   }, []);
+
+  //#endregion
+  //#region Excluded Ingredients
+
+  const [excludedIngredients, setExcludedIngredients] = useState<
+    IngredientEntity[]
+  >([]);
+  useEffect(() => {
+    if (
+      !route.params ||
+      !route.params.excludedIngredients ||
+      route.params.excludedIngredients.length <= 0
+    ) {
+      setExcludedIngredients([]);
+      return;
+    }
+
+    const ids = route.params.excludedIngredients;
+    const foundSelectedIngredients: IngredientEntity[] = [];
+    ingredients.forEach((ingredient) => {
+      if (ids.includes(ingredient.id)) {
+        foundSelectedIngredients.push(ingredient);
+      }
+    });
+    setExcludedIngredients(foundSelectedIngredients);
+  }, [route.params?.excludedIngredients]);
+  useEffect(() => {
+    handleSearchReqChange(
+      'ExceptIngredientID',
+      excludedIngredients.map((i) => i.id)
+    );
+  }, [excludedIngredients]);
+
+  const handleExcludedIngredientRemove = useCallback((id: number) => {
+    setExcludedIngredients((prev) => prev.filter((i) => i.id !== id));
+  }, []);
+
+  //#endregion
+
+  //#endregion
+
+  //#endregion
+
+  console.log(route.params);
 
   return (
     <>
@@ -278,21 +365,25 @@ const Search = ({ route }) => {
             >
               Bao gồm Nguyên liệu
             </Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-              {includedIngredients &&
-                includedIngredients.length > 0 &&
-                includedIngredients.map((i) => (
-                  <Chip
-                    key={i.id}
-                    onClose={() => handleIncludeIngredientRemove(i.id)}
-                  >
-                    {i.name}
-                  </Chip>
-                ))}
-              <Chip icon="plus" onPress={handleIncludedIngredientTabClick}>
-                Thêm
-              </Chip>
-            </View>
+            <ChipList
+              chips={includedIngredients}
+              onAdd={() => handleIngredientFilterAddClick('included')}
+              onRemove={handleIncludeIngredientRemove}
+            />
+          </View>
+
+          <View style={{ gap: 8 }}>
+            <Text
+              variant="titleMedium"
+              style={[styles.boldText, styles.primaryText]}
+            >
+              Không bao gồm Nguyên liệu
+            </Text>
+            <ChipList
+              chips={excludedIngredients}
+              onAdd={() => handleIngredientFilterAddClick('excluded')}
+              onRemove={handleExcludedIngredientRemove}
+            />
           </View>
 
           <FlatList

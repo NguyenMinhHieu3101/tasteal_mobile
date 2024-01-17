@@ -1,3 +1,26 @@
+export type Cache<T> = {
+  value: T;
+  time: number;
+};
+export function createPaginationCacheKey(page: number, pageSize: number) {
+  return `${page}_${pageSize}`;
+}
+const CACHE_EXPIRED_TIME = 1000 * 60 * 5; // 5min
+export function getValueFromCache<TKey, TValue>(
+  cache: Map<TKey, Cache<TValue>>,
+  key: TKey
+): TValue | undefined {
+  if (cache.has(key)) {
+    const value = cache.get(key);
+    if (Date.now() - value.time < CACHE_EXPIRED_TIME) {
+      return value.value;
+    } else {
+      cache.delete(key);
+    }
+  }
+  return undefined;
+}
+
 /**
  * Creates a caching function that memoizes the results of a given function.
  *

@@ -26,7 +26,18 @@ import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES } from '../constants/common';
 import { useSpinner } from '../hooks';
 
+export type IngredientFilterMode = 'included' | 'excluded';
+
 const IngredientFilter = ({ route }) => {
+  //#region Mode
+
+  const [mode, setMode] = useState<IngredientFilterMode>('included');
+  useEffect(() => {
+    if (!route.params.mode) return;
+    setMode(route.params.mode);
+  }, [route.params.mode]);
+
+  //#endregion
   //#region Hooks
 
   const theme = useTheme();
@@ -100,21 +111,29 @@ const IngredientFilter = ({ route }) => {
   //#region Selection
 
   const includedIngredients = useMemo(() => {
-    console.log('included ingredients', route.params.includedIngredients);
     return route.params.includedIngredients || [];
   }, [route.params.includedIngredients]);
+  const excludedIngredients = useMemo(() => {
+    return route.params.excludedIngredients || [];
+  }, [route.params.excludedIngredients]);
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientEntity[]
   >([]);
   useEffect(() => {
-    console.log(includedIngredients);
     const foundSelectedIngredients: IngredientEntity[] = [];
-    ingredients.forEach((ingredient) => {
-      if (includedIngredients.includes(ingredient.id)) {
-        foundSelectedIngredients.push(ingredient);
-      }
-    });
-    console.log(foundSelectedIngredients);
+    if (mode === 'included') {
+      ingredients.forEach((ingredient) => {
+        if (includedIngredients.includes(ingredient.id)) {
+          foundSelectedIngredients.push(ingredient);
+        }
+      });
+    } else if (mode === 'excluded') {
+      ingredients.forEach((ingredient) => {
+        if (excludedIngredients.includes(ingredient.id)) {
+          foundSelectedIngredients.push(ingredient);
+        }
+      });
+    }
     setSelectedIngredients(foundSelectedIngredients);
   }, [ingredients]);
 
@@ -162,13 +181,22 @@ const IngredientFilter = ({ route }) => {
   //#region Handlers
 
   const handleConfirm = () => {
-    navigation.navigate(ROUTES.Search, {
-      includedIngredients: selectedIngredients.map((i) => i.id),
-    });
+    if (mode === 'included') {
+      navigation.navigate(ROUTES.Search, {
+        includedIngredients: selectedIngredients.map((i) => i.id),
+        excludedIngredients: excludedIngredients,
+      });
+    } else if (mode === 'excluded') {
+      navigation.navigate(ROUTES.Search, {
+        includedIngredients: includedIngredients,
+        excludedIngredients: selectedIngredients.map((i) => i.id),
+      });
+    }
   };
   const handleGoBack = () => {
     navigation.navigate(ROUTES.Search, {
       includedIngredients: includedIngredients,
+      excludedIngredients: excludedIngredients,
     });
   };
 
