@@ -6,12 +6,16 @@ import { Text, useTheme } from "react-native-paper";
 import TrendingComponent from "../components/ui/home/TrendingComponent";
 import NewReleaseComponent from "../components/ui/home/NewReleaseComponent";
 import MostContributeCarousel from "../components/ui/home/MostContributeCarousel";
-import Animated from "react-native-reanimated";
+import { DefaultHeader } from "../components/common/Header/DefaultHeader";
 
-const Home = () => {
+const Home = ({ navigation }) => {
   const theme = useTheme();
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <View style={{ flex: 1 }}>
+      {/* Header */}
+      <DefaultHeader navigation={navigation} />
+
+      {/* Body */}
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ flex: 1, marginLeft: 20 }}
@@ -143,7 +147,7 @@ const Home = () => {
           <MostContributeCarousel />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
