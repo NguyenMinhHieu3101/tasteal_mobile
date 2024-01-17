@@ -1,4 +1,3 @@
-import { User, onAuthStateChanged } from "firebase/auth";
 import {
   createContext,
   useCallback,
@@ -8,6 +7,8 @@ import {
 } from "react";
 import { useSpinner } from "../hooks";
 import { auth } from "../api/firebase/firebaseConfig";
+import { User } from "@react-native-google-signin/google-signin";
+import { onAuthStateChanged } from "firebase/auth";
 
 export type LoginContextState = {
   login: {
@@ -36,23 +37,23 @@ export const useLoginContext = () => {
     setLogin({ isUserSignedIn: isUserSignedIn, user: user });
   }, []);
 
-  useEffect(() => {
-    if (login.isUserSignedIn == undefined) {
-      // spin(true);
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          setLogin({ isUserSignedIn: true, user: user });
-        } else {
-          setLogin({ isUserSignedIn: false, user: undefined });
-        }
-      });
-      // spin(false);
+  // useEffect(() => {
+  //   if (login.isUserSignedIn == undefined) {
+  //     // spin(true);
+  //     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  //       if (user) {
+  //         setLogin({ isUserSignedIn: true, user: user });
+  //       } else {
+  //         setLogin({ isUserSignedIn: false, user: undefined });
+  //       }
+  //     });
+  //     // spin(false);
 
-      return () => {
-        unsubscribe();
-      };
-    }
-  }, [login]);
+  //     return () => {
+  //       unsubscribe();
+  //     };
+  //   }
+  // }, [login]);
 
   return {
     login: {

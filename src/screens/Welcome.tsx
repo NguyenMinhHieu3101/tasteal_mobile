@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Image, Pressable, TouchableOpacity, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import COLORS from "../constants/colors";
@@ -9,11 +9,38 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ROUTES } from "../constants/common";
 import { AccountService } from "../api/services/accountService";
 import LoginContext from "../contexts/LoginContext";
-import { signInWithPopup } from "@firebase/auth";
+
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from "@react-native-google-signin/google-signin";
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
   const { login } = useContext(LoginContext);
+
+  const signIn = async () => {
+    try {
+      GoogleSignin.configure({
+        webClientId:
+          "1042610165833-jov2r7s1dmka0k4u8luccjo52p7c6aql.apps.googleusercontent.com",
+        iosClientId:
+          "1042610165833-h09t14dojae09qht6a9f66i1natpo0c3.apps.googleusercontent.com",
+      });
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      if (userInfo.user) {
+      }
+      console.log("userInfo", userInfo);
+
+      if (login.handleLogin) {
+        login.handleLogin(true, userInfo);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -69,7 +96,7 @@ const Welcome = ({ navigation }) => {
             <TouchableOpacity
               // mode="contained"
               // buttonColor="white"
-              onPress={() => {}}
+              onPress={signIn}
               style={{
                 display: "flex",
                 flexDirection: "row",

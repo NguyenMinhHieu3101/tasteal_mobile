@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1042610165833",
+    "firebase_url": "https://tasteal-191ca-default-rtdb.firebaseio.com",
+    "project_id": "tasteal-191ca",
+    "storage_bucket": "tasteal-191ca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1042610165833:android:1f11b2a40e6955033f0798",
+        "android_client_info": {
+          "package_name": "com.gr33nbean.tastealmobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1042610165833-af9pnsfjsgatacppv9hbm679h1e1l12c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gr33nbean.tastealmobile",
+            "certificate_hash": "724e1c58e15cd2d534e8367b0cbdbf7c3ed6b9e2"
+          }
+        },
+        {
+          "client_id": "1042610165833-jov2r7s1dmka0k4u8luccjo52p7c6aql.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwfAgnmKslNXThVvj2wRR-CLsYsgoNM0U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1042610165833-jov2r7s1dmka0k4u8luccjo52p7c6aql.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1042610165833-h09t14dojae09qht6a9f66i1natpo0c3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tasteal.tasteal-mobile"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
