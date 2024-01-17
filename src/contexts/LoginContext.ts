@@ -7,7 +7,6 @@ import {
   useState,
 } from "react";
 import { useSpinner } from "../hooks";
-import { auth } from "../api/firebase/firebaseConfig";
 
 export type LoginContextState = {
   login: {
@@ -36,23 +35,23 @@ export const useLoginContext = () => {
     setLogin({ isUserSignedIn: isUserSignedIn, user: user });
   }, []);
 
-  useEffect(() => {
-    if (login.isUserSignedIn == undefined) {
-      // spin(true);
-      const unsubscribe = onAuthStateChanged(auth, async (user) => {
-        if (user) {
-          setLogin({ isUserSignedIn: true, user: user });
-        } else {
-          setLogin({ isUserSignedIn: false, user: undefined });
-        }
-      });
-      // spin(false);
+  // useEffect(() => {
+  //   if (login.isUserSignedIn == undefined) {
+  //     // spin(true);
+  //     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+  //       if (user) {
+  //         setLogin({ isUserSignedIn: true, user: user });
+  //       } else {
+  //         setLogin({ isUserSignedIn: false, user: undefined });
+  //       }
+  //     });
+  //     // spin(false);
 
-      return () => {
-        unsubscribe();
-      };
-    }
-  }, [login]);
+  //     return () => {
+  //       unsubscribe();
+  //     };
+  //   }
+  // }, [login]);
 
   return {
     login: {

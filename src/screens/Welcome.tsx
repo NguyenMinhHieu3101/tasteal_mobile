@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Image, Pressable, TouchableOpacity, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
 import COLORS from "../constants/colors";
@@ -7,9 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ROUTES } from "../constants/common";
-import { AccountService } from "../api/services/accountService";
 import LoginContext from "../contexts/LoginContext";
-import { signInWithPopup } from "@firebase/auth";
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
