@@ -57,7 +57,7 @@ const Grocery = ({ navigation }) => {
       }
       snapPoints={["20%"]}
     >
-      <SafeAreaView
+      <View
         style={{
           flex: 1,
           backgroundColor: theme.colors.background,
@@ -93,6 +93,21 @@ const Grocery = ({ navigation }) => {
           </View>
         </Header>
 
+        <Container
+          style={{
+            paddingBottom: 20,
+            flex: 0,
+            backgroundColor: theme.colors.background,
+          }}
+        >
+          <View>
+            <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
+              Giỏ đi chợ
+            </Text>
+            <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
+          </View>
+        </Container>
+
         <ScrollView
           style={{
             flex: 1,
@@ -102,20 +117,6 @@ const Grocery = ({ navigation }) => {
             // height: "100%",
           }}
         >
-          <Container
-            style={{
-              paddingBottom: 20,
-              flex: 0,
-              backgroundColor: theme.colors.background,
-            }}
-          >
-            <View>
-              <Text variant="headlineMedium" style={{ fontWeight: "900" }}>
-                Giỏ đi chợ
-              </Text>
-              <Text variant="titleMedium">0 Công thức • 3 Nguyên liệu</Text>
-            </View>
-          </Container>
           <Container
             style={{
               flex: 1,
@@ -186,7 +187,7 @@ const Grocery = ({ navigation }) => {
             </Container>
           </View> */}
         </ScrollView>
-      </SafeAreaView>
+      </View>
     </DefaultBottomSheet>
   );
 };
