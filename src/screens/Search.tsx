@@ -1,9 +1,18 @@
 import { NavigationProp, useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  FlatList,
+  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {
+  Banner,
   Chip,
+  Divider,
   Icon,
+  List,
   MD3Theme,
   Text,
   TextInput,
@@ -244,6 +253,12 @@ const Search = ({ route }) => {
 
   //#endregion
 
+  // #region Filter Accordion
+
+  const [accordionOpen, setAccodionOpen] = useState(false);
+
+  // #endregion
+
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -262,116 +277,160 @@ const Search = ({ route }) => {
             onChangeText={handleSearchTermChange}
           />
 
-          <View style={{ flexDirection: 'row' }}>
-            <Text>Bộ lọc</Text>
-            <Icon source="chevron-left" size={12} />
-          </View>
+          <List.Accordion
+            title="Bộ lọc"
+            style={[
+              {
+                borderColor: theme.colors.primary,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderTopLeftRadius: 12,
+                borderTopRightRadius: 12,
+              },
 
-          <View style={{ gap: 8 }}>
-            <Text
-              variant="titleMedium"
-              style={[styles.boldText, styles.primaryText]}
+              !accordionOpen
+                ? { borderBottomLeftRadius: 12, borderBottomRightRadius: 12 }
+                : {},
+            ]}
+            titleStyle={{
+              fontWeight: 'bold',
+              fontSize: 16,
+              color: theme.colors.primary,
+            }}
+            right={(props) => (
+              <List.Icon
+                {...props}
+                icon="filter"
+                color={theme.colors.primary}
+              />
+            )}
+            onPress={() => setAccodionOpen(!accordionOpen)}
+            expanded={accordionOpen}
+          >
+            <View
+              style={[
+                {
+                  gap: 12,
+                  padding: 12,
+
+                  borderColor: theme.colors.primary,
+                  borderWidth: 1,
+                  borderStyle: 'solid',
+                  borderBottomLeftRadius: 12,
+                  borderBottomRightRadius: 12,
+
+                  marginTop: 4,
+                },
+              ]}
             >
-              Thời gian
-            </Text>
-            <View style={{ flexDirection: 'row', gap: 8 }}>
-              <Chip
-                onPress={() => handleTimePressed(15)}
-                selected={selectedTime === 15}
-                showSelectedOverlay
-              >
-                &lt; 15 phút
-              </Chip>
-              <Chip
-                onPress={() => handleTimePressed(30)}
-                selected={selectedTime === 30}
-                showSelectedOverlay
-              >
-                &lt; 30 phút
-              </Chip>
-              <Chip
-                onPress={() => handleTimePressed(60)}
-                selected={selectedTime === 60}
-                showSelectedOverlay
-              >
-                &lt; 60 phút
-              </Chip>
+              <View style={{ gap: 8 }}>
+                <Text
+                  variant="titleMedium"
+                  style={[styles.boldText, styles.primaryText]}
+                >
+                  Thời gian
+                </Text>
+                <View style={{ flexDirection: 'row', gap: 8 }}>
+                  <Chip
+                    onPress={() => handleTimePressed(15)}
+                    selected={selectedTime === 15}
+                    showSelectedOverlay
+                  >
+                    &lt; 15 phút
+                  </Chip>
+                  <Chip
+                    onPress={() => handleTimePressed(30)}
+                    selected={selectedTime === 30}
+                    showSelectedOverlay
+                  >
+                    &lt; 30 phút
+                  </Chip>
+                  <Chip
+                    onPress={() => handleTimePressed(60)}
+                    selected={selectedTime === 60}
+                    showSelectedOverlay
+                  >
+                    &lt; 60 phút
+                  </Chip>
+                </View>
+              </View>
+              <View style={{ gap: 8 }}>
+                <Text
+                  variant="titleMedium"
+                  style={[styles.boldText, styles.primaryText]}
+                >
+                  Calories (Cal) / phần
+                </Text>
+                <View
+                  style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}
+                >
+                  <Chip
+                    onPress={() => handleCaloriesPressed('<200')}
+                    selected={selectedCalories === '<200'}
+                    showSelectedOverlay
+                  >
+                    &lt; 200
+                  </Chip>
+                  <Chip
+                    onPress={() => handleCaloriesPressed('200-400')}
+                    selected={selectedCalories === '200-400'}
+                    showSelectedOverlay
+                  >
+                    200 - 400
+                  </Chip>
+                  <Chip
+                    onPress={() => handleCaloriesPressed('400-600')}
+                    selected={selectedCalories === '400-600'}
+                    showSelectedOverlay
+                  >
+                    400 - 600
+                  </Chip>
+                  <Chip
+                    onPress={() => handleCaloriesPressed('600-800')}
+                    selected={selectedCalories === '600-800'}
+                    showSelectedOverlay
+                  >
+                    600 - 800
+                  </Chip>
+                  <Chip
+                    onPress={() => handleCaloriesPressed('>800')}
+                    selected={selectedCalories === '>800'}
+                    showSelectedOverlay
+                  >
+                    &gt; 800
+                  </Chip>
+                </View>
+              </View>
+              <View style={{ gap: 8 }}>
+                <Text
+                  variant="titleMedium"
+                  style={[styles.boldText, styles.primaryText]}
+                >
+                  Bao gồm Nguyên liệu
+                </Text>
+                <ChipList
+                  chips={includedIngredients}
+                  onAdd={() => handleIngredientFilterAddClick('included')}
+                  onRemove={handleIncludeIngredientRemove}
+                />
+              </View>
+              <View style={{ gap: 8 }}>
+                <Text
+                  variant="titleMedium"
+                  style={[styles.boldText, styles.primaryText]}
+                >
+                  Không bao gồm Nguyên liệu
+                </Text>
+                <ChipList
+                  chips={excludedIngredients}
+                  onAdd={() => handleIngredientFilterAddClick('excluded')}
+                  onRemove={handleExcludedIngredientRemove}
+                />
+              </View>
             </View>
-          </View>
+          </List.Accordion>
 
-          <View style={{ gap: 8 }}>
-            <Text
-              variant="titleMedium"
-              style={[styles.boldText, styles.primaryText]}
-            >
-              Calories (Cal) / phần
-            </Text>
-            <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
-              <Chip
-                onPress={() => handleCaloriesPressed('<200')}
-                selected={selectedCalories === '<200'}
-                showSelectedOverlay
-              >
-                &lt; 200
-              </Chip>
-              <Chip
-                onPress={() => handleCaloriesPressed('200-400')}
-                selected={selectedCalories === '200-400'}
-                showSelectedOverlay
-              >
-                200 - 400
-              </Chip>
-              <Chip
-                onPress={() => handleCaloriesPressed('400-600')}
-                selected={selectedCalories === '400-600'}
-                showSelectedOverlay
-              >
-                400 - 600
-              </Chip>
-              <Chip
-                onPress={() => handleCaloriesPressed('600-800')}
-                selected={selectedCalories === '600-800'}
-                showSelectedOverlay
-              >
-                600 - 800
-              </Chip>
-              <Chip
-                onPress={() => handleCaloriesPressed('>800')}
-                selected={selectedCalories === '>800'}
-                showSelectedOverlay
-              >
-                &gt; 800
-              </Chip>
-            </View>
-          </View>
-
-          <View style={{ gap: 8 }}>
-            <Text
-              variant="titleMedium"
-              style={[styles.boldText, styles.primaryText]}
-            >
-              Bao gồm Nguyên liệu
-            </Text>
-            <ChipList
-              chips={includedIngredients}
-              onAdd={() => handleIngredientFilterAddClick('included')}
-              onRemove={handleIncludeIngredientRemove}
-            />
-          </View>
-
-          <View style={{ gap: 8 }}>
-            <Text
-              variant="titleMedium"
-              style={[styles.boldText, styles.primaryText]}
-            >
-              Không bao gồm Nguyên liệu
-            </Text>
-            <ChipList
-              chips={excludedIngredients}
-              onAdd={() => handleIngredientFilterAddClick('excluded')}
-              onRemove={handleExcludedIngredientRemove}
-            />
-          </View>
+          <Divider />
 
           <FlatList
             data={recipes}
@@ -415,6 +474,22 @@ const getStyles = (theme?: MD3Theme) =>
     content: {
       gap: 12,
       height: '100%',
+    },
+    filter: {
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+      padding: 4,
+
+      flexDirection: 'row',
+      justifyContent: 'flex-end',
+      alignItems: 'center',
+    },
+    filterBanner: {
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+      backgroundColor: theme.colors.background,
     },
     filterButton: {
       paddingHorizontal: 16,

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -8,8 +8,8 @@ import {
 } from 'react-native';
 import {
   Button,
+  Divider,
   Icon,
-  IconButton,
   MD3Theme,
   Text,
   TextInput,
@@ -222,35 +222,66 @@ const IngredientFilter = ({ route }) => {
           right={<TextInput.Icon icon="magnify" />}
         />
 
+        <Divider />
+
         <Text
           variant="titleLarge"
           style={{ fontWeight: 'bold', color: theme.colors.primary }}
         >
           Nguyên liệu đã chọn
         </Text>
-        <FlatList
-          key="selected-ingredient-flat-list"
-          data={selectedIngredients}
-          keyExtractor={(i) => i.id.toString()}
-          renderItem={({ item }) => (
-            <RowIngredientItem
-              item={item}
-              onTap={handleDeselectIngredient}
-              removeable
-              style={{
-                width: flatListWidth / 4,
-              }}
-            />
-          )}
-          horizontal={true}
-          contentContainerStyle={
-            getStyles(theme, {
-              loading,
-              hasSelected: selectedIngredients.length > 0,
-            }).selectedIngredientFlatList
-          }
-          showsHorizontalScrollIndicator={false}
-        />
+
+        {selectedIngredients.length <= 0 ? (
+          <Text
+            style={{
+              textAlign: 'center',
+              color: theme.colors.primary,
+              fontWeight: 'bold',
+              fontStyle: 'italic',
+            }}
+          >
+            Chọn nguyên liệu để lọc công thức ngay!
+          </Text>
+        ) : null}
+        <View
+          style={{
+            // top inner shadow
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: -4,
+            },
+            shadowOpacity: 0.25,
+            shadowRadius: 4,
+            elevation: 5,
+          }}
+        >
+          <FlatList
+            key="selected-ingredient-flat-list"
+            data={selectedIngredients}
+            keyExtractor={(i) => i.id.toString()}
+            renderItem={({ item }) => (
+              <RowIngredientItem
+                item={item}
+                onTap={handleDeselectIngredient}
+                removeable
+                style={{
+                  width: flatListWidth / 4,
+                }}
+              />
+            )}
+            horizontal={true}
+            contentContainerStyle={
+              getStyles(theme, {
+                loading,
+                hasSelected: selectedIngredients.length > 0,
+              }).selectedIngredientFlatList
+            }
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+
+        <Divider />
 
         <Text
           variant="titleLarge"
