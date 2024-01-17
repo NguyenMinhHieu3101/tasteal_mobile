@@ -19,6 +19,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { defaultTheme } from "./src/theme/defaultTheme";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View } from "react-native";
+import LoginContext, { useLoginContext } from "./src/contexts/LoginContext";
 
 const CustomTabBarIcon = ({ focused, color, active, inactive }) => {
   const theme = useTheme();
@@ -127,32 +128,35 @@ export default function App() {
   return (
     <PaperProvider theme={defaultTheme}>
       <SpinnerProvider>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName={
-              // ROUTES.Welcome Mở ra
-              "DoThang"
-            }
-            screenOptions={{
-              headerShown: false,
-            }}
-          >
-            {screens
-              // .filter((screen) => screen.hideBottomBar) Mở ra
-              .map((screen) => (
-                <Stack.Screen
-                  key={screen.name}
-                  name={screen.name}
-                  component={screen.component}
-                />
-              ))}
+        <LoginContext.Provider value={useLoginContext()}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName={
+                // ROUTES.Welcome Mở ra
+                "DoThang"
+              }
+              screenOptions={{
+                headerShown: false,
+              }}
+            >
+              {screens
+                // .filter((screen) => screen.hideBottomBar) Mở ra
+                .map((screen) => (
+                  <Stack.Screen
+                    key={screen.name}
+                    name={screen.name}
+                    component={screen.component}
+                    options={{ ...screen.options }}
+                  />
+                ))}
 
-            <Stack.Screen
-              name={ROUTES.NoBottomBarScreen}
-              children={NoBottomBar}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+              <Stack.Screen
+                name={ROUTES.NoBottomBarScreen}
+                children={NoBottomBar}
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </LoginContext.Provider>
       </SpinnerProvider>
     </PaperProvider>
   );
@@ -162,6 +166,7 @@ const NoBottomBar = () => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       headerShown: false,
+      unmountOnBlur: true,
     })}
     initialRouteName={ROUTES.Home}
   >

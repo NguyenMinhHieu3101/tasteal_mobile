@@ -1,17 +1,18 @@
-import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { Image, Pressable, TouchableOpacity, View } from "react-native";
 import { Text, useTheme } from "react-native-paper";
-import { Button } from "react-native-paper";
 import COLORS from "../constants/colors";
 import IMAGES from "../constants/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Container from "../components/common/Container";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { ROUTES } from "../constants/common";
+import LoginContext from "../contexts/LoginContext";
 
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
+  const { login } = useContext(LoginContext);
+
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
@@ -66,9 +67,11 @@ const Welcome = ({ navigation }) => {
             <TouchableOpacity
               // mode="contained"
               // buttonColor="white"
-              onPress={() => navigation.navigate(ROUTES.Signup)}
+              onPress={() => {}}
               style={{
                 display: "flex",
+                flexDirection: "row",
+                gap: 12,
                 justifyContent: "center",
                 alignItems: "center",
                 height: 50,
@@ -85,30 +88,9 @@ const Welcome = ({ navigation }) => {
                   resizeMode: "contain",
                 }}
               />
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              // mode="contained"
-              // buttonColor="white"
-              onPress={() => navigation.navigate(ROUTES.Signup)}
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                height: 50,
-                flex: 1,
-                borderRadius: 100,
-                backgroundColor: "white",
-              }}
-            >
-              <Image
-                source={IMAGES.icon_facebook}
-                style={{
-                  height: 24,
-                  width: 24,
-                  resizeMode: "contain",
-                }}
-              />
+              <Text variant="bodyLarge" style={{ fontWeight: "700" }}>
+                GOOGLE
+              </Text>
             </TouchableOpacity>
           </View>
 
