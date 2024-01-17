@@ -29,7 +29,7 @@ export class RecipeService {
    *
    * @return {Promise<RecipeEntity[]>}
    */
-  public static async GetAllRecipes(
+  public static GetAllRecipes(
     pageSize: number = 12,
     page: number = 1
   ): Promise<RecipeEntity[]> {
@@ -44,15 +44,9 @@ export class RecipeService {
       } as PageReq),
     };
 
-    return await fetch(ApiEndPoint.GetAllRecipe(), requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        return data;
-      })
-      .catch((error) => {
-        console.error('Lỗi:', error);
-      });
+    return fetch(ApiEndPoint.GetAllRecipe(), requestOptions).then((response) =>
+      response.json()
+    );
   }
   /**
    * Get recipe detail data by id.
@@ -63,7 +57,6 @@ export class RecipeService {
    */
   public static async GetById(id: number): Promise<RecipeRes> {
     if (recipeCache.has(id)) {
-      console.log('Use data in cache');
       return Promise.resolve(recipeCache.get(id)!);
     }
 
@@ -99,7 +92,6 @@ export class RecipeService {
     return await fetch(ApiEndPoint.GetRecipesByUserId(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data.recipes;
       })
       .catch((error) => {
@@ -176,7 +168,6 @@ export class RecipeService {
     await fetch(ApiEndPoint.SearchRecipe(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         recipes = data;
       })
       .catch((error) => {

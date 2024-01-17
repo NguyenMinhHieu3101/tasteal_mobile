@@ -1,120 +1,146 @@
-import React from "react";
-import {
-  Text,
-  ScrollView,
-  View,
-  TouchableOpacity,
-  Dimensions,
-} from "react-native";
+import React, { useState } from "react";
+import { ScrollView, View, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Carousel from "react-native-reanimated-carousel";
+import { Text, useTheme } from "react-native-paper";
 
-import RecipeCard from "../components/RecipeCard";
+import TrendingComponent from "../components/ui/home/TrendingComponent";
+import NewReleaseComponent from "../components/ui/home/NewReleaseComponent";
+import MostContributeCarousel from "../components/ui/home/MostContributeCarousel";
 import Animated from "react-native-reanimated";
 
 const Home = () => {
-  const { width } = Dimensions.get("screen");
+  const theme = useTheme();
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ flex: 1, margin: 20 }}
+        style={{ flex: 1, marginLeft: 20 }}
       >
-        <Text style={{ fontSize: 30, fontWeight: "bold", marginBottom: 15 }}>
-          Daily Inspiration
-        </Text>
-
         <View>
-          <Carousel
-            loop
-            width={width}
-            height={460}
-            // mode="horizontal-stack"
-            autoPlay={true}
-            data={[...new Array(6).keys()]}
-            scrollAnimationDuration={1000}
-            onSnapToItem={(index) => console.log("current index:", index)}
-            renderItem={({ index }) => <RecipeCard />}
-          />
-        </View>
-
-        <View>
-          <View
+          <Text
+            variant="headlineLarge"
             style={{
-              marginTop: 35,
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 15,
+              fontWeight: "bold",
+              marginVertical: 15,
+              color: theme.colors.primary,
             }}
           >
-            <Text style={{ flex: 0.9, fontSize: 20, fontWeight: "bold" }}>
-              Thịnh hành
-            </Text>
-            <TouchableOpacity style={{ marginRight: -20 }}>
-              <Text
-                style={{
-                  textTransform: "uppercase",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Xem tất cả
-              </Text>
-            </TouchableOpacity>
-          </View>
-
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ height: 460 }}
-          >
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
-            </View>
-          </ScrollView>
+            Daily Inspiration
+          </Text>
         </View>
 
-        <View>
+        <View style={{ marginTop: 10 }}>
           <View
             style={{
-              flexDirection: "row",
-              alignItems: "center",
+              marginTop: 0,
+              flexDirection: "column",
               marginBottom: 15,
             }}
           >
             <Text
+              variant="titleLarge"
               style={{
-                flex: 0.9,
-                fontSize: 20,
                 fontWeight: "bold",
+                color: theme.colors.primary,
+                textTransform: "uppercase",
               }}
             >
-              Vừa ra mắt
+              Thịnh hành
             </Text>
-            <TouchableOpacity>
-              <Text
-                style={{
-                  textTransform: "uppercase",
-                  textDecorationLine: "underline",
-                }}
-              >
-                Xem tất cả
-              </Text>
-            </TouchableOpacity>
+
+            <Text
+              variant="bodyMedium"
+              style={{ color: theme.colors.primary, paddingVertical: 5 }}
+            >
+              Những công thức được mọi người yêu thích nhất!
+            </Text>
           </View>
 
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            style={{ height: 460 }}
-          >
-            <View style={{ flexDirection: "row", gap: 20 }}>
-              <RecipeCard />
-              <RecipeCard />
-              <RecipeCard />
+          <TrendingComponent />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <View style={{ marginBottom: 15, marginRight: 20 }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+
+                justifyContent: "space-between",
+              }}
+            >
+              <Text
+                variant="titleLarge"
+                style={{
+                  flex: 0.9,
+                  fontWeight: "bold",
+                  color: theme.colors.primary,
+                  textTransform: "uppercase",
+                }}
+              >
+                Vừa ra mắt
+              </Text>
+              <TouchableOpacity>
+                <Text
+                  style={{
+                    textTransform: "uppercase",
+                    textDecorationLine: "underline",
+                    color: theme.colors.primary,
+                  }}
+                >
+                  Xem tất cả
+                </Text>
+              </TouchableOpacity>
             </View>
-          </ScrollView>
+
+            <Text
+              variant="bodyMedium"
+              style={{ color: theme.colors.primary, paddingVertical: 5 }}
+            >
+              Các công thức nấu ăn nhanh, mới, dễ đi chợ giúp bạn tiết kiệm thời
+              gian và tiền bạc.
+            </Text>
+          </View>
+
+          <NewReleaseComponent />
+        </View>
+
+        <View style={{ marginTop: 10 }}>
+          <View
+            style={{
+              alignItems: "center",
+              marginBottom: 15,
+              justifyContent: "space-between",
+              marginRight: 20,
+            }}
+          >
+            <Text
+              variant="titleLarge"
+              style={{
+                flex: 0.9,
+                fontWeight: "bold",
+                color: theme.colors.primary,
+                textTransform: "uppercase",
+              }}
+            >
+              Đóng góp nhiều nhất
+            </Text>
+
+            <Text
+              variant="bodyMedium"
+              style={{
+                color: theme.colors.primary,
+                textAlign: "center",
+                paddingVertical: 5,
+              }}
+            >
+              Gặp gỡ cộng đồng các chuyên gia ẩm thực, người viết blog ẩm thực
+              cho đến các đầu bếp bậc thầy của chúng tôi từ khắp nơi trên thế
+              giới.
+            </Text>
+          </View>
+
+          <MostContributeCarousel />
         </View>
       </ScrollView>
     </SafeAreaView>

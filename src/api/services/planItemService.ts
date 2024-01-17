@@ -20,8 +20,6 @@ export class PlanItemService {
     )
       .then((response) => response.json())
       .then((data: Plan_ItemEntity[]) => {
-        console.log(data);
-
         return data.map((item) => {
           return {
             ...item,

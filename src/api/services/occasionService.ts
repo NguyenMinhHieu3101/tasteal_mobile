@@ -110,7 +110,6 @@ export class OccasionService {
     return await fetch(ApiEndPoint.UpdateOccasion(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -131,7 +130,6 @@ export class OccasionService {
     return await fetch(ApiEndPoint.DeleteOccasion(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

@@ -21,7 +21,6 @@ export class PantryItemService {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -43,7 +42,6 @@ export class PantryItemService {
     return await fetch(ApiEndPoint.GetPantryItemById(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -66,7 +64,6 @@ export class PantryItemService {
     return await fetch(ApiEndPoint.AddPantryItem(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -93,7 +90,6 @@ export class PantryItemService {
     return await fetch(ApiEndPoint.UpdatePantryItem(), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {
@@ -115,7 +111,6 @@ export class PantryItemService {
     return await fetch(ApiEndPoint.DeletePantryItem(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

@@ -36,7 +36,6 @@ export class CookbookRecipeService {
     return await fetch(ApiEndPoint.DeleteCookBookRecipe(id), requestOptions)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         return data;
       })
       .catch((error) => {

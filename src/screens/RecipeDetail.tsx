@@ -1,32 +1,41 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Rating, AirbnbRating } from "react-native-ratings";
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import {
-  View,
-  TouchableOpacity,
+  Dimensions,
+  FlatList,
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
-  Pressable,
-  Dimensions,
-} from "react-native";
-import { IconButton, useTheme, Text } from "react-native-paper";
-import useDefaultBottomSheet from "../hooks/useDefaultBottomSheet";
-import Container from "../components/common/Container";
-import { useSpinner } from "../hooks/useSpinner";
-import { RecipeService } from "../api/services/recipeService";
-import { RecipeEntity } from "../api/models/entities/RecipeEntity/RecipeEntity";
-import { RecipeRes } from "../api/models/dtos/Response/RecipeRes/RecipeRes";
-import useFirebaseImage from "../api/hooks/useStorageImage";
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { Button, IconButton, Text, useTheme } from 'react-native-paper';
+import { AirbnbRating, Rating } from 'react-native-ratings';
+import useFirebaseImage from '../api/hooks/useFirebaseImage';
+import { RecipeRes } from '../api/models/dtos/Response/RecipeRes/RecipeRes';
+import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
+import { RecipeService } from '../api/services/recipeService';
+import Container from '../components/common/Container';
+import DirectionList from '../components/common/collections/DirectionList';
+import IngredientList from '../components/common/collections/IngredientList';
+import useDefaultBottomSheet from '../hooks/useDefaultBottomSheet';
+import { useSpinner } from '../hooks/useSpinner';
+
 const RecipeDetail = ({ route, navigation }) => {
   const theme = useTheme();
-  const widthDevice = Dimensions.get("screen").width;
-  const heightDevice = Dimensions.get("screen").height;
+  const widthDevice = Dimensions.get('screen').width;
+  const heightDevice = Dimensions.get('screen').height;
   const [currentRecipe, setCurrentRecipe] = useState<RecipeRes>(null);
-  // console.log(heightDevice); //844
-  // console.log(widthDevice); //390
+
   const { recipeId } = route.params ? route.params : { recipeId: 4 };
-  console.log(recipeId);
+
   const spin = useSpinner();
+  const [showMore, setShowMore] = useState(false);
 
   useLayoutEffect(() => {
     let active = true;
@@ -38,13 +47,14 @@ const RecipeDetail = ({ route, navigation }) => {
       try {
         entities = await RecipeService.GetById(Number(recipeId));
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error);
       } finally {
       }
 
       if (!active) return;
 
       setCurrentRecipe(entities);
+
       spin(false);
     })();
 
@@ -55,26 +65,78 @@ const RecipeDetail = ({ route, navigation }) => {
 
   useEffect(() => {
     navigation.setOptions({
-      headerTitle: "",
+      headerTitle: '',
       headerLeft: () => (
         <IconButton
           style={{ marginLeft: -10 }}
           icon="arrow-left"
           size={24}
-          onPress={() => navigation.navigate("DoThang")}
+          onPress={() => navigation.navigate('DoThang')}
         />
       ),
       headerStyle: {
-        backgroundColor: "transparent",
+        backgroundColor: 'transparent',
       },
       headerShadowVisible: false,
     });
   }, [navigation, currentRecipe]);
-  {
-    console.log(currentRecipe);
-  }
+
   const imageRecipeUrl = useFirebaseImage(currentRecipe?.image);
 
+  const renderIngredient = useCallback(
+    ({ item }) => {
+      return <IngredientList item={item} />;
+    },
+    [currentRecipe]
+  );
+
+  const renderDirection = useCallback(
+    ({ item }) => {
+      return <DirectionList item={item} />;
+    },
+    [currentRecipe]
+  );
+
+  const renderNutritionInfo = (nutrition, index) => (
+    <View
+      key={index}
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        gap: 12,
+        paddingBottom: 8,
+      }}
+    >
+      <Text
+        variant="labelLarge"
+        style={{
+          color: theme.colors.primary,
+          flex: 6,
+          fontWeight: nutrition[0] === 'calories' ? 'bold' : 'normal',
+          paddingLeft: 12,
+        }}
+      >
+        {nutrition[0]}
+      </Text>
+      <Text
+        variant="bodyMedium"
+        style={{
+          color: theme.colors.primary,
+          flex: 2,
+          textAlign: 'left',
+          fontWeight: nutrition[0] === 'calories' ? 'bold' : 'normal',
+        }}
+      >
+        {nutrition[1]}g
+      </Text>
+    </View>
+  );
+
+  let nutritionEntries = null;
+  if (currentRecipe != null) {
+    nutritionEntries = Object.entries(currentRecipe.nutrition_info).slice(1);
+  }
   return currentRecipe == null ? (
     <View style={{ flex: 1 }} />
   ) : (
@@ -85,32 +147,32 @@ const RecipeDetail = ({ route, navigation }) => {
             <Image
               source={{ uri: imageRecipeUrl }}
               style={{
-                height: "100%",
-                width: "100%",
-                resizeMode: "cover",
+                height: '100%',
+                width: '100%',
+                resizeMode: 'cover',
               }}
             />
           </View>
 
           <View
             style={{
-              backgroundColor: "transparent",
-              justifyContent: "center",
-              alignItems: "center",
+              backgroundColor: 'transparent',
+              justifyContent: 'center',
+              alignItems: 'center',
               flex: 1,
-              position: "absolute",
+              position: 'absolute',
               bottom: -50,
-              width: "100%",
+              width: '100%',
             }}
           >
             <View
               style={{
                 backgroundColor: theme.colors.background,
                 padding: 20,
-                alignItems: "center",
-                width: "90%",
+                alignItems: 'center',
+                width: '90%',
                 borderRadius: 12,
-                shadowColor: "#000",
+                shadowColor: '#000',
                 shadowOffset: { width: 0, height: 2 },
                 shadowOpacity: 0.1,
                 shadowRadius: 4,
@@ -120,7 +182,7 @@ const RecipeDetail = ({ route, navigation }) => {
               <Text
                 variant="headlineSmall"
                 style={{
-                  fontWeight: "bold",
+                  fontWeight: 'bold',
                   color: theme.colors.primary,
                   marginVertical: 8,
                 }}
@@ -129,10 +191,10 @@ const RecipeDetail = ({ route, navigation }) => {
               </Text>
               <Text style={{ color: theme.colors.primary }}>
                 <Text
-                  style={{ fontWeight: "bold", color: theme.colors.primary }}
+                  style={{ fontWeight: 'bold', color: theme.colors.primary }}
                 >
                   by
-                </Text>{" "}
+                </Text>{' '}
                 {currentRecipe.author.name}
               </Text>
             </View>
@@ -141,7 +203,7 @@ const RecipeDetail = ({ route, navigation }) => {
 
         <Container
           style={{
-            width: "100%",
+            width: '100%',
             flex: 1,
             marginTop: 100,
             backgroundColor: theme.colors.background,
@@ -149,25 +211,25 @@ const RecipeDetail = ({ route, navigation }) => {
         >
           <View
             style={{
-              justifyContent: "center",
-              alignItems: "center",
-              width: "100%",
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100%',
               gap: 16,
             }}
           >
             <View
               style={{
                 flex: 1,
-                flexDirection: "row",
-                justifyContent: "center",
-                alignItems: "center",
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
                 gap: 12,
               }}
             >
               <View>
                 <Text
                   style={{
-                    fontWeight: "bold",
+                    fontWeight: 'bold',
                     fontSize: 18,
                     color: theme.colors.primary,
 
@@ -196,23 +258,23 @@ const RecipeDetail = ({ route, navigation }) => {
               style={{
                 color: theme.colors.primary,
                 //  fontFamily: "roboto",
-                textAlign: "justify",
+                textAlign: 'justify',
                 marginTop: 24,
               }}
             >
               {currentRecipe.introduction}
             </Text>
-            <View style={{ flexDirection: "column" }}>
+            <View style={{ flexDirection: 'column' }}>
               <View
                 style={{
                   backgroundColor: theme.colors.background,
                   padding: 30,
                   paddingHorizontal: 70,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "90%",
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: '90%',
                   borderRadius: 12,
-                  shadowColor: "#000",
+                  shadowColor: '#000',
                   shadowOffset: { width: 0, height: 2 },
                   shadowOpacity: 0.1,
                   shadowRadius: 4,
@@ -222,9 +284,9 @@ const RecipeDetail = ({ route, navigation }) => {
               >
                 <Text
                   style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontWeight: "bold",
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontWeight: 'bold',
                     color: theme.colors.primary,
                   }}
                   variant="titleMedium"
@@ -233,9 +295,9 @@ const RecipeDetail = ({ route, navigation }) => {
                 </Text>
                 <Text
                   style={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    fontStyle: "italic",
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    fontStyle: 'italic',
                     color: theme.colors.primary,
                   }}
                   variant="labelSmall"
@@ -245,11 +307,138 @@ const RecipeDetail = ({ route, navigation }) => {
               </View>
             </View>
 
-            <Text>Thời gian: {currentRecipe.totalTime} phút</Text>
-            <Text style={{ marginBottom: 24 }}>
-              Luồng: {currentRecipe.serving_size} người
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: theme.colors.primary,
+                textAlign: 'left',
+                width: '100%',
+              }}
+              variant="titleMedium"
+            >
+              {' '}
+              Nguyên liệu
             </Text>
+            <FlatList
+              key="ingredient-flat-list"
+              data={currentRecipe.ingredients}
+              renderItem={renderIngredient}
+              numColumns={1}
+              showsVerticalScrollIndicator={false}
+              style={{
+                flex: 1,
+                width: '100%',
+                marginBottom: 20,
+                flexDirection: 'column',
+              }}
+            />
+
+            <Button
+              mode="contained"
+              style={{
+                width: '100%',
+                marginBottom: 24,
+              }}
+              onPress={() => {
+                navigation.navigate('#');
+              }}
+            >
+              <Text
+                variant="labelLarge"
+                style={{ color: 'white', fontWeight: 'bold' }}
+              >
+                THÊM VÀO GIỎ
+              </Text>
+            </Button>
+
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: theme.colors.primary,
+                textAlign: 'left',
+                width: '100%',
+              }}
+              variant="titleMedium"
+            >
+              Dinh dưỡng mỗi bữa ăn
+            </Text>
+
+            <View>
+              {nutritionEntries
+                .map(renderNutritionInfo)
+                .slice(0, showMore ? undefined : 3)}
+
+              {!showMore && nutritionEntries.length > 3 && (
+                <Pressable onPress={() => setShowMore(true)}>
+                  <Text
+                    style={{
+                      color: theme.colors.primary,
+                      fontStyle: 'italic',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Xem thêm
+                  </Text>
+                </Pressable>
+              )}
+
+              {showMore && (
+                <Pressable onPress={() => setShowMore(false)}>
+                  <Text
+                    style={{
+                      color: theme.colors.primary,
+                      fontStyle: 'italic',
+                      textAlign: 'center',
+                    }}
+                  >
+                    Ẩn bớt
+                  </Text>
+                </Pressable>
+              )}
+            </View>
+
+            {currentRecipe.author_note && (
+              <Text
+                style={{
+                  fontWeight: 'bold',
+                  color: theme.colors.primary,
+                  textAlign: 'left',
+                  width: '100%',
+                }}
+                variant="titleMedium"
+              >
+                {' '}
+                Ghi chú của tác giả
+              </Text>
+            )}
+            <Text
+              style={{
+                fontWeight: 'bold',
+                color: theme.colors.primary,
+                textAlign: 'left',
+                width: '100%',
+              }}
+              variant="titleMedium"
+            >
+              {' '}
+              Hướng dẫn
+            </Text>
+            <Text style={{ marginBottom: 24 }}>{''}</Text>
           </View>
+
+          <FlatList
+            key="direction-flat-list"
+            data={currentRecipe.directions}
+            renderItem={renderDirection}
+            numColumns={1}
+            showsVerticalScrollIndicator={false}
+            style={{
+              flex: 1,
+              width: '100%',
+              marginBottom: 20,
+              flexDirection: 'column',
+            }}
+          />
         </Container>
       </View>
     </ScrollView>

@@ -11,6 +11,8 @@ import Container from "../components/common/Container";
 import Header from "../components/common/Header/HeaderFrame";
 import { ROUTES } from "../constants/common";
 import { CommonActions } from "@react-navigation/native";
+import CartItemFrame from "../components/ui/grocery/CartItemFrame";
+import CartItemCheckBox from "../components/ui/grocery/CartItemCheckBox";
 const Grocery = ({ navigation }) => {
   const theme = useTheme();
   const bottomSheet = useDefaultBottomSheet();
@@ -121,6 +123,54 @@ const Grocery = ({ navigation }) => {
             }}
           >
             <AddYourOwnItem />
+          </Container>
+          <Container>
+            <CartItemFrame label="Đồ cá nhân">
+              <CartItemCheckBox
+                item={{
+                  cartId: 1,
+                  ingredient_id: 1,
+                  amount: 5,
+                  isBought: false,
+                }}
+              ></CartItemCheckBox>
+
+              <CartItemCheckBox
+                item={{
+                  cartId: 1,
+                  ingredient_id: 1,
+                  amount: 5,
+                  isBought: false,
+                }}
+              ></CartItemCheckBox>
+
+              <CartItemCheckBox
+                item={{
+                  cartId: 1,
+                  ingredient_id: 1,
+                  amount: 5,
+                  isBought: false,
+                }}
+              ></CartItemCheckBox>
+            </CartItemFrame>
+          </Container>
+
+          <Container>
+            <View>
+              <CartItemFrame label="Đã có">
+                <View style={{ backgroundColor: "#f2f2f2" }}>
+                  <CartItemCheckBox
+                    item={{
+                      cartId: 1,
+                      ingredient_id: 1,
+                      amount: 5,
+                      isBought: true,
+                    }}
+                    type="personal"
+                  ></CartItemCheckBox>
+                </View>
+              </CartItemFrame>
+            </View>
           </Container>
 
           {/* <View
