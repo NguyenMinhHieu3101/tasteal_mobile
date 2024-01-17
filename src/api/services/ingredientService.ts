@@ -1,3 +1,8 @@
+import {
+  Cache,
+  createPaginationCacheKey,
+  getValueFromCache,
+} from '../../utils/cache';
 import { ApiEndPoint } from '../lib/url';
 import {
   CreateIngredientReq,
@@ -12,6 +17,8 @@ import { IngredientEntity } from '../models/entities/IngredientEntity/Ingredient
 
 export type IngredientGetRes = IngredientEntity & IngredientRes;
 
+const GetAllCache: Map<string, Cache<IngredientEntity[]>> = new Map();
+
 /**
  * Represents a service for managing ingredients.
  */
@@ -25,6 +32,11 @@ export class IngredientService {
     pageSize: number = 12,
     page: number = 1
   ): Promise<IngredientEntity[]> {
+    const cacheKey = createPaginationCacheKey(page, pageSize);
+    const cacheValue = getValueFromCache(GetAllCache, cacheKey);
+
+    if (cacheValue) return Promise.resolve(cacheValue);
+
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -35,9 +47,14 @@ export class IngredientService {
         page: page,
       } as PageReq),
     };
+
     return fetch(ApiEndPoint.GetAllIngredients(), requestOptions)
       .then((res) => res.json())
       .then((data) => {
+        GetAllCache.set(cacheKey, {
+          value: data.ingredients,
+          time: Date.now(),
+        });
         return data.ingredients;
       });
   }

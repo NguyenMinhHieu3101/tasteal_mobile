@@ -1,3 +1,4 @@
+import { useDebounce } from '@uidotdev/usehooks';
 import { useCallback, useEffect, useState } from 'react';
 import { useSpinner } from '../../hooks';
 import { removeDiacritics } from '../../utils/string';
@@ -17,6 +18,8 @@ type SortType = {
   type: 'name' | 'rating' | 'totalTime' | 'calories' | 'serving_size';
   sort: 'asc' | 'desc';
 };
+
+const DEBOUNCED_TIME = 500; // 0.5s
 
 const useRecipeSearch = (viewportItemAmount: number = 12) => {
   //#region Hooks
@@ -69,6 +72,7 @@ const useRecipeSearch = (viewportItemAmount: number = 12) => {
   //#endregion
   //#region Search
   const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, DEBOUNCED_TIME);
 
   const handleSearchTermChange = useCallback((newSearchTerm: string) => {
     if (newSearchTerm == '') {
@@ -102,13 +106,14 @@ const useRecipeSearch = (viewportItemAmount: number = 12) => {
         removeDiacritics(value.toLocaleLowerCase())
       );
     },
-    [searchTerm]
+    [debouncedSearchTerm]
   );
 
   //#endregion
   //#region Filter
   const [searchReq, setSearchReq] =
     useState<RecipeSearchReq>(initRecipeSearchReq);
+  const debouncedSearchReq = useDebounce(searchReq, DEBOUNCED_TIME);
 
   function handleSearchReqChange<T extends keyof RecipeSearchReq>(
     type: T,
@@ -146,7 +151,7 @@ const useRecipeSearch = (viewportItemAmount: number = 12) => {
     return () => {
       active = false;
     };
-  }, [searchReq]);
+  }, [debouncedSearchReq]);
 
   function resetSearchReq() {
     setSearchReq(initRecipeSearchReq);
