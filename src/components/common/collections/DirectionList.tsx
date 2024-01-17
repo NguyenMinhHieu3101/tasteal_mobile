@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from "react";
+import { FC, memo, useCallback } from 'react';
 import {
   Image,
   StyleProp,
@@ -6,10 +6,10 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
-} from "react-native";
-import { IconButton, MD3Theme, Text } from "react-native-paper";
-import useFirebaseImage from "../../../api/hooks/useStorageImage";
-import { DirectionRes } from "../../../api/models/dtos/Response/DirectionRes/DirectionRes";
+} from 'react-native';
+import { IconButton, MD3Theme, Text } from 'react-native-paper';
+import useFirebaseImage from '../../../api/hooks/useFirebaseImage';
+import { DirectionRes } from '../../../api/models/dtos/Response/DirectionRes/DirectionRes';
 
 type RowDirectionItemProps = {
   item: DirectionRes;
@@ -17,11 +17,11 @@ type RowDirectionItemProps = {
 };
 
 const RowIngredientItem: FC<RowDirectionItemProps> = ({ item, style }) => {
-  const imageUrl = useFirebaseImage(item.image || "");
+  const imageUrl = useFirebaseImage(item.image || '');
 
   return (
     <View style={[styles.container, style || {}]}>
-      <View style={{ width: "100%" }}>
+      <View style={{ width: '100%' }}>
         <Text
           variant="titleLarge"
           style={[
@@ -34,7 +34,7 @@ const RowIngredientItem: FC<RowDirectionItemProps> = ({ item, style }) => {
         </Text>
       </View>
       <View style={styles.direction}>
-        <Text variant="bodyMedium" style={{ textAlign: "justify" }}>
+        <Text variant="bodyMedium" style={{ textAlign: 'justify' }}>
           {item.direction}
         </Text>
       </View>
@@ -46,32 +46,32 @@ const RowIngredientItem: FC<RowDirectionItemProps> = ({ item, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    flexDirection: "column",
-    width: "100%",
+    alignItems: 'center',
+    flexDirection: 'column',
+    width: '100%',
   },
   image: {
-    width: "100%",
+    width: '100%',
     height: 300,
     borderRadius: 20,
   },
   stepText: {
     // Define your text styles here
-    textAlign: "left",
-    width: "100%",
+    textAlign: 'left',
+    width: '100%',
 
-    fontWeight: "bold",
+    fontWeight: 'bold',
     paddingTop: 50,
   },
   boldText: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   direction: {
-    textAlign: "justify",
+    textAlign: 'justify',
     marginTop: 10,
     marginBottom: 20,
-    alignItems: "center", // Center the content horizontally
-    justifyContent: "center", // Center the content vertically
+    alignItems: 'center', // Center the content horizontally
+    justifyContent: 'center', // Center the content vertically
   },
 });
 

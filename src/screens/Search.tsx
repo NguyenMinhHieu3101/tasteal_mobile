@@ -3,7 +3,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -63,6 +63,13 @@ const Search = () => {
   };
 
   //#endregion
+  //#region Routing
+
+  const handleCardPress = useCallback((id: number) => {
+    navigation.navigate(ROUTES.RecipeDetail, { recipeId: id });
+  }, []);
+
+  //#endregion
 
   return (
     <SafeAreaView style={styles.container}>
@@ -102,7 +109,9 @@ const Search = () => {
 
         <FlatList
           data={recipes}
-          renderItem={({ item }) => <SmallRecipeCard recipe={item} />}
+          renderItem={({ item }) => (
+            <SmallRecipeCard recipe={item} onPressed={handleCardPress} />
+          )}
           keyExtractor={(item) => item.id.toString()}
           numColumns={2}
           columnWrapperStyle={{ gap: SMALL_GAP }}

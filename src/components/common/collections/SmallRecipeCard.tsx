@@ -19,31 +19,31 @@ import {
 } from '../../../constants/common';
 import StarRating from '../../StarRating';
 
-const SmallRecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
+type SmallRecipeCard = {
+  recipe: RecipeEntity;
+  onPressed?: (id: number) => void;
+};
+
+const SmallRecipeCard = ({ recipe, onPressed }: SmallRecipeCard) => {
+  // #region Hooks
+
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
+
+  // #endregion
+  // #region Images
 
   const imageUrl = useFirebaseImage(recipe.image || '');
   const avatarUrl = useFirebaseImage(recipe.account.avatar || '');
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // #endregion
+  // #region Handlers
 
-  // const { login, cookbooks, handleSpinner } = useContext(AppContext);
-
-  // const handleCardPress = useCallback(() => {
-  //   navigate(PageRoute.Recipe.Detail(recipe.id));
-  // }, [navigate, recipe.id]);
-  // const [snackbarAlert] = useSnackbarService();
   const handleCardPress = () => {
-    navigation.navigate(ROUTES.RecipeDetail, { recipeId: recipe.id });
+    onPressed && onPressed(recipe.id);
   };
+
+  // #endregion
 
   return (
     <>
