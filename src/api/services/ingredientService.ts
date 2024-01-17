@@ -23,8 +23,7 @@ export class IngredientService {
    */
   public static GetAll(
     pageSize: number = 12,
-    page: number = 1,
-    cache: boolean = false
+    page: number = 1
   ): Promise<IngredientEntity[]> {
     const requestOptions = {
       method: 'POST',

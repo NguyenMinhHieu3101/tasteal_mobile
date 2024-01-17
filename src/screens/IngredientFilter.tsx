@@ -26,7 +26,7 @@ import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES } from '../constants/common';
 import { useSpinner } from '../hooks';
 
-const IngredientFilter = () => {
+const IngredientFilter = ({ route }) => {
   //#region Hooks
 
   const theme = useTheme();
@@ -99,10 +99,25 @@ const IngredientFilter = () => {
   //#endregion
   //#region Selection
 
-  // Ingredient selection
+  const includedIngredients = useMemo(() => {
+    console.log('included ingredients', route.params.includedIngredients);
+    return route.params.includedIngredients || [];
+  }, [route.params.includedIngredients]);
   const [selectedIngredients, setSelectedIngredients] = useState<
     IngredientEntity[]
   >([]);
+  useEffect(() => {
+    console.log(includedIngredients);
+    const foundSelectedIngredients: IngredientEntity[] = [];
+    ingredients.forEach((ingredient) => {
+      if (includedIngredients.includes(ingredient.id)) {
+        foundSelectedIngredients.push(ingredient);
+      }
+    });
+    console.log(foundSelectedIngredients);
+    setSelectedIngredients(foundSelectedIngredients);
+  }, [ingredients]);
+
   const handleSelectIngredient = useCallback((ingredient: IngredientEntity) => {
     setSelectedIngredients((prev) => {
       if (prev.includes(ingredient)) {
@@ -148,7 +163,12 @@ const IngredientFilter = () => {
 
   const handleConfirm = () => {
     navigation.navigate(ROUTES.Search, {
-      ingredients: selectedIngredients.map((i) => i.id),
+      includedIngredients: selectedIngredients.map((i) => i.id),
+    });
+  };
+  const handleGoBack = () => {
+    navigation.navigate(ROUTES.Search, {
+      includedIngredients: includedIngredients,
     });
   };
 
@@ -157,7 +177,7 @@ const IngredientFilter = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={[styles.content]}>
-        <TouchableOpacity onPress={() => navigation.navigate(ROUTES.Search)}>
+        <TouchableOpacity onPress={handleGoBack}>
           <Icon source="close" size={20} />
         </TouchableOpacity>
 
