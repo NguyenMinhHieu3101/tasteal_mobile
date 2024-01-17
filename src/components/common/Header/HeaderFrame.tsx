@@ -1,6 +1,7 @@
-import { View, Text, ViewStyle, SafeAreaView } from "react-native";
+import { View, Text, ViewStyle } from "react-native";
 import React from "react";
 import Container from "../Container";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Header = ({
   children,
@@ -10,11 +11,12 @@ const Header = ({
   style?: ViewStyle;
 }) => {
   return (
-    <SafeAreaView>
+    <>
+      <SafeAreaView />
       <Container style={{ flex: 0, paddingBottom: 16, ...style }}>
         {children}
       </Container>
-    </SafeAreaView>
+    </>
   );
 };
 
