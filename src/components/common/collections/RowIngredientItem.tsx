@@ -2,7 +2,7 @@ import { FC, memo, useCallback } from 'react';
 import { Image, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
 import { IconButton, Text, useTheme } from 'react-native-paper';
 
-import useFirebaseImage from '../../../api/hooks/useStorageImage';
+import useFirebaseImage from '../../../api/hooks/useFirebaseImage';
 import { IngredientEntity } from '../../../api/models/entities/IngredientEntity/IngredientEntity';
 
 type RowIngredientItemProps = {

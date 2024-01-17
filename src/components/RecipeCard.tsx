@@ -1,27 +1,27 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
   Dimensions,
   Image,
   ImageBackground,
+  StyleSheet,
+  Text,
   TouchableOpacity,
-} from "react-native";
-import { Button, IconButton, useTheme } from "react-native-paper";
+  View,
+} from 'react-native';
+import { Button, IconButton, useTheme } from 'react-native-paper';
 
-import StarRating from "./StarRating";
-import { ROUTES } from "../constants/common";
-import { RecipeEntity } from "../api/models/entities/RecipeEntity/RecipeEntity";
-import useFirebaseImage from "../api/hooks/useStorageImage";
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import useFirebaseImage from '../api/hooks/useFirebaseImage';
+import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
+import { ROUTES } from '../constants/common';
+import StarRating from './StarRating';
 
 const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
   const theme = useTheme();
   const navigation = useNavigation<NavigationProp<any>>();
 
-  const imageUrl = useFirebaseImage(recipe.image || "");
-  const avatarUrl = useFirebaseImage(recipe.account.avatar || "");
+  const imageUrl = useFirebaseImage(recipe.image || '');
+  const avatarUrl = useFirebaseImage(recipe.account.avatar || '');
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -45,7 +45,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
       <TouchableOpacity onPress={handleCardPress}>
         <View style={styles.cardContainer}>
           <ImageBackground style={styles.imageStyle} source={{ uri: imageUrl }}>
-            <View style={{ position: "absolute", top: 10, right: 10 }}>
+            <View style={{ position: 'absolute', top: 10, right: 10 }}>
               <IconButton
                 mode="contained"
                 icon="bookmark-outline"
@@ -72,7 +72,7 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
           <Text
             style={{
               fontSize: 15,
-              fontWeight: "bold",
+              fontWeight: 'bold',
               marginHorizontal: 15,
               marginVertical: 10,
               color: theme.colors.primary,
@@ -90,10 +90,10 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
               style={{
                 borderRadius: 100,
                 height: 40,
-                width: "85%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                width: '85%',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
                 borderColor: theme.colors.primary,
               }}
             >
@@ -173,14 +173,14 @@ const RecipeCard = ({ recipe }: { recipe: RecipeEntity }) => {
 };
 
 const radius = 20;
-const deviceWidth = Math.round(Dimensions.get("window").width);
+const deviceWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
   cardContainer: {
     width: deviceWidth - 100,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     height: 430,
     borderRadius: radius,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOffset: {
       width: 5,
       height: 5,
@@ -194,29 +194,29 @@ const styles = StyleSheet.create({
     width: deviceWidth - 100,
     borderTopLeftRadius: radius,
     borderTopRightRadius: radius,
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   timeStyle: {
     fontSize: 15,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginHorizontal: 10,
-    color: "white",
-    position: "absolute",
+    color: 'white',
+    position: 'absolute',
     bottom: 10,
   },
   avatarStyle: {
-    position: "absolute",
+    position: 'absolute',
     right: 15,
     bottom: 108,
     borderRadius: 25,
-    height: "10%",
-    width: "14%",
-    borderColor: "white",
+    height: '10%',
+    width: '14%',
+    borderColor: 'white',
     borderWidth: 4,
   },
   buttonStyle: {
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: 8,
   },
 });

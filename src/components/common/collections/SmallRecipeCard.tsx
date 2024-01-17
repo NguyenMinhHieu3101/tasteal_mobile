@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { Avatar, Button, IconButton, Text, useTheme } from 'react-native-paper';
 
-import useFirebaseImage from '../../../api/hooks/useStorageImage';
+import useFirebaseImage from '../../../api/hooks/useFirebaseImage';
 import { RecipeEntity } from '../../../api/models/entities/RecipeEntity/RecipeEntity';
 import {
   SMALL_GAP as COMMON_GAP,

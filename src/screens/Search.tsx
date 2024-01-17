@@ -3,7 +3,7 @@ import {
   useNavigation,
   useRoute,
 } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -11,15 +11,9 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Button,
-  MD3Theme,
-  Text,
-  TextInput,
-  useTheme,
-} from 'react-native-paper';
+import { MD3Theme, Text, TextInput, useTheme } from 'react-native-paper';
+import { useRecipeSearch } from '../api/hooks';
 import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
-import { RecipeService } from '../api/services/recipeService';
 import SmallRecipeCard from '../components/common/collections/SmallRecipeCard';
 import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES, SMALL_GAP } from '../constants/common';
@@ -27,6 +21,8 @@ import { useSpinner } from '../hooks';
 
 let cache: RecipeEntity[];
 let time: number;
+
+const ITEM_AMOUNT = 12;
 
 const Search = () => {
   //#region Hooks
@@ -44,50 +40,20 @@ const Search = () => {
   //#endregion
   //#region Search
 
-  const [search, setSearch] = useState('');
-
-  //#endregion
-  //#region Recipes
-
-  const [loading, setLoading] = useState(false);
-
-  const [recipes, setRecipes] = useState<RecipeEntity[]>([]);
-  useEffect(() => {
-    let active = true;
-
-    setLoading(true);
-    spin(true);
-    (async () => {
-      try {
-        if (cache) {
-          if (time && Date.now() - time < 1000 * 12) {
-            setRecipes(cache);
-            return;
-          } else {
-            cache = undefined;
-          }
-        }
-
-        const entities = await RecipeService.GetAllRecipes(1000000);
-
-        if (!active) return;
-
-        cache = entities;
-        time = Date.now();
-        setRecipes(entities);
-      } catch (err) {
-        console.log(err);
-        setRecipes([]);
-      } finally {
-        setLoading(false);
-        spin(false);
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, []);
+  const {
+    recipes,
+    searchReq,
+    resetSearchReq,
+    handleSearchReqChange,
+    searchTerm,
+    handleSearchTermChange,
+    // tuKhoas,
+    // handleChangeTuKhoa,
+    loadNext,
+    end,
+    sortType,
+    handleSort,
+  } = useRecipeSearch(ITEM_AMOUNT);
 
   //#endregion
   //#region Filtering
@@ -109,9 +75,10 @@ const Search = () => {
         </Text>
 
         <TastealTextInput
-          value={search}
+          value={searchTerm}
           placeholder="Tìm kiếm..."
           right={<TextInput.Icon icon="magnify" />}
+          onChangeText={handleSearchTermChange}
         />
 
         <View style={{ flexDirection: 'row', gap: 8 }}>

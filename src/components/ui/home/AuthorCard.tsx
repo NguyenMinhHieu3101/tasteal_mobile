@@ -1,14 +1,14 @@
-import { Dimensions, View } from "react-native";
-import React from "react";
+import React from 'react';
+import { Dimensions, View } from 'react-native';
 
-import { AccountEntity } from "../../../api/models/entities/AccountEntity/AccountEntity";
-import { useTheme, Card, Text } from "react-native-paper";
-import useFirebaseImage from "../../../api/hooks/useStorageImage";
+import { Card, Text, useTheme } from 'react-native-paper';
+import useFirebaseImage from '../../../api/hooks/useFirebaseImage';
+import { AccountEntity } from '../../../api/models/entities/AccountEntity/AccountEntity';
 
 const AuthorCard = ({ author }: { author: AccountEntity }) => {
   const theme = useTheme();
-  const width = Dimensions.get("screen").width;
-  const avatarUrl = useFirebaseImage(author?.avatar || "");
+  const width = Dimensions.get('screen').width;
+  const avatarUrl = useFirebaseImage(author?.avatar || '');
   return (
     <>
       <View>
@@ -18,7 +18,7 @@ const AuthorCard = ({ author }: { author: AccountEntity }) => {
             <Text
               variant="titleSmall"
               style={{
-                textTransform: "uppercase",
+                textTransform: 'uppercase',
                 paddingTop: 10,
                 color: theme.colors.primary,
               }}
@@ -28,7 +28,7 @@ const AuthorCard = ({ author }: { author: AccountEntity }) => {
             <Text
               variant="titleMedium"
               style={{
-                fontWeight: "bold",
+                fontWeight: 'bold',
                 paddingVertical: 5,
                 color: theme.colors.primary,
               }}

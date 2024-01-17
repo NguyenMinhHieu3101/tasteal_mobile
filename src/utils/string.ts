@@ -1,4 +1,5 @@
-import { LunarDate } from "@nghiavuive/lunar_date_vi";
+import { LunarDate } from '@nghiavuive/lunar_date_vi';
+import unidecode from 'unidecode';
 
 export function convertLunarToSolarDate(lunarDate: Date) {
   const lunarDate_Real = new LunarDate({
@@ -13,8 +14,8 @@ export function convertLunarToSolarDate(lunarDate: Date) {
 
 export function convertToSnakeCase(text: string): string {
   return text
-    .replace(/([a-z])([A-Z])/g, "$1_$2")
-    .replace(/\s+/g, "_")
+    .replace(/([a-z])([A-Z])/g, '$1_$2')
+    .replace(/\s+/g, '_')
     .toLowerCase();
 }
 
@@ -30,3 +31,7 @@ export const transparentColor = (hex, alpha) => {
 
   return hexToRgb(hex);
 };
+
+export function removeDiacritics(text: string): string {
+  return unidecode(text);
+}

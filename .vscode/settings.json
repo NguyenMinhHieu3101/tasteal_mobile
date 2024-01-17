@@ -3,6 +3,7 @@
     "/src/components/common/inputs",
     "/src/contexts",
     "/src/hooks",
-    "/src/components/common/collections"
+    "/src/components/common/collections",
+    "/src/api/hooks"
   ]
 }
