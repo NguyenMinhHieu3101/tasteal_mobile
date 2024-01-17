@@ -11,93 +11,9 @@ import { AccountService } from "../api/services/accountService";
 import LoginContext from "../contexts/LoginContext";
 import { signInWithPopup } from "@firebase/auth";
 
-import * as Google from "expo-auth-session/providers/google";
-import * as WebBrowser from "expo-web-browser";
-import {
-  GoogleAuthProvider,
-  onAuthStateChanged,
-  signInWithCredential,
-} from "firebase/auth";
-import { auth } from "../api/firebase/firebaseConfig";
-import AysncStorage from "@react-native-async-storage/async-storage";
-
 const Welcome = ({ navigation }) => {
   const theme = useTheme();
   const { login } = useContext(LoginContext);
-
-  const [request, response, promptAsync] = Google.useAuthRequest({
-    androidClientId: process.env.ANDROIDCLIENTID,
-  });
-
-  useEffect(() => {
-    if (response.type == "success") {
-      const { id_token } = response.params;
-      const credential = GoogleAuthProvider.credential(id_token);
-      signInWithCredential(auth, credential);
-    }
-  }, [response]);
-
-  useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log(user);
-
-        login.handleLogin && login.handleLogin(true, user);
-      }
-    });
-
-    return unsub;
-  }, []);
-
-  // const handleSignInWithGoogle = useCallback(() => {
-  //   signInWithPopup(auth, googleProvider)
-  //     .then((userCredential) => {
-  //       console.log("[AUTH] Sign in with Google successfully", userCredential);
-  //       // openSnackbar("Đăng nhập thành công!", "success");
-
-  //       AccountService.GetByUid(userCredential.user.uid)
-  //         .then(() =>
-  //           console.log("Account existed! No need to create new account!")
-  //         )
-  //         .catch(() => {
-  //           console.log("Account not existed! Need to create new account!");
-
-  //           AccountService.SignUpAccount({
-  //             uid: userCredential.user.uid,
-  //             name: userCredential.user.displayName,
-  //           })
-  //             .then((isSuccess) => {
-  //               if (isSuccess) {
-  //                 console.log("Sign up successfully");
-  //                 // openSnackbar("Đăng ký thành công!");
-  //                 login.handleLogin(true, userCredential.user);
-
-  //                 navigation.navigate(ROUTES.Login);
-  //               } else {
-  //                 console.log("Sign up failed");
-  //                 // openSnackbar("Đăng ký thất bại!", "warning");
-  //               }
-  //             })
-  //             .catch((error) => {
-  //               console.log("Sign up failed", error);
-  //               // openSnackbar("Đăng ký thất bại!", "warning");
-  //             });
-  //         })
-  //         .finally(() => {
-  //           if (login.handleLogin) {
-  //             login.handleLogin(true, userCredential.user);
-  //             // navigateSignIn();
-  //           }
-  //         });
-  //     })
-  //     .catch((error) => {
-  //       console.log("[AUTH] Sign in with Google failed", error);
-  //       // openSnackbar("Đăng nhập thất bại! Hệ thống xảy ra lỗi.", "warning");
-  //       if (login.handleLogin) {
-  //         login.handleLogin(false, undefined);
-  //       }
-  //     });
-  // }, [login, navigation]);
 
   return (
     <View style={{ flex: 1 }}>
@@ -153,7 +69,7 @@ const Welcome = ({ navigation }) => {
             <TouchableOpacity
               // mode="contained"
               // buttonColor="white"
-              onPress={() => promptAsync()}
+              onPress={() => {}}
               style={{
                 display: "flex",
                 flexDirection: "row",
