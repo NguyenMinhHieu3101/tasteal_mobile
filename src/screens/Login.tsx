@@ -1,5 +1,5 @@
 import { AntDesign } from "@expo/vector-icons";
-import React from "react";
+import React, { useContext, useRef, useState } from "react";
 import {
   BackHandler,
   SafeAreaView,
@@ -8,13 +8,14 @@ import {
   View,
 } from "react-native";
 import { Button, IconButton, Text, useTheme } from "react-native-paper";
-import MyButton from "../components/MyButton";
 import COLORS from "../constants/colors";
-import FONTSIZE from "../constants/fontsize";
 import { ROUTES } from "../constants/common";
 import Container from "../components/common/Container";
+import LoginContext, { SampleAccount } from "../contexts/LoginContext";
 const Login = ({ navigation }) => {
   const theme = useTheme();
+  const [userName, setUserName] = useState("");
+  const { login } = useContext(LoginContext);
   return (
     <Container>
       <SafeAreaView />
@@ -43,7 +44,9 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.view}>
         <TextInput
-          placeholder="Email"
+          placeholder="Tài khoản"
+          value={userName}
+          onChangeText={setUserName}
           placeholderTextColor={COLORS.grey}
           style={{ ...styles.input, fontSize: theme.fonts.bodyLarge.fontSize }}
         ></TextInput>
@@ -59,7 +62,17 @@ const Login = ({ navigation }) => {
       </View>
       <View style={styles.view}>
         <Button
-          onPress={() => navigation.navigate(ROUTES.NoBottomBarScreen)}
+          onPress={() => {
+            if (userName && userName !== "") {
+              const user = SampleAccount.find((x) => x.username === userName);
+              if (user) {
+                if (login.handleLogin) {
+                  login.handleLogin(true, user.account);
+                }
+                navigation.navigate(ROUTES.NoBottomBarScreen);
+              }
+            }
+          }}
           mode="contained"
           style={{
             paddingVertical: 4,
