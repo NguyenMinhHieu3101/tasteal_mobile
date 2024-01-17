@@ -1,4 +1,4 @@
-import { AccountEntity } from '@/api/models/entities/AccountEntity/AccountEntity';
+import { AccountEntity } from '../../../entities/AccountEntity/AccountEntity';
 
 export type GetAllPantryItemReq = {
   account_id: AccountEntity['uid'];

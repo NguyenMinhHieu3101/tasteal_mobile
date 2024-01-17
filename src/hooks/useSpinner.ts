@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { SpinnerContext } from '../contexts';
+import { SpinnerContext } from '../contexts/SpinnerContext';
 
 export type SpinnerLoadingFunction = (spin?: boolean) => void;
 

@@ -1,30 +1,17 @@
-import {
-  NavigationProp,
-  useNavigation,
-  useRoute,
-} from '@react-navigation/native';
-import { QueryFieldFilterConstraint } from 'firebase/firestore';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { FlatList, SafeAreaView, StyleSheet, View } from 'react-native';
 import {
   Chip,
-  Dialog,
-  Drawer,
+  Icon,
   MD3Theme,
-  Portal,
   Text,
   TextInput,
   useTheme,
 } from 'react-native-paper';
+
 import { useRecipeSearch } from '../api/hooks';
 import { IngredientEntity } from '../api/models/entities/IngredientEntity/IngredientEntity';
-import { RecipeEntity } from '../api/models/entities/RecipeEntity/RecipeEntity';
 import { IngredientService } from '../api/services/ingredientService';
 import { ChipList } from '../components/common/collections';
 import SmallRecipeCard from '../components/common/collections/SmallRecipeCard';
@@ -32,9 +19,6 @@ import TastealTextInput from '../components/common/inputs/TastealTextInput';
 import { PADDING_HORIZONTAL, ROUTES, SMALL_GAP } from '../constants/common';
 import { useSpinner } from '../hooks';
 import { IngredientFilterMode } from './IngredientFilter';
-
-let cache: RecipeEntity[];
-let time: number;
 
 const ITEM_AMOUNT = 12;
 
@@ -260,8 +244,6 @@ const Search = ({ route }) => {
 
   //#endregion
 
-  console.log(route.params);
-
   return (
     <>
       <SafeAreaView style={styles.container}>
@@ -279,6 +261,11 @@ const Search = ({ route }) => {
             right={<TextInput.Icon icon="magnify" />}
             onChangeText={handleSearchTermChange}
           />
+
+          <View style={{ flexDirection: 'row' }}>
+            <Text>Bộ lọc</Text>
+            <Icon source="chevron-left" size={12} />
+          </View>
 
           <View style={{ gap: 8 }}>
             <Text

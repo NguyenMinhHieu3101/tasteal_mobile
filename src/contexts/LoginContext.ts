@@ -1,12 +1,6 @@
-import { User, onAuthStateChanged } from "firebase/auth";
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
-import { useSpinner } from "../hooks";
+import { User } from 'firebase/auth';
+import { createContext, useCallback, useState } from 'react';
+import { useSpinner } from '../hooks';
 
 export type LoginContextState = {
   login: {
