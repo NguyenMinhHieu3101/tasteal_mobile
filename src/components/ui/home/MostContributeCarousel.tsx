@@ -43,8 +43,7 @@ const MostContributeCarousel = ({ exceptUid }: { exceptUid?: string }) => {
           mode="parallax"
           autoPlay={true}
           data={mostContributedAuthors}
-          scrollAnimationDuration={1000}
-          onSnapToItem={(index) => {}}
+          scrollAnimationDuration={500}
           renderItem={({ index }) => (
             <AuthorCard author={mostContributedAuthors[index]} />
           )}

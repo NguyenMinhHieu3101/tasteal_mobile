@@ -1,15 +1,16 @@
 export const ROUTES = {
-  Welcome: 'Welcome',
-  Login: 'Login',
-  Signup: 'Signup',
-  Grocery: 'Grocery',
-  IngredientFilter: 'IngredientFilter',
-  RecipeDetail: 'RecipeDetail',
+  Welcome: "Welcome",
+  Login: "Login",
+  Signup: "Signup",
+  Grocery: "Grocery",
+  IngredientFilter: "IngredientFilter",
+  RecipeDetail: "RecipeDetail",
   //
-  NoBottomBarScreen: 'NoBottomBarScreen',
-  Home: 'Home',
-  Search: 'Search',
-  Pantry: 'Pantry',
+  NoBottomBarScreen: "NoBottomBarScreen",
+  Home: "Home",
+  Search: "Search",
+  Pantry: "Pantry",
+  AuthorDetail: "AuthorDetail",
 };
 
 export const PADDING_HORIZONTAL = 20;
