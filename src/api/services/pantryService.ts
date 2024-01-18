@@ -1,29 +1,31 @@
-import { ApiEndPoint } from '../lib/url';
+import { ApiEndPoint } from "../lib/url";
 import {
   RecipesIngreAny,
   RecipesPantryAny,
-} from '../models/dtos/Request/PantryReq/PantryReq';
-import { RecipeEntity } from '../models/entities/RecipeEntity/RecipeEntity';
+} from "../models/dtos/Request/PantryReq/PantryReq";
+import { RecipeEntity } from "../models/entities/RecipeEntity/RecipeEntity";
 
 export class PantryService {
   public static async GetRecipesByIngredientsAny(
     recipesIngreAny: RecipesIngreAny
   ): Promise<RecipeEntity[]> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(recipesIngreAny),
     };
 
     return await fetch(ApiEndPoint.GetRecipesByIngredientsAny(), requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi: 28", error);
         return [];
       });
   }
@@ -32,9 +34,9 @@ export class PantryService {
     recipesIngreAll: RecipesIngreAny
   ): Promise<RecipeEntity[]> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(recipesIngreAll),
     };
@@ -45,7 +47,7 @@ export class PantryService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
@@ -54,9 +56,9 @@ export class PantryService {
     recipesPantryAny: RecipesPantryAny
   ): Promise<RecipeEntity[]> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(recipesPantryAny),
     };
@@ -67,7 +69,7 @@ export class PantryService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
@@ -76,9 +78,9 @@ export class PantryService {
     recipesPantryAll: RecipesPantryAny
   ): Promise<RecipeEntity[]> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(recipesPantryAll),
     };
@@ -89,7 +91,7 @@ export class PantryService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }

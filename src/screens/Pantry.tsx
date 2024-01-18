@@ -136,7 +136,7 @@ const Pantry = ({ navigation }) => {
       }
     }
     fetch();
-  }, []);
+  }, [login.user]);
 
   return (
     <DefaultBottomSheet
@@ -192,7 +192,7 @@ const Pantry = ({ navigation }) => {
 
               <CustomTabItem
                 title="Gợi ý"
-                amount={"28"}
+                amount={recommendRecipes?.length.toString() ?? "0"}
                 active={tabValue === 1}
                 onPress={() => setTabValue(1)}
               />
@@ -226,7 +226,7 @@ const Pantry = ({ navigation }) => {
         </ScrollView>
 
         {/* Add */}
-        <AddIngredient onPress={() => bottomSheet.openBottomSheet()} />
+        {/* <AddIngredient onPress={() => bottomSheet.openBottomSheet()} /> */}
       </View>
     </DefaultBottomSheet>
   );

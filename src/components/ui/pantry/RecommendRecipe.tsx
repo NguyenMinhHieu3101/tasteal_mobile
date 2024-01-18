@@ -25,7 +25,7 @@ const RecommendRecipe = ({
 
   const [page, setPage] = useState<PageReq>({
     page: 0,
-    pageSize: 12,
+    pageSize: 100,
   });
   const [end, setEnd] = useState(false);
 
@@ -61,7 +61,7 @@ const RecommendRecipe = ({
       }
     }
     fetch();
-  }, [pantryItems]);
+  }, []);
 
   return (
     <>
@@ -111,8 +111,6 @@ const RecommendRecipe = ({
               );
             })}
         </View>
-
-        <Button mode="contained">XEM THÊM</Button>
       </View>
 
       {/* Banner có một số */}
@@ -146,17 +144,17 @@ const RecommendRecipe = ({
             flexWrap: "wrap",
           }}
         >
-          {/* {[1, 2, 3, 4, 5].map((i) => {
-            const width = 100 / 2;
-            return (
-              <View key={i} style={{ width: `${width}%`, padding: 6 }}>
-                <PrimaryCard />
-              </View>
-            );
-          })} */}
+          {needByMoreRecipes &&
+            needByMoreRecipes.length > 0 &&
+            needByMoreRecipes.map((i) => {
+              const width = 100 / 2;
+              return (
+                <View key={i.id} style={{ width: `${width}%`, padding: 6 }}>
+                  <PrimaryCard recipe={i} />
+                </View>
+              );
+            })}
         </View>
-
-        <Button mode="contained">XEM THÊM</Button>
       </View>
     </>
   );
