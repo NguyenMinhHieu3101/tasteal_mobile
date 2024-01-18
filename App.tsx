@@ -11,6 +11,7 @@ import {
   Signup,
   Welcome,
   RecipeDetail,
+  AuthorDetail,
 } from "./src/screens";
 import DoThang from "./src/screens/DoThang";
 import IngredientFilter from "./src/screens/IngredientFilter";
@@ -112,6 +113,11 @@ const screens: {
         />
       ),
     },
+  },
+  {
+    name: ROUTES.AuthorDetail,
+    component: AuthorDetail,
+    hideBottomBar: true,
   },
   // Xóa khi phát triển xong
   {

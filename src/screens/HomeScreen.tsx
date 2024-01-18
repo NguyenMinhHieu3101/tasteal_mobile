@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import { ScrollView, View, TouchableOpacity, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { Text, useTheme } from "react-native-paper";
+import { Divider, Text, useTheme } from "react-native-paper";
 
 import TrendingComponent from "../components/ui/home/TrendingComponent";
 import NewReleaseComponent from "../components/ui/home/NewReleaseComponent";
 import MostContributeCarousel from "../components/ui/home/MostContributeCarousel";
+import { useSpinner } from "../hooks/useSpinner";
 import { DefaultHeader } from "../components/common/Header/DefaultHeader";
 
 const Home = ({ navigation }) => {
   const theme = useTheme();
+
   return (
     <View style={{ flex: 1 }}>
       {/* Header */}
