@@ -69,7 +69,7 @@ const Welcome = ({ navigation }) => {
               // buttonColor="white"
               onPress={() => {}}
               style={{
-                display: "flex",
+                display: "none",
                 flexDirection: "row",
                 gap: 12,
                 justifyContent: "center",

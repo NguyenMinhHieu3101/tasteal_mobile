@@ -2,6 +2,8 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Image, TouchableOpacity, View } from "react-native";
 import { Icon, Text, useTheme } from "react-native-paper";
 import { Rating } from "react-native-ratings";
+import { RecipeEntity } from "../../../api/models/entities/RecipeEntity/RecipeEntity";
+import useFirebaseImage from "../../../api/hooks/useFirebaseImage";
 
 const borderRadius = 20;
 const cardHeight = 260;
@@ -16,8 +18,9 @@ const shadow = {
 };
 
 const spacing = 12;
-export function PrimaryCard() {
+export function PrimaryCard({ recipe }: { recipe: RecipeEntity }) {
   const theme = useTheme();
+  const image = useFirebaseImage(recipe.image);
   return (
     <View
       style={{
@@ -39,7 +42,7 @@ export function PrimaryCard() {
         <View style={{ height: imageHeight, position: "relative" }}>
           <Image
             source={{
-              uri: "https://www.sidechef.com/ingredient/28cce717-1e68-446e-ac63-18bd27f8b7e9.jpg",
+              uri: image,
             }}
             style={{ flex: 1 }}
           />

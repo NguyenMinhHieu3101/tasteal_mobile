@@ -1,16 +1,16 @@
-import { ApiEndPoint } from '../lib/url';
-import { CreatePantryItemReq } from '../models/dtos/Request/CreatePantryItemReq/CreatePantryItemReq';
-import { GetAllPantryItemReq } from '../models/dtos/Request/GetAllPantryItemReq/GetAllPantryItemReq';
-import { Pantry_ItemEntity } from '../models/entities/Pantry_ItemEntity/Pantry_ItemEntity';
+import { ApiEndPoint } from "../lib/url";
+import { CreatePantryItemReq } from "../models/dtos/Request/CreatePantryItemReq/CreatePantryItemReq";
+import { GetAllPantryItemReq } from "../models/dtos/Request/GetAllPantryItemReq/GetAllPantryItemReq";
+import { Pantry_ItemEntity } from "../models/entities/Pantry_ItemEntity/Pantry_ItemEntity";
 
 export class PantryItemService {
   public static async GetAllPantryItemsByAccountId(
     getAllPantryItemReq: GetAllPantryItemReq
   ): Promise<Pantry_ItemEntity[]> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(getAllPantryItemReq),
     };
@@ -19,23 +19,25 @@ export class PantryItemService {
       ApiEndPoint.GetAllPantryItemsByAccountId(),
       requestOptions
     )
-      .then((response) => response.json())
+      .then((response) => {
+        return response.json();
+      })
       .then((data) => {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
 
   public static async GetPantryItemById(
-    id: Pantry_ItemEntity['id']
+    id: Pantry_ItemEntity["id"]
   ): Promise<Pantry_ItemEntity> {
     const requestOptions: RequestInit = {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
     };
 
@@ -45,7 +47,7 @@ export class PantryItemService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
@@ -54,9 +56,9 @@ export class PantryItemService {
     newPantryItem: CreatePantryItemReq
   ): Promise<Pantry_ItemEntity> {
     const requestOptions: RequestInit = {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify(newPantryItem),
     };
@@ -67,19 +69,19 @@ export class PantryItemService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
 
   public static async UpdatePantryItem(
-    id: Pantry_ItemEntity['id'],
+    id: Pantry_ItemEntity["id"],
     number: number
   ): Promise<Pantry_ItemEntity> {
     const requestOptions: RequestInit = {
-      method: 'PUT',
+      method: "PUT",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
       body: JSON.stringify({
         id: id,
@@ -93,18 +95,18 @@ export class PantryItemService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }
 
   public static async DeletePantryItem(
-    id: Pantry_ItemEntity['id']
+    id: Pantry_ItemEntity["id"]
   ): Promise<boolean> {
     const requestOptions: RequestInit = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
-        'Content-Type': 'application/json; charset=UTF-8',
+        "Content-Type": "application/json; charset=UTF-8",
       },
     };
 
@@ -114,7 +116,7 @@ export class PantryItemService {
         return data;
       })
       .catch((error) => {
-        console.error('Lỗi:', error);
+        console.error("Lỗi:", error);
         return [];
       });
   }

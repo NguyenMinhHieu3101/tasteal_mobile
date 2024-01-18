@@ -132,15 +132,15 @@ export default function App() {
           <NavigationContainer>
             <Stack.Navigator
               initialRouteName={
-                // ROUTES.Welcome Mở ra
-                "DoThang"
+                ROUTES.Welcome
+                // "DoThang"
               }
               screenOptions={{
                 headerShown: false,
               }}
             >
               {screens
-                // .filter((screen) => screen.hideBottomBar) Mở ra
+                .filter((screen) => screen.hideBottomBar)
                 .map((screen) => (
                   <Stack.Screen
                     key={screen.name}

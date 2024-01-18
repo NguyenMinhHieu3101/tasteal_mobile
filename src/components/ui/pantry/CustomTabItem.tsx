@@ -9,7 +9,7 @@ const CustomTabItem = ({
   onPress,
 }: {
   title: string;
-  amount: number;
+  amount: string;
   active: boolean;
   onPress?: () => void;
 }) => {
